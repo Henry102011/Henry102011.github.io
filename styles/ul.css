@@ -1,0 +1,32 @@
+body {
+    font-family:Arial, Helvetica, sams-serif;
+    font-size: 100%
+    margin-left; 10px;
+   
+}
+a;hover, a:focus {
+    font-style: italic;
+    color: orangered;
+}
+header h1 {
+    font-size:175%
+:   color   #11111
+   text-indent: 30px;
+}
+header h2 {
+   font-size: 130%;
+   color: #000000
+}
+header img{
+    float: left;
+}
+.shadow{
+    text-shadow: 2px 2px rgb(120,0, 0)
+}
+main h3{
+    margin-top: 3em;
+    font-size: 106%
+}
+#id {
+    line-height: 105%;
+}
