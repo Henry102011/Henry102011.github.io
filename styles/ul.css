@@ -1,16 +1,15 @@
 body {
     font-family:Arial, Helvetica, sams-serif;
-    font-size: 100%
-    margin-left: 10px;
-   
+    font-size: 100%;
+    margin-left: 10px;   
 }
-a;hover, a:focus {
+a:hover, a:focus {
     font-style: italic;
     color: orangered;
 }
 header h1 {
-    font-size:175%
-;   color; purple 
+    font-size:175%;
+   color: purple; 
    text-indent: 30px;
 }
 header h2 {
@@ -23,6 +22,9 @@ header img{
 .shadow{
     text-shadow: 2px 2px rgb(120,0, 0)
 }
+main {
+    clear: left;
+}
 main h3{
     margin-top: 3em;
     font-size: 106%
@@ -31,6 +33,6 @@ main h3{
     line-height: 105%;
 }
 footer p.copyright {
-    text-align: center ;
-    font-size:  80%
+    text-align: center;
+    font-size: 80%
 }
