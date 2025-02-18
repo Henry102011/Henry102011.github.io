@@ -35,9 +35,55 @@ header img {
 .shadow {
     text-shadow: 2px 2px 2px rgb(128, 0, 0);
 }
+article { 
+    clear: both;
+    width: 70%;
+    float: left;
+    column-count: 2;
+    column-rule: 2px dotted maroon;
+    column-gap: 2em;
+    margin-left: 2em;
+}
+article h3{
+    column-span: all;
+}
+article img {
+    float:left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
 main {
     clear:left;
 }
+article p::first-letter {
+    font-size: 3em;
+    font-weight: bold;
+    font-style: italic;
+    color:lightsteelblue;
+}
+aside {
+    width: 20%;
+    float: right;
+    background-color:  #ffebc0;
+}
+footer {
+    clear:both;
+    border-top: 2px solid maroon;
+}
+footer p.copyright {
+   text-align: center;
+   font-size: 80%; 
+}
+p.fixed { width: auto;
+    position: fixed;
+    bottom: 35%;
+    right: 0;
+    border: 35%;
+    right: 0;
+    border: 3px solid darkgreen; 
+    background-color: lightgreen;
+ }
+
 main h3 {
     margin: 3em 2em 1.5em;
     border: 5px double blue;
