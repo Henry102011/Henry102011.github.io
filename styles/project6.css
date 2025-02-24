@@ -1,6 +1,7 @@
 html {
     background-image: linear-gradient(to left, white 0%, #f33405 100%);
 }
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 100%;
@@ -12,29 +13,34 @@ body {
     border-radius: 25px;
     box-shadow: 5px 5px 0 0;
 }
+
 a:hover, a:focus {
-font-style: italic;
-color: orangered;
-border: 3px blue;
-border-style: dotted solid;
+    font-style: italic;
+    color: orangered;
+    border: 3px dotted solid blue;
 }
+
 header h1 {
     font-size: 175%;
     color: maroon;
     text-indent: 30px;
 }
+
 header h2 {
     font-size: 130%;
     color: #800000;
     text-indent: 30px;
 }
+
 header img {
     float: left;
     margin-left: 2em;
 }
+
 .shadow {
     text-shadow: 2px 2px 2px rgb(128, 0, 0);
 }
+
 article { 
     clear: both;
     width: 70%;
@@ -44,44 +50,53 @@ article {
     column-gap: 2em;
     margin-left: 2em;
 }
-article h3{
-    column-span: all;
+
+article h3 {
+    width: 100%;
+    break-before: column;
 }
+
 article img {
-    float:left;
+    float: left;
     margin-right: 1em;
     margin-bottom: 1em;
 }
+
 main {
-    clear:left;
+    clear: left;
 }
+
 article p::first-letter {
     font-size: 3em;
     font-weight: bold;
     font-style: italic;
-    color:lightsteelblue;
+    color: lightgreen;
 }
+
 aside {
     width: 20%;
     float: right;
-    background-color:  #ffebc0;
+    background-color: #ffebc6;
+    padding: 15px;
 }
+
 footer {
-    clear:both;
+    clear: both;
     border-top: 2px solid maroon;
 }
+
 footer p.copyright {
-   text-align: center;
-   font-size: 80%; 
+    text-align: center;
+    font-size: 80%;
 }
-p.fixed { width: auto;
+
+p.fixed {
+    width: auto;
     position: fixed;
-    bottom: 35%;
-    right: 0;
-    right: 0;
-    border: 3px solid darkgreen; 
+    bottom: 10px;
+    right: 10px;
+    border: 3px solid darkgreen;
     background-color: lightgreen;
     padding: 20px;
     font-size: 20px;
 }
-
