@@ -99,7 +99,7 @@ p.fixed {
     width: auto;
     position: fixed;
     top: 1%;
-    right: 1em;
+    right: 2em;
     border: 3px solid darkgreen; 
     background-color: lightgreen;
     padding: 20px;
