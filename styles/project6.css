@@ -82,7 +82,7 @@ aside {
     float: right;
     background-color: #ffebc0;
     padding: 20px;
-    margin-bottom: 50em; /* Added spacing below the aside */
+    margin-bottom: 20em; /* Added spacing below the aside */
 }
 
 footer {
