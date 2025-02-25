@@ -100,7 +100,7 @@ footer p.copyright {
 
 p.fixed {
     width: auto;
-    position:auto;
+    position:absolute;
     top: 1em; /* Adjusts position above the footer */  
     right: 4em;
     border: 3px solid darkgreen; 
