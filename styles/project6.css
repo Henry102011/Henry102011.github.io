@@ -100,7 +100,7 @@ footer p.copyright {
 p.fixed {
     width: auto;
     position: fixed;
-    margin-bottom: 1%;
+    margin:auto; 
     right: 2em;
     border: 3px solid darkgreen; 
     background-color: lightgreen;
