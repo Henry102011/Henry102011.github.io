@@ -101,7 +101,7 @@ footer p.copyright {
 p.fixed {
     width: auto;
     position: fixed;
-    border-top-right-radius: 1em;
+    border-top-right-radius: 5em;
     right: 4em;
     border: 3px solid darkgreen; 
     background-color: lightgreen;
