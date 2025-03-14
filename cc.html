@@ -214,10 +214,181 @@
         particles[j].draw();
         if (particles[j].alpha <= 0) {
           particles.splice(j, 1);
+        } const fireworksCanvas = document.getElementById("fireworksCanvas");
+      const ctx = fireworksCanvas.getContext("2d");
+
+      function resizeFireworks() {
+        fireworksCanvas.width = window.innerWidth;
+        fireworksCanvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeFireworks);
+      resizeFireworks();
+
+      // Particle for explosion fragments
+      function Particle(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.velX = random(-3, 3);
+        this.velY = random(-3, 3);
+        this.alpha = 1;
+        this.color = color;
+        this.gravity = 0.05;
+      }
+      Particle.prototype.update = function () {
+        this.velY += this.gravity;
+        this.x += this.velX;
+        this.y += this.velY;
+        this.alpha -= 0.01;
+      };
+      Particle.prototype.draw = function () {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      };
+
+      // Rocket that ascends before exploding
+      function Rocket() {
+        this.x = random(fireworksCanvas.width * 0.2, fireworksCanvas.width * 0.8);
+        this.y = fireworksCanvas.height;
+        this.targetY = random(fireworksCanvas.height * 0.1, fireworksCanvas.height * 0.5);
+        this.exploded = false;
+        this.velY = random(-8, -10);
+        this.velX = random(-1, 1);
+        this.color = "hsl(" + Math.floor(random(0, 360)) + ", 100%, 50%)";
+      }
+      Rocket.prototype.update = function () {
+        if (!this.exploded) {
+          this.x += this.velX;
+          this.y += this.velY;
+          if (this.y <= this.targetY) {
+            this.explode();
+            this.exploded = true;
+          }
+        }
+      };
+      Rocket.prototype.explode = function () {
+        for (let i = 0; i < 30; i++) {
+          particles.push(new Particle(this.x, this.y, this.color));
+        }
+      };
+      Rocket.prototype.draw = function () {
+        if (!this.exploded) {
+          ctx.save();
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      };
+
+      let rockets = [];
+      let particles = [];
+
+      function loopFireworks() {
+        requestAnimationFrame(loopFireworks);
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+        ctx.globalCompositeOperation = "lighter";
+
+        if (Math.random() < 0.05) {
+          rockets.push(new Rocket());
+        }
+        for (let i = rockets.length - 1; i >= 0; i--) {
+          rockets[i].update();
+          rockets[i].draw();
+          if (rockets[i].exploded) {
+            rockets.splice(i, 1);
+          }
+        }
+        for (let j = particles.length - 1; j >= 0; j--) {
+          particles[j].update();
+          particles[j].draw();
+          if (particles[j].alpha <= 0) {
+            particles.splice(j, 1);
+          }
         }
       }
-    }
-    loop();
-  </script>
-</body>
+      loopFireworks();
+
+      // ---------------------------------------------------
+      // Falling Cherry Blossom Petals Animation
+      // ---------------------------------------------------
+      const petalsCanvas = document.getElementById("petalsCanvas");
+      const pctx = petalsCanvas.getContext("2d");
+
+      function resizePetals() {
+        petalsCanvas.width = window.innerWidth;
+        petalsCanvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizePetals);
+      resizePetals();
+
+      function Petal() {
+        // Start at a random horizontal position and above the screen
+        this.x = random(0, petalsCanvas.width);
+        this.y = random(-petalsCanvas.height, 0);
+        this.radiusX = random(5, 10);
+        this.radiusY = random(3, 7);
+        this.speedY = random(1, 3);
+        this.speedX = random(-0.5, 0.5);
+        this.angle = random(0, Math.PI * 2);
+        this.rotationSpeed = random(-0.02, 0.02);
+        this.swing = random(0, 2 * Math.PI);
+        this.swingSpeed = random(0.02, 0.05);
+        // Soft pink cherry blossom color
+        this.color = "rgba(255,192,203,0.8)";
+      }
+
+      Petal.prototype.update = function () {
+        this.y += this.speedY;
+        // Horizontal drift with a gentle sine oscillation
+        this.x += this.speedX + Math.sin(this.swing) * 2;
+        this.swing += this.swingSpeed;
+        this.angle += this.rotationSpeed;
+        // Reset petal when it goes off the bottom
+        if (this.y - this.radiusY > petalsCanvas.height) {
+          this.y = -this.radiusY;
+          this.x = random(0, petalsCanvas.width);
+        }
+      };
+
+      Petal.prototype.draw = function () {
+        pctx.save();
+        pctx.translate(this.x, this.y);
+        pctx.rotate(this.angle);
+        pctx.fillStyle = this.color;
+        pctx.beginPath();
+        // Draw an ellipse representing a petal if supported
+        if (pctx.ellipse) {
+          pctx.ellipse(0, 0, this.radiusX, this.radiusY, 0, 0, Math.PI * 2);
+        } else {
+          pctx.arc(0, 0, this.radiusX, 0, Math.PI * 2);
+        }
+        pctx.fill();
+        pctx.restore();
+      };
+
+      let petals = [];
+      // Create an initial set of petals
+      for (let i = 0; i < 50; i++) {
+        petals.push(new Petal());
+      }
+
+      function loopPetals() {
+        requestAnimationFrame(loopPetals);
+        pctx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
+        petals.forEach((petal) => {
+          petal.update();
+          petal.draw();
+        });
+      }
+      loopPetals();
+    </script>
+  </body>
 </html>
