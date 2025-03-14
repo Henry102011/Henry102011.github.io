@@ -1,280 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Happy Birthday CC!</title>
-  <style>
-    /* Full-page black background with no scrollbars */
-    body {
-      background: black;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      position: relative;
-    }
-    /* Fireworks canvas behind everything */
-    #fireworksCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-    /* Petals canvas above fireworks but below content */
-    #petalsCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    /* Wrapper for candles and message */
-    #content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-    }
-    /* Container for the candles */
-    .candles {
-      display: flex;
-      gap: 20px;
-    }
-    /* Style for each candle body */
-    .candle {
-      position: relative;
-      width: 30px;
-      height: 100px;
-      background: #ccc;
-      border-radius: 5px;
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-    }
-    /* Flame using a CSS triangle with flicker */
-    .flame {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-bottom: 30px solid orange;
-      animation: flicker 1s infinite;
-    }
-    @keyframes flicker {
-      0% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Happy Early Birthday!</title>
+    <style>
+      /* Overall body with a soft pink background */
+      body {
+        background: #ffb6c1;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        font-family: Arial, sans-serif;
       }
-      50% {
-        opacity: 0.5;
-        transform: translateX(-50%) translateY(-5px);
+      /* Fireworks canvas behind everything */
+      #fireworksCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
       }
-      100% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
+      /* Petals canvas above fireworks but below content */
+      #petalsCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
       }
-    }
-    /* Birthday message style */
-    .message {
-      font-size: 3rem;
-      margin-top: 50px;
-      text-align: center;
-      animation: fadeIn 3s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+      /* Content container for candles and message */
+      #content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #333;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      /* Container for the candles */
+      .candles {
+        display: flex;
+        gap: 20px;
       }
-    }
-  </style>
-</head>
-<body>
-  <!-- Fireworks canvas -->
-  <canvas id="fireworksCanvas"></canvas>
-  <!-- Petals canvas -->
-  <canvas id="petalsCanvas"></canvas>
-  <!-- Content with candles and birthday message -->
-  <div id="content">
-    <div class="candles">
-      <div class="candle">
-        <div class="flame"></div>
+      /* Each candle body */
+      .candle {
+        position: relative;
+        width: 30px;
+        height: 100px;
+        background: #ccc;
+        border-radius: 5px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+      /* Realistic animated flame for each candle */
+      .flame {
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 30px solid orange;
+        animation: flameFlicker 1s infinite alternate ease-in-out;
+      }
+      @keyframes flameFlicker {
+        0% {
+          transform: translateX(-50%) translateY(0) scale(1);
+          border-bottom-color: orange;
+        }
+        50% {
+          transform: translateX(-50%) translateY(-5px) scale(1.1);
+          border-bottom-color: gold;
+        }
+        100% {
+          transform: translateX(-50%) translateY(0) scale(1);
+          border-bottom-color: orange;
+        }
+      }
+      /* Birthday message styling */
+      .message {
+        font-size: 3rem;
+        margin-top: 50px;
+        text-align: center;
+        animation: fadeIn 3s ease-in-out;
+        color: #333;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Fireworks canvas -->
+    <canvas id="fireworksCanvas"></canvas>
+    <!-- Petals canvas -->
+    <canvas id="petalsCanvas"></canvas>
+    <!-- Main content with candles and birthday message -->
+    <div id="content">
+      <div class="candles">
+        <div class="candle">
+          <div class="flame"></div>
+        </div>
+        <div class="candle">
+          <div class="flame"></div>
+        </div>
+        <div class="candle">
+          <div class="flame"></div>
+        </div>
       </div>
-      <div class="candle">
-        <div class="flame"></div>
-      </div>
-      <div class="candle">
-        <div class="flame"></div>
-      </div>
+      <div class="message">Happy Early Birthday</div>
     </div>
-    <div class="message">Happy Birthday CC!</div>
-  </div>
 
-  <script>
-    /* Utility function for random numbers */
-    function random(min, max) {
-      return Math.random() * (max - min) + min;
-    }
+    <script>
+      /* Utility function for random numbers */
+      function random(min, max) {
+        return Math.random() * (max - min) + min;
+      }
 
-    // -------------------
-    // Fireworks Animation
-    // -------------------
-    const fireworksCanvas = document.getElementById("fireworksCanvas");
-    const ctx = fireworksCanvas.getContext("2d");
+      // ---------------------------------------------------
+      // Fireworks Animation
+      // ---------------------------------------------------
+      const fireworksCanvas = document.getElementById("fireworksCanvas");
+      const ctx = fireworksCanvas.getContext("2d");
 
-    function resizeFireworks() {
-      fireworksCanvas.width = window.innerWidth;
-      fireworksCanvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeFireworks);
-    resizeFireworks();
+      function resizeFireworks() {
+        fireworksCanvas.width = window.innerWidth;
+        fireworksCanvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeFireworks);
+      resizeFireworks();
 
-    // Particle for explosion fragments
-    function Particle(x, y, color) {
-      this.x = x;
-      this.y = y;
-      this.velX = random(-3, 3);
-      this.velY = random(-3, 3);
-      this.alpha = 1;
-      this.color = color;
-      this.gravity = 0.05;
-    }
-    Particle.prototype.update = function() {
-      this.velY += this.gravity;
-      this.x += this.velX;
-      this.y += this.velY;
-      this.alpha -= 0.01;
-    }
-    Particle.prototype.draw = function() {
-      ctx.save();
-      ctx.globalAlpha = this.alpha;
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    // Rocket that ascends before exploding
-    function Rocket() {
-      this.x = random(fireworksCanvas.width * 0.2, fireworksCanvas.width * 0.8);
-      this.y = fireworksCanvas.height;
-      this.targetY = random(fireworksCanvas.height * 0.1, fireworksCanvas.height * 0.5);
-      this.exploded = false;
-      this.velY = random(-8, -10);
-      this.velX = random(-1, 1);
-      this.color = "hsl(" + Math.floor(random(0, 360)) + ", 100%, 50%)";
-    }
-    Rocket.prototype.update = function() {
-      if (!this.exploded) {
+      // Particle for explosion fragments
+      function Particle(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.velX = random(-3, 3);
+        this.velY = random(-3, 3);
+        this.alpha = 1;
+        this.color = color;
+        this.gravity = 0.05;
+      }
+      Particle.prototype.update = function () {
+        this.velY += this.gravity;
         this.x += this.velX;
         this.y += this.velY;
-        if (this.y <= this.targetY) {
-          this.explode();
-          this.exploded = true;
-        }
-      }
-    }
-    Rocket.prototype.explode = function() {
-      for (let i = 0; i < 30; i++) {
-        particles.push(new Particle(this.x, this.y, this.color));
-      }
-    }
-    Rocket.prototype.draw = function() {
-      if (!this.exploded) {
+        this.alpha -= 0.01;
+      };
+      Particle.prototype.draw = function () {
         ctx.save();
+        ctx.globalAlpha = this.alpha;
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
+      };
+
+      // Rocket that ascends before exploding
+      function Rocket() {
+        this.x = random(fireworksCanvas.width * 0.2, fireworksCanvas.width * 0.8);
+        this.y = fireworksCanvas.height;
+        this.targetY = random(fireworksCanvas.height * 0.1, fireworksCanvas.height * 0.5);
+        this.exploded = false;
+        this.velY = random(-8, -10);
+        this.velX = random(-1, 1);
+        this.color = "hsl(" + Math.floor(random(0, 360)) + ", 100%, 50%)";
       }
-    }
+      Rocket.prototype.update = function () {
+        if (!this.exploded) {
+          this.x += this.velX;
+          this.y += this.velY;
+          if (this.y <= this.targetY) {
+            this.explode();
+            this.exploded = true;
+          }
+        }
+      };
+      Rocket.prototype.explode = function () {
+        for (let i = 0; i < 30; i++) {
+          particles.push(new Particle(this.x, this.y, this.color));
+        }
+      };
+      Rocket.prototype.draw = function () {
+        if (!this.exploded) {
+          ctx.save();
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      };
 
-    let rockets = [];
-    let particles = [];
+      let rockets = [];
+      let particles = [];
 
-    function loopFireworks() {
-      requestAnimationFrame(loopFireworks);
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-      ctx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
-      ctx.globalCompositeOperation = 'lighter';
+      function loopFireworks() {
+        requestAnimationFrame(loopFireworks);
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+        ctx.globalCompositeOperation = "lighter";
 
-      if (Math.random() < 0.05) {
-        rockets.push(new Rocket());
-      }
-      for (let i = rockets.length - 1; i >= 0; i--) {
-        rockets[i].update();
-        rockets[i].draw();
-        if (rockets[i].exploded) {
-          rockets.splice(i, 1);
+        if (Math.random() < 0.05) {
+          rockets.push(new Rocket());
+        }
+        for (let i = rockets.length - 1; i >= 0; i--) {
+          rockets[i].update();
+          rockets[i].draw();
+          if (rockets[i].exploded) {
+            rockets.splice(i, 1);
+          }
+        }
+        for (let j = particles.length - 1; j >= 0; j--) {
+          particles[j].update();
+          particles[j].draw();
+          if (particles[j].alpha <= 0) {
+            particles.splice(j, 1);
+          }
         }
       }
-      for (let j = particles.length - 1; j >= 0; j--) {
-        particles[j].update();
-        particles[j].draw();
-        if (particles[j].alpha <= 0) {
-          particles.splice(j, 1);
-        }
+      loopFireworks();
+
+      // ---------------------------------------------------
+      // Falling Cherry Blossom Petals Animation
+      // ---------------------------------------------------
+      const petalsCanvas = document.getElementById("petalsCanvas");
+      const pctx = petalsCanvas.getContext("2d");
+
+      function resizePetals() {
+        petalsCanvas.width = window.innerWidth;
+        petalsCanvas.height = window.innerHeight;
       }
-    }
-    loopFireworks();
+      window.addEventListener("resize", resizePetals);
+      resizePetals();
 
-    // -------------------
-    // Falling Rose Petals Animation
-    // -------------------
-    const petalsCanvas = document.getElementById("petalsCanvas");
-    const pctx = petalsCanvas.getContext("2d");
+      function Petal() {
+        // Start at a random horizontal position and above the screen
+        this.x = random(0, petalsCanvas.width);
+        this.y = random(-petalsCanvas.height, 0);
+        this.radiusX = random(5, 10);
+        this.radiusY = random(3, 7);
+        this.speedY = random(1, 3);
+        this.speedX = random(-0.5, 0.5);
+        this.angle = random(0, Math.PI * 2);
+        this.rotationSpeed = random(-0.02, 0.02);
+        this.swing = random(0, 2 * Math.PI);
+        this.swingSpeed = random(0.02, 0.05);
+        // Soft pink cherry blossom color
+        this.color = "rgba(255,192,203,0.8)";
+      }
 
-    function resizePetals() {
-      petalsCanvas.width = window.innerWidth;
-      petalsCanvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizePetals);
-    resizePetals();
+      Petal.prototype.update = function () {
+        this.y += this.speedY;
+        // Horizontal drift with a gentle sine oscillation
+        this.x += this.speedX + Math.sin(this.swing) * 2;
+        this.swing += this.swingSpeed;
+        this.angle += this.rotationSpeed;
+        // Reset petal when it goes off the bottom
+        if (this.y - this.radiusY > petalsCanvas.height) {
+          this.y = -this.radiusY;
+          this.x = random(0, petalsCanvas.width);
+        }
+      };
 
-    function Petal() {
-      // Start somewhere above the screen
-      this.x = random(0, petalsCanvas.width);
-      this.y = random(-petalsCanvas.height, 0);
-      this.radiusX = random(5, 10);
-      this.radiusY = random(3, 7);
-      this.speedY = random(1, 3);
-      this.speedX = random(-1, 1);
-      this.angle = random(0, Math.PI * 2);
-      // Rotation speed for a slight spin
-      this.rotationSpeed = random(-0.02, 0.02);
-      // Slight oscillation for a natural fall
-      this.swing = random(0, 2 * Math.PI);
-      this.swingSpeed = random(0.02, 0.05);
-      // A pinkish color for a rose petal
-      this.color = "rgba(255, 182, 193, 0.8)";
-    }
+      Petal.prototype.draw = function () {
+        pctx.save();
+        pctx.translate(this.x, this.y);
+        pctx.rotate(this.angle);
+        pctx.fillStyle = this.color;
+        pctx.beginPath();
+        // Draw an ellipse representing a petal
+        if (pctx.ellipse) {
+          pctx.ellipse(0, 0, this.radiusX, this.radiusY, 0, 0, Math.PI * 2);
+        } else {
+          // Fallback for browsers that don't support ellipse
+          pctx.arc(0, 0, this.radiusX, 0, Math.PI * 2);
+        }
+        pctx.fill();
+        pctx.restore();
+      };
 
-    Petal.prototype.update = function() {
-      this.y += this.speedY;
-      // Horizontal drift with a sine oscillation
-      this.x += this.speedX + Math.sin(this.swing) * 2;
-      this.swing += this.swingSpeed;
-      this.angle += this.rotationSpeed;
-      // If the petal moves off the bottom of the screen, reset it above the top.
-      if (this.y - this.radiusY > petalsCanvas.height) {
-        this.y = -thisa
+      let petals = [];
+      // Create an initial set of petals
+      for (let i = 0; i < 50; i++) {
+        petals.push(new Petal());
+      }
+
+      function loopPetals() {
+        requestAnimationFrame(loopPetals);
+        pctx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
+        petals.forEach((petal) => {
+          petal.update();
+          petal.draw();
+        });
+      }
+      loopPetals();
+    </script>
+  </body>
