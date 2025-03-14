@@ -1,27 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Happy Birthday CC!</title>
   <style>
-    /* Full-page black background, flex-centered content */
+    /* Full-page black background with no scrollbars */
     body {
       background: black;
       margin: 0;
       padding: 0;
       overflow: hidden;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       font-family: Arial, sans-serif;
-      color: #fff;
       position: relative;
-      z-index: 1;
     }
-    /* Canvas for fireworks behind all content */
+    /* Fireworks canvas behind everything */
     #fireworksCanvas {
       position: fixed;
       top: 0;
@@ -30,6 +23,28 @@
       height: 100%;
       pointer-events: none;
       z-index: 0;
+    }
+    /* Petals canvas above fireworks but below content */
+    #petalsCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* Wrapper for candles and message */
+    #content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
     }
     /* Container for the candles */
     .candles {
@@ -45,7 +60,7 @@
       border-radius: 5px;
       box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
     }
-    /* Flame for the candle with flicker effect */
+    /* Flame using a CSS triangle with flicker */
     .flame {
       position: absolute;
       top: -40px;
@@ -59,11 +74,20 @@
       animation: flicker 1s infinite;
     }
     @keyframes flicker {
-      0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      50% { opacity: 0.5; transform: translateX(-50%) translateY(-5px); }
-      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        opacity: 0.5;
+        transform: translateX(-50%) translateY(-5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
     }
-    /* Style for the birthday message */
+    /* Birthday message style */
     .message {
       font-size: 3rem;
       margin-top: 50px;
@@ -71,55 +95,58 @@
       animation: fadeIn 3s ease-in-out;
     }
     @keyframes fadeIn {
-      from { 
-         opacity: 0;
-         transform: translateY(20px);
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
       to {
-         opacity: 1;
-         transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
 </head>
 <body>
-  <!-- Fireworks canvas (drawn behind main content) -->
+  <!-- Fireworks canvas -->
   <canvas id="fireworksCanvas"></canvas>
-
-  <!-- Candle container with three candles -->
-  <div class="candles">
-    <div class="candle">
-      <div class="flame"></div>
+  <!-- Petals canvas -->
+  <canvas id="petalsCanvas"></canvas>
+  <!-- Content with candles and birthday message -->
+  <div id="content">
+    <div class="candles">
+      <div class="candle">
+        <div class="flame"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+      </div>
     </div>
-    <div class="candle">
-      <div class="flame"></div>
-    </div>
-    <div class="candle">
-      <div class="flame"></div>
-    </div>
+    <div class="message">Happy Birthday CC!</div>
   </div>
-  <!-- Birthday message -->
-  <div class="message">Happy Birthday CC!</div>
 
-  <!-- Fireworks script -->
   <script>
-    const canvas = document.getElementById("fireworksCanvas");
-    const ctx = canvas.getContext("2d");
-
-    // Resize the canvas to fill the screen
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    // Utility function
+    /* Utility function for random numbers */
     function random(min, max) {
       return Math.random() * (max - min) + min;
     }
 
-    // Particle constructor for explosion fragments
+    // -------------------
+    // Fireworks Animation
+    // -------------------
+    const fireworksCanvas = document.getElementById("fireworksCanvas");
+    const ctx = fireworksCanvas.getContext("2d");
+
+    function resizeFireworks() {
+      fireworksCanvas.width = window.innerWidth;
+      fireworksCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeFireworks);
+    resizeFireworks();
+
+    // Particle for explosion fragments
     function Particle(x, y, color) {
       this.x = x;
       this.y = y;
@@ -145,11 +172,11 @@
       ctx.restore();
     }
 
-    // Rocket constructor that ascends before exploding
+    // Rocket that ascends before exploding
     function Rocket() {
-      this.x = random(canvas.width * 0.2, canvas.width * 0.8);
-      this.y = canvas.height;
-      this.targetY = random(canvas.height * 0.1, canvas.height * 0.5);
+      this.x = random(fireworksCanvas.width * 0.2, fireworksCanvas.width * 0.8);
+      this.y = fireworksCanvas.height;
+      this.targetY = random(fireworksCanvas.height * 0.1, fireworksCanvas.height * 0.5);
       this.exploded = false;
       this.velY = random(-8, -10);
       this.velX = random(-1, 1);
@@ -181,25 +208,19 @@
       }
     }
 
-    // Arrays to keep track of rockets and particles
     let rockets = [];
     let particles = [];
 
-    // Animation loop for fireworks
-    function loop() {
-      requestAnimationFrame(loop);
-      // Clear canvas with slight opacity for trails
+    function loopFireworks() {
+      requestAnimationFrame(loopFireworks);
       ctx.globalCompositeOperation = 'destination-out';
       ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
       ctx.globalCompositeOperation = 'lighter';
 
-      // Randomly launch new rockets
       if (Math.random() < 0.05) {
         rockets.push(new Rocket());
       }
-
-      // Update and draw rockets
       for (let i = rockets.length - 1; i >= 0; i--) {
         rockets[i].update();
         rockets[i].draw();
@@ -207,8 +228,6 @@
           rockets.splice(i, 1);
         }
       }
-
-      // Update and draw particles
       for (let j = particles.length - 1; j >= 0; j--) {
         particles[j].update();
         particles[j].draw();
@@ -217,7 +236,45 @@
         }
       }
     }
-    loop();
-  </script>
-</body>
-</html>
+    loopFireworks();
+
+    // -------------------
+    // Falling Rose Petals Animation
+    // -------------------
+    const petalsCanvas = document.getElementById("petalsCanvas");
+    const pctx = petalsCanvas.getContext("2d");
+
+    function resizePetals() {
+      petalsCanvas.width = window.innerWidth;
+      petalsCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizePetals);
+    resizePetals();
+
+    function Petal() {
+      // Start somewhere above the screen
+      this.x = random(0, petalsCanvas.width);
+      this.y = random(-petalsCanvas.height, 0);
+      this.radiusX = random(5, 10);
+      this.radiusY = random(3, 7);
+      this.speedY = random(1, 3);
+      this.speedX = random(-1, 1);
+      this.angle = random(0, Math.PI * 2);
+      // Rotation speed for a slight spin
+      this.rotationSpeed = random(-0.02, 0.02);
+      // Slight oscillation for a natural fall
+      this.swing = random(0, 2 * Math.PI);
+      this.swingSpeed = random(0.02, 0.05);
+      // A pinkish color for a rose petal
+      this.color = "rgba(255, 182, 193, 0.8)";
+    }
+
+    Petal.prototype.update = function() {
+      this.y += this.speedY;
+      // Horizontal drift with a sine oscillation
+      this.x += this.speedX + Math.sin(this.swing) * 2;
+      this.swing += this.swingSpeed;
+      this.angle += this.rotationSpeed;
+      // If the petal moves off the bottom of the screen, reset it above the top.
+      if (this.y - this.radiusY > petalsCanvas.height) {
+        this.y = -thisa
