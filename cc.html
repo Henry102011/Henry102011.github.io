@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Happy Birthday CC!</title>
+  <style>
+    /* Set a full-page black background and center content */
+    body {
+      background: black;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+    /* Container for the candles */
+    .candles {
+      display: flex;
+      gap: 20px;
+    }
+    /* Style for each candle body */
+    .candle {
+      position: relative;
+      width: 30px;
+      height: 100px;
+      background: #ccc;
+      border-radius: 5px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+    }
+    /* Create the flame using border technique */
+    .flame {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid orange;
+      /* Animate the flame to simulate a flicker */
+      animation: flicker 1s infinite;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.5; transform: translateX(-50%) translateY(-5px); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    /* Style for the birthday message */
+    .message {
+      font-size: 3rem;
+      margin-top: 50px;
+      text-align: center;
+      animation: fadeIn 3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { 
+         opacity: 0;
+         transform: translateY(20px);
+      }
+      to {
+         opacity: 1;
+         transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Candle container with three candles -->
+  <div class="candles">
+    <div class="candle">
+      <div class="flame"></div>
+    </div>
+    <div class="candle">
+      <div class="flame"></div>
+    </div>
+    <div class="candle">
+      <div class="flame"></div>
+    </div>
+  </div>
+  <!-- Birthday message -->
+  <div class="message">Happy Birthday CC!</div>
+</body>
+</html>
