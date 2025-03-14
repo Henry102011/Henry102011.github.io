@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Happy Birthday CC!</title>
   <style>
-    /* Set a full-page black background and center content */
+    /* Full-page black background, flex-centered content */
     body {
       background: black;
       margin: 0;
       padding: 0;
+      overflow: hidden;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -17,6 +18,18 @@
       align-items: center;
       font-family: Arial, sans-serif;
       color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+    /* Canvas for fireworks behind all content */
+    #fireworksCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
     /* Container for the candles */
     .candles {
@@ -32,7 +45,7 @@
       border-radius: 5px;
       box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
     }
-    /* Create the flame using border technique */
+    /* Flame for the candle with flicker effect */
     .flame {
       position: absolute;
       top: -40px;
@@ -43,7 +56,6 @@
       border-left: 15px solid transparent;
       border-right: 15px solid transparent;
       border-bottom: 30px solid orange;
-      /* Animate the flame to simulate a flicker */
       animation: flicker 1s infinite;
     }
     @keyframes flicker {
@@ -71,6 +83,9 @@
   </style>
 </head>
 <body>
+  <!-- Fireworks canvas (drawn behind main content) -->
+  <canvas id="fireworksCanvas"></canvas>
+
   <!-- Candle container with three candles -->
   <div class="candles">
     <div class="candle">
@@ -84,6 +99,125 @@
     </div>
   </div>
   <!-- Birthday message -->
-  <div class="message">Happy Birthday Early CC!</div>
+  <div class="message">Happy Birthday CC!</div>
+
+  <!-- Fireworks script -->
+  <script>
+    const canvas = document.getElementById("fireworksCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Resize the canvas to fill the screen
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Utility function
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    // Particle constructor for explosion fragments
+    function Particle(x, y, color) {
+      this.x = x;
+      this.y = y;
+      this.velX = random(-3, 3);
+      this.velY = random(-3, 3);
+      this.alpha = 1;
+      this.color = color;
+      this.gravity = 0.05;
+    }
+    Particle.prototype.update = function() {
+      this.velY += this.gravity;
+      this.x += this.velX;
+      this.y += this.velY;
+      this.alpha -= 0.01;
+    }
+    Particle.prototype.draw = function() {
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Rocket constructor that ascends before exploding
+    function Rocket() {
+      this.x = random(canvas.width * 0.2, canvas.width * 0.8);
+      this.y = canvas.height;
+      this.targetY = random(canvas.height * 0.1, canvas.height * 0.5);
+      this.exploded = false;
+      this.velY = random(-8, -10);
+      this.velX = random(-1, 1);
+      this.color = "hsl(" + Math.floor(random(0, 360)) + ", 100%, 50%)";
+    }
+    Rocket.prototype.update = function() {
+      if (!this.exploded) {
+        this.x += this.velX;
+        this.y += this.velY;
+        if (this.y <= this.targetY) {
+          this.explode();
+          this.exploded = true;
+        }
+      }
+    }
+    Rocket.prototype.explode = function() {
+      for (let i = 0; i < 30; i++) {
+        particles.push(new Particle(this.x, this.y, this.color));
+      }
+    }
+    Rocket.prototype.draw = function() {
+      if (!this.exploded) {
+        ctx.save();
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Arrays to keep track of rockets and particles
+    let rockets = [];
+    let particles = [];
+
+    // Animation loop for fireworks
+    function loop() {
+      requestAnimationFrame(loop);
+      // Clear canvas with slight opacity for trails
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = 'lighter';
+
+      // Randomly launch new rockets
+      if (Math.random() < 0.05) {
+        rockets.push(new Rocket());
+      }
+
+      // Update and draw rockets
+      for (let i = rockets.length - 1; i >= 0; i--) {
+        rockets[i].update();
+        rockets[i].draw();
+        if (rockets[i].exploded) {
+          rockets.splice(i, 1);
+        }
+      }
+
+      // Update and draw particles
+      for (let j = particles.length - 1; j >= 0; j--) {
+        particles[j].update();
+        particles[j].draw();
+        if (particles[j].alpha <= 0) {
+          particles.splice(j, 1);
+        }
+      }
+    }
+    loop();
+  </script>
 </body>
 </html>
