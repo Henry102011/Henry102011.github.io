@@ -44,12 +44,16 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding: 0 10px;
+        box-sizing: border-box;
         color: #333;
       }
-      /* Container for the candles */
+      /* Container for the candles - using flex-wrap to allow responsiveness */
       .candles {
         display: flex;
         gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
       }
       /* Each candle body */
       .candle {
@@ -103,6 +107,22 @@
         to {
           opacity: 1;
           transform: translateY(0);
+        }
+      }
+      /* Responsive adjustments for smaller screens */
+      @media (max-width: 500px) {
+        .candle {
+          width: 25px;
+          height: 80px;
+        }
+        .flame {
+          top: -30px;
+          border-left: 12px solid transparent;
+          border-right: 12px solid transparent;
+          border-bottom: 25px solid orange;
+        }
+        .message {
+          font-size: 2rem;
         }
       }
     </style>
@@ -287,11 +307,10 @@
         pctx.rotate(this.angle);
         pctx.fillStyle = this.color;
         pctx.beginPath();
-        // Draw an ellipse representing a petal
+        // Draw an ellipse representing a petal if supported
         if (pctx.ellipse) {
           pctx.ellipse(0, 0, this.radiusX, this.radiusY, 0, 0, Math.PI * 2);
         } else {
-          // Fallback for browsers that don't support ellipse
           pctx.arc(0, 0, this.radiusX, 0, Math.PI * 2);
         }
         pctx.fill();
@@ -315,3 +334,4 @@
       loopPetals();
     </script>
   </body>
+</html>
