@@ -383,12 +383,12 @@
       function loopPetals() {
         requestAnimationFrame(loopPetals);
         pctx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
-        petals.forEach((petal) => {
+        petals.forEach((petal) => 
           petal.update();
           petal.draw();
-        }
+        
     
-    }loopPetals();
+    loopPetals();
     </script>
   </body>
 </html>
