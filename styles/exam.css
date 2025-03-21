@@ -28,7 +28,7 @@ ul {
 }
 
 a {
-    color: white;
+    color: blue;
     text-decoration: none;
     padding: 15px 20px;
     display: block;
@@ -76,7 +76,7 @@ p {
     float: right;
     margin: 0 0 15px 15px;
     max-width: 300px;
-    border: 1px solid #ddd;
+    border: 1px solid orange;
     padding: 5px;
 }
 
