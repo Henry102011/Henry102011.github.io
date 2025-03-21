@@ -15,7 +15,7 @@ body {
     background-position: right;
     background-repeat: repeat-y;
     background-attachment: fixed;
-    background-color:  cornflowerblue;
+    background-color:  rgb(100, 237, 237);
 }
 
 nav {
