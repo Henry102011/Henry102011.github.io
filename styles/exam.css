@@ -71,7 +71,7 @@ p {
     margin-right: 5px;
 }
 
-/* Image styling */
+
 .float-right {
     float: right;
     margin: 0 0 15px 15px;
@@ -80,7 +80,7 @@ p {
     padding: 5px;
 }
 
-/* Aside styling */
+
 aside {
     width: 20%;
     position: fixed;
