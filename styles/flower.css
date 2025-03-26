@@ -985,4 +985,15 @@
    animation-play-state: paused !important;
  }
  
+ footer {
+    clear: both;
+    border-top: 3px solid maroon;
+    margin-bottom: 10em;
+}
+
+footer p.copyright {
+    text-align: center;
+    font-size: 80%;
+}
+
  /*# sourceMappingURL=style.css.map */
