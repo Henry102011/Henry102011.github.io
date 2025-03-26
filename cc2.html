@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Happy Birthday Cecilia!</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #0d0d0d;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      // Array to hold fireworks
+      let fireworks = [];
+      // Timer to add new fireworks
+      let fireworkTimer = 0;
+      
+      // Variables for dancing character
+      let danceOffset = 0;
+      let danceSpeed = 0.05;
+      
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+        textFont('Georgia');
+        textAlign(CENTER, CENTER);
+      }
+      
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+      }
+      
+      function draw() {
+        // Draw a dark background
+        background(13, 13, 13);
+        
+        // Draw fireworks
+        if (frameCount % 20 === 0) {
+          fireworks.push(new Firework());
+        }
+        for (let i = fireworks.length - 1; i >= 0; i--) {
+          fireworks[i].update();
+          fireworks[i].show();
+          if (fireworks[i].finished()) {
+            fireworks.splice(i, 1);
+          }
+        }
+        
+        // Draw birthday cake on which the character stands
+        drawCake();
+
+        // Update dance offset
+        danceOffset = sin(frameCount * danceSpeed) * 10;
+        // Draw dancing character
+        drawDancingCharacter(width/2, height - 150 + danceOffset);
+        
+        // Draw greeting text above scene
+        fill(255, 240, 245);
+        textSize(36);
+        text("Happy Birthday Cecilia!", width/2, 50);
+      }
+      
+      // Firework object
+      class Firework {
+        constructor() {
+          this.pos = createVector(random(width), random(height/2));
+          this.particles = [];
+          this.numParticles = int(random(10, 20));
+          for (let i = 0; i < this.numParticles; i++) {
+            // Each particle in random direction
+            let angle = random(TWO_PI);
+            let speed = random(2, 5);
+            let vel = p5.Vector.fromAngle(angle).mult(speed);
+            this.particles.push({
+              pos: this.pos.copy(),
+              vel: vel,
+              alpha: 255,
+              size: random(4, 8)
+            });
+          }
+        }
+        
+        update() {
+          for (let p of this.particles) {
+            p.pos.add(p.vel);
+            p.alpha -= 4;
+          }
+        }
+        
+        show() {
+          noStroke();
+          for (let p of this.particles) {
+            fill(random(150,255), random(150,255), random(150,255), p.alpha);
+            ellipse(p.pos.x, p.pos.y, p.size);
+          }
+        }
+        
+        finished() {
+          return this.particles[0].alpha < 0;
+        }
+      }
+      
+      function drawCake() {
+        // Draw a layered cake at bottom center.
+        let cakeWidth = 300;
+        let cakeHeight = 150;
+        let cakeX = width/2 - cakeWidth/2;
+        let cakeY = height - cakeHeight - 20;
+        
+        // Base cake layer
+        fill(255, 228, 196);
+        stroke(200, 180, 150);
+        strokeWeight(2);
+        rect(cakeX, cakeY, cakeWidth, cakeHeight, 20);
+        
+        // Icing layer on top
+        fill(255, 182, 193);
+        noStroke();
+        arc(width/2, cakeY, cakeWidth, 40, PI, TWO_PI);
+      }
+      
+      function drawDancingCharacter(x, y) {
+        push();
+        translate(x, y);
+        // Draw the body (standing on cake)
+        // Body: simple ellipse
+        noStroke();
+        fill(255);
+        ellipse(0, 0, 80, 100);
+        
+        // Draw face
+        fill(255);
+        ellipse(0, -30, 60, 60);
+        
+        // Eyes
+        fill(0);
+        ellipse(-10, -35, 6, 6);
+        ellipse(10, -35, 6, 6);
+        
+        // Nose (a little dot)
+        fill(255, 105, 180);
+        ellipse(0, -25, 4, 4);
+        
+        // Ears (a nod to Cinnamoroll’s long ears)
+        fill(255);
+        ellipse(-25, -70, 20, 50);
+        ellipse(25, -70, 20, 50);
+        
+        // A red bow on one ear (Hello Kitty element)
+        fill(255, 0, 0);
+        ellipse(25, -70, 12, 12);
+        // Bow details
+        fill(255, 192, 203);
+        ellipse(33, -72, 6, 10);
+        ellipse(17, -72, 6, 10);
+        
+        // Mouth (Hello Kitty traditionally does not have one,
+        // but a slight smile can convey dancing energy)
+        stroke(0);
+        strokeWeight(1);
+        noFill();
+        arc(0, -20, 20, 10, 0, PI);
+        noStroke();
+        
+        // Arms (raised slightly as if dancing)
+        fill(255);
+        ellipse(-45, -5, 15, 30);
+        ellipse(45, -5, 15, 30);
+        
+        // Pink flower in right hand (simulate on upper right arm)
+        drawPinkFlower(45, -15);
+        
+        // Legs
+        fill(255);
+        ellipse(-15, 50, 15, 30);
+        ellipse(15, 50, 15, 30);
+        
+        pop();
+      }
+      
+      function drawPinkFlower(offsetX, offsetY) {
+        push();
+        translate(offsetX, offsetY);
+        // Draw simple flower: a center and several petals.
+        fill(255,105,180); // pink petals
+        noStroke();
+        for (let angle = 0; angle < 360; angle += 72) {
+          let rad = radians(angle);
+          let petalX = cos(rad) * 8;
+          let petalY = sin(rad) * 8;
+          ellipse(petalX, petalY, 8, 12);
+        }
+        fill(255, 215, 0); // center in a yellow tone
+        ellipse(0, 0, 6, 6);
+        pop();
+      }
+    </script>
+  </body>
+</html>
+
