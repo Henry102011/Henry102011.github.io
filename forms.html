@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join ITSA - Information Technology Student Association membership registration">
+    <meta name="keywords" content="ITSA, join, membership, registration, IT students">
+    <title>Join ITSA - Information Technology Student Association</title>
+    <link rel="stylesheet" href="styles/ITSA.css">
+    <link rel="stylesheet" href="styles/form.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <section class="top-nav">
+        <div><p>ITSA</p></div>
+        <input id="menu-toggle" type="checkbox">
+        <label class="menu-button-container" for="menu-toggle">
+            <div class="menu-button"></div>
+        </label>
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pages/about.html">About</a></li>
+            <li><a href="pages/events.html">Events</a></li>
+            <li><a href="pages/resources.html">Resources</a></li>
+            <li><a href="pages/contact.html">Contact</a></li>
+        </ul>
+    </section>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Join ITSA</h1>
+            <p>Become a member of our technology community</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h2>Membership Registration</h2>
+            <p>Please fill out the form below to register for ITSA membership.</p>
+            
+            <form action="register_account.html" method="post" id="registration_form">
+                <fieldset>
+                    <legend>Registration Information</legend>
+                    <label for="email">E-Mail:</label>
+                    <input type="email" name="email" id="email" autofocus required autocomplete="on"><br>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" required
+                        placeholder="At least 6 letters or numbers"
+                        pattern="[a-zA-Z0-9]{6,}"
+                        title="Must be at least 6 alphanumeric characters"><br>
+                    <label for="verify">Verify Password:</label>
+                    <input type="password" name="verify" id="verify" required><br>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Member Information</legend>
+                    <label for="first_name">First Name:</label>
+                    <input type="text" name="first_name" id="first_name"
+                        required autocomplete="on"><br>
+                    <label for="state">State:</label>
+                    <input type="text" name="state" id="state" required
+                        maxlength="2"
+                        placeholder="2-character code"
+                        autocomplete="on"><br>
+                    <label for="zip">ZIP Code:</label>
+                    <input type="text" name="zip" id="zip" required
+                        placeholder="5 or 9 digits"
+                        pattern="^\d{5}(-\d{4})?$"
+                        title="Either 5 or 9 digits"
+                        autocomplete="on"><br>
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" name="phone" id="phone"
+                        placeholder="999-999-9999"
+                        pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                        title="Must be 999-999-999 format"
+                        autocomplete="on"><br>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Membership Information</legend>
+                    <label for="membership_type">Membership Type:</label>
+                    <select name="membership_type" id="membership_type">
+                        <option value="junior">Junior</option>
+                        <option value="regular">Regular</option>
+                        <option value="charter">Charter</option>
+                    </select><br>
+                    <label for="starting_date">Starting Date:</label>
+                    <input type="date" name="starting_date" id="starting_date" required><br>
+                    <label for="tickets">Tickets:</label>
+                    <input type="number" name="tickets" id="tickets" min="1" max="4" value="2"><br>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>How Did You Hear About Us?</legend>
+                    <input type="radio" name="hear_about" id="search_engine" value="search_engine">
+                    <label for="search_engine">Search Engine</label><br>
+                    <input type="radio" name="hear_about" id="friend" value="friend">
+                    <label for="friend">Friend</label><br>
+                    <input type="radio" name="hear_about" id="social_media" value="social_media">
+                    <label for="social_media">Social Media</label><br>
+                    <input type="radio" name="hear_about" id="other" value="other">
+                    <label for="other">Other</label><br>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Comments</legend>
+                    <textarea name="comments" id="comments" placeholder="Please add any comments here"></textarea>
+                </fieldset>
+                
+                <fieldset id="buttons">
+                    <legend>Submit Your Membership</legend>
+                    <input type="submit" value="Register" class="cta-button">
+                    <input type="reset" value="Reset Fields" class="secondary-button">
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: itsa@university.edu</p>
+                <p>Phone: (123) 456-7890</p>
+                <p>Office: Technology Building, Room 201</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="form.html">Join ITSA</a></li>
+                    <li><a href="pages/resources.html">Resources</a></li>
+                    <li><a href="pages/faq.html">FAQ</a></li>
+                    <li><a href="pages/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://instagram.com/itsa" target="_blank">Instagram</a>
+                    <a href="https://twitter.com/itsa" target="_blank">Twitter</a>
+                    <a href="https://www.linkedin.com/company/aitpsam/" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/itsa" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Information Technology Student Association | <a href="pages/privacy.html">Privacy Policy</a></p>
+        </div>
+    </footer>
+</body>
+</html>
