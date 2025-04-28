@@ -17,7 +17,7 @@ html, body {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: #2c3e50;
+    background-color: #1E1E1E; /* Dark gray/black for SHSU */
     color: #FFF;
     height: 4em;
     padding: 1em 2em;
@@ -30,6 +30,7 @@ html, body {
     font-size: 1.5em;
     font-weight: bold;
     margin: 0;
+    color: #F78F1E; /* SHSU Orange */
 }
 
 .menu {
@@ -103,9 +104,9 @@ html, body {
 }
 
 .menu a:hover, a.current {
-    color: #3498db;
+    color: #F78F1E; /* SHSU Orange */
     text-decoration: none;
-    border-bottom: 2px solid #3498db;
+    border-bottom: 2px solid #F78F1E; /* SHSU Orange */
     padding-bottom: 5px;
 }
 
@@ -127,6 +128,7 @@ html, body {
 .hero h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    color: #F78F1E; /* SHSU Orange */
 }
 
 .hero p {
@@ -136,7 +138,7 @@ html, body {
 
 .cta-button {
     display: inline-block;
-    background-color: #3498db;
+    background-color: #F78F1E; /* SHSU Orange */
     color: white;
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
@@ -146,7 +148,7 @@ html, body {
 }
 
 .cta-button:hover {
-    background-color: #2980b9;
+    background-color: #D97A17; /* Darker SHSU Orange */
 }
 
 /* Main Content */
@@ -173,6 +175,7 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease;
+    border-top: 4px solid #F78F1E; /* SHSU Orange border */
 }
 
 .feature-card:hover {
@@ -188,7 +191,7 @@ main {
 }
 
 .feature-card h2 {
-    color: #2c3e50;
+    color: #1E1E1E; /* Dark gray/black for SHSU */
     margin-bottom: 0.5rem;
 }
 
@@ -199,10 +202,11 @@ main {
     border-radius: 8px;
     margin: 3rem 0;
     text-align: center;
+    border-left: 4px solid #F78F1E; /* SHSU Orange accent */
 }
 
 .about-preview h2 {
-    color: #2c3e50;
+    color: #1E1E1E; /* Dark gray/black for SHSU */
     margin-bottom: 1rem;
 }
 
@@ -215,8 +219,8 @@ main {
 .secondary-button {
     display: inline-block;
     background-color: transparent;
-    color: #3498db;
-    border: 2px solid #3498db;
+    color: #F78F1E; /* SHSU Orange */
+    border: 2px solid #F78F1E; /* SHSU Orange */
     padding: 0.6rem 1.2rem;
     border-radius: 5px;
     text-decoration: none;
@@ -225,14 +229,14 @@ main {
 }
 
 .secondary-button:hover {
-    background-color: #3498db;
+    background-color: #F78F1E; /* SHSU Orange */
     color: white;
 }
 
 /* Events Section */
 .upcoming-events h2 {
     text-align: center;
-    color: #2c3e50;
+    color: #1E1E1E; /* Dark gray/black for SHSU */
     margin-bottom: 2rem;
 }
 
@@ -256,7 +260,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #3498db;
+    background-color: #F78F1E; /* SHSU Orange */
     color: white;
     padding: 1rem;
     min-width: 100px;
@@ -279,7 +283,7 @@ main {
 
 .event-details h3 {
     margin-top: 0;
-    color: #2c3e50;
+    color: #1E1E1E; /* Dark gray/black for SHSU */
 }
 
 .event-location {
@@ -296,7 +300,7 @@ main {
 
 /* Footer */
 footer {
-    background-color: #2c3e50;
+    background-color: #1E1E1E; /* Dark gray/black for SHSU */
     color: white;
     padding: 3rem 2rem 1rem;
 }
@@ -318,7 +322,7 @@ footer {
 .footer-section h3 {
     margin-bottom: 1rem;
     font-size: 1.2rem;
-    color: #3498db;
+    color: #F78F1E; /* SHSU Orange */
 }
 
 .footer-section p, .footer-section ul {
@@ -341,7 +345,7 @@ footer {
 }
 
 .footer-section a:hover {
-    color: #3498db;
+    color: #F78F1E; /* SHSU Orange */
 }
 
 .social-links {
@@ -364,7 +368,7 @@ footer {
 }
 
 .footer-bottom a {
-    color: #3498db;
+    color: #F78F1E; /* SHSU Orange */
     text-decoration: none;
 }
 
@@ -383,7 +387,7 @@ footer {
         width: 100%;
         justify-content: center;
         align-items: center;
-        background-color: #2c3e50;
+        background-color: #1E1E1E; /* Dark gray/black for SHSU */
     }
     
     #menu-toggle ~ .menu li {
@@ -395,7 +399,7 @@ footer {
     }
     
     #menu-toggle:checked ~ .menu li {
-        border: 1px solid #34495e;
+        border: 1px solid #333;
         height: 3em;
         padding: 0.5em;
         transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -408,11 +412,11 @@ footer {
         padding: 0.5em 0;
         width: 100%;
         color: white;
-        background-color: #2c3e50;
+        background-color: #1E1E1E; /* Dark gray/black for SHSU */
     }
     
     .menu > li:not(:last-child) {
-        border-bottom: 1px solid #34495e;
+        border-bottom: 1px solid #333;
     }
     
     .hero h1 {
@@ -488,4 +492,3 @@ footer {
         min-width: 100%;
     }
 }
-
