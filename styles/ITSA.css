@@ -1,494 +1,93 @@
-/* Base Styles */
-html, body {
-    margin: 0;
-    height: 100%;
-    font-size: 100%;
-    scroll-behavior: smooth;
-}
+/* Add these styles to your existing CSS file */
 
-* {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-sizing: border-box;
-}
-
-/* Navigation Menu */
-.top-nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #1E1E1E; /* Dark gray/black for SHSU */
-    color: #FFF;
-    height: 4em;
-    padding: 1em 2em;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.top-nav div p {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin: 0;
-    color: #F78F1E; /* SHSU Orange */
-}
-
-.menu {
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.menu > li {
-    margin: 0 1rem;
-    overflow: hidden;
-}
-
-.menu-button-container {
-    display: none;
-    height: 100%;
-    width: 30px;
-    cursor: pointer;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#menu-toggle {
-    display: none;
-}
-
-.menu-button,
-.menu-button::before,
-.menu-button::after {
-    display: block;
-    background-color: #fff;
+/* Paw print animation */
+.paw-print {
     position: absolute;
-    height: 4px;
-    width: 30px;
-    transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
-    border-radius: 2px;
+    font-size: 24px;
+    color: #f47321; /* SHSU Orange */
+    pointer-events: none;
+    z-index: 1000;
+    animation: fadeOut 1s forwards;
 }
 
-.menu-button::before {
-    content: '';
-    margin-top: -8px;
+@keyframes fadeOut {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
 }
 
-.menu-button::after {
-    content: '';
-    margin-top: 8px;
+/* Bearkat mascot that follows cursor */
+.mascot-container {
+    position: fixed;
+    pointer-events: none;
+    z-index: 999;
+    transform: translate(-50%, -50%);
 }
 
-#menu-toggle:checked + .menu-button-container .menu-button::before {
-    margin-top: 0px;
-    transform: rotate(405deg);
-}
-
-#menu-toggle:checked + .menu-button-container .menu-button {
-    background: rgba(255, 255, 255, 0);
-}
-
-#menu-toggle:checked + .menu-button-container .menu-button::after {
-    margin-top: 0px;
-    transform: rotate(-405deg);
-}
-
-.top-nav a {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.menu a:hover, a.current {
-    color: #F78F1E; /* SHSU Orange */
-    text-decoration: none;
-    border-bottom: 2px solid #F78F1E; /* SHSU Orange */
-    padding-bottom: 5px;
-}
-
-/* Hero Section */
-.hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    text-align: center;
-    padding: 6rem 2rem;
-}
-
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #F78F1E; /* SHSU Orange */
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-}
-
-.cta-button {
-    display: inline-block;
-    background-color: #F78F1E; /* SHSU Orange */
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.cta-button:hover {
-    background-color: #D97A17; /* Darker SHSU Orange */
-}
-
-/* Main Content */
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-/* Features Section */
-.features {
+.bearkat-mascot {
+    width: 40px;
+    height: 40px;
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin: 3rem 0;
-}
-
-.feature-card {
-    flex: 1;
-    min-width: 300px;
-    margin: 1rem;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-    border-top: 4px solid #F78F1E; /* SHSU Orange border */
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-}
-
-.feature-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-}
-
-.feature-card h2 {
-    color: #1E1E1E; /* Dark gray/black for SHSU */
-    margin-bottom: 0.5rem;
-}
-
-/* About Preview Section */
-.about-preview {
-    background-color: #f8f9fa;
-    padding: 3rem;
-    border-radius: 8px;
-    margin: 3rem 0;
-    text-align: center;
-    border-left: 4px solid #F78F1E; /* SHSU Orange accent */
-}
-
-.about-preview h2 {
-    color: #1E1E1E; /* Dark gray/black for SHSU */
-    margin-bottom: 1rem;
-}
-
-.about-preview p {
-    max-width: 800px;
-    margin: 0 auto 1.5rem;
-    line-height: 1.6;
-}
-
-.secondary-button {
-    display: inline-block;
-    background-color: transparent;
-    color: #F78F1E; /* SHSU Orange */
-    border: 2px solid #F78F1E; /* SHSU Orange */
-    padding: 0.6rem 1.2rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.secondary-button:hover {
-    background-color: #F78F1E; /* SHSU Orange */
-    color: white;
-}
-
-/* Events Section */
-.upcoming-events h2 {
-    text-align: center;
-    color: #1E1E1E; /* Dark gray/black for SHSU */
-    margin-bottom: 2rem;
-}
-
-.event-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.event-card {
-    display: flex;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.event-date {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #F78F1E; /* SHSU Orange */
-    color: white;
-    padding: 1rem;
-    min-width: 100px;
+    transition: transform 0.2s ease;
 }
 
-.event-date .month {
-    font-size: 0.9rem;
-    font-weight: bold;
+.bearkat-mascot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
-.event-date .day {
-    font-size: 1.8rem;
-    font-weight: bold;
+/* Orange flash effect on click */
+.orange-flash {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(244,115,33,0.8) 0%, rgba(244,115,33,0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 998;
+    transform: translate(-50%, -50%);
+    animation: flash 0.5s forwards;
 }
 
-.event-details {
-    padding: 1.5rem;
-    flex-grow: 1;
+@keyframes flash {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
 }
 
-.event-details h3 {
-    margin-top: 0;
-    color: #1E1E1E; /* Dark gray/black for SHSU */
+/* Enhance existing elements with SHSU colors */
+.about-section h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f47321; /* Changed to SHSU Orange */
 }
 
-.event-location {
-    color: #7f8c8d;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
+.event-highlight {
+    background-color: #f8f9fa;
+    border-left: 4px solid #f47321; /* Changed to SHSU Orange */
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
 }
 
-.upcoming-events .secondary-button {
-    display: block;
-    width: fit-content;
-    margin: 0 auto;
+.leader-card h3 {
+    color: #f47321; /* Changed to SHSU Orange */
+    margin-bottom: 10px;
 }
 
-/* Footer */
-footer {
-    background-color: #1E1E1E; /* Dark gray/black for SHSU */
-    color: white;
-    padding: 3rem 2rem 1rem;
-}
-
-.footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.footer-section {
-    flex: 1;
-    min-width: 250px;
-    margin-bottom: 2rem;
-}
-
-.footer-section h3 {
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    color: #F78F1E; /* SHSU Orange */
-}
-
-.footer-section p, .footer-section ul {
-    margin: 0.5rem 0;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-section a {
-    color: #ecf0f1;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-section a:hover {
-    color: #F78F1E; /* SHSU Orange */
-}
-
-.social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.social-links a {
-    display: inline-block;
-    margin-right: 1rem;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    margin-top: 2rem;
-    border-top: 1px solid #34495e;
-    font-size: 0.9rem;
-}
-
-.footer-bottom a {
-    color: #F78F1E; /* SHSU Orange */
+.contact-info a {
+    color: #f47321; /* Changed to SHSU Orange */
     text-decoration: none;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .menu-button-container {
-        display: flex;
-    }
-    
-    .menu {
-        position: absolute;
-        top: 0;
-        margin-top: 4em;
-        left: 0;
-        flex-direction: column;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        background-color: #1E1E1E; /* Dark gray/black for SHSU */
-    }
-    
-    #menu-toggle ~ .menu li {
-        height: 0;
-        margin: 0;
-        padding: 0;
-        border: 0;
-        transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    
-    #menu-toggle:checked ~ .menu li {
-        border: 1px solid #333;
-        height: 3em;
-        padding: 0.5em;
-        transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    
-    .menu > li {
-        display: flex;
-        justify-content: center;
-        margin: 0;
-        padding: 0.5em 0;
-        width: 100%;
-        color: white;
-        background-color: #1E1E1E; /* Dark gray/black for SHSU */
-    }
-    
-    .menu > li:not(:last-child) {
-        border-bottom: 1px solid #333;
-    }
-    
-    .hero h1 {
-        font-size: 2rem;
-    }
-    
-    .hero p {
-        font-size: 1rem;
-    }
-    
-    .features {
-        flex-direction: column;
-    }
-    
-    .feature-card {
-        margin: 1rem 0;
-    }
-    
-    .about-preview {
-        padding: 2rem 1rem;
-    }
-    
-    .event-card {
-        flex-direction: column;
-    }
-    
-    .event-date {
-        flex-direction: row;
-        padding: 0.5rem;
-        min-width: auto;
-        width: 100%;
-    }
-    
-    .event-date .month, .event-date .day {
-        margin: 0 0.5rem;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-    }
+/* Add some hover effects to make the site more interactive */
+.leader-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-@media (max-width: 480px) {
-    .top-nav {
-        padding: 1em;
-    }
-    
-    .hero {
-        padding: 3rem 1rem;
-    }
-    
-    main {
-        padding: 1rem;
-    }
-    
-    .hero h1 {
-        font-size: 1.5rem;
-    }
-    
-    .feature-card {
-        min-width: auto;
-    }
-    
-    .about-preview {
-        padding: 1.5rem 1rem;
-    }
-    
-    .event-details {
-        padding: 1rem;
-    }
-    
-    .footer-section {
-        min-width: 100%;
-    }
+.leader-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
