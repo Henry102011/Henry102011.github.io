@@ -67,14 +67,16 @@
 }
 
 @media (max-width: 768px) {
-    .leadership-team 
+    .leadership-team {
+        flex-direction: column;
+    }
 }
-    
-        .paw-print {
-        position: absolute;
-        font-size: 24px;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        animation: fadeOut 1s forwards;
-        z-index: 1000;
-        }
+
+.paw-print {
+    position: absolute;
+    font-size: 24px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: fadeOut 1s forwards;
+    z-index: 1000;
+}
