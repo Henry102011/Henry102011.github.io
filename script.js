@@ -1,74 +1,42 @@
-// Bearkat paw print cursor effect for SHSU-themed website
+// Bearkat paw prints flying up from bottom animation
 document.addEventListener('DOMContentLoaded', function() {
-    // Create a container for the mascot that follows the cursor
-    const mascotContainer = document.createElement('div');
-    mascotContainer.className = 'mascot-container';
-    document.body.appendChild(mascotContainer);
-    
-    // Create the Bearkat mascot element
-    const mascot = document.createElement('div');
-    mascot.className = 'bearkat-mascot';
-    mascot.innerHTML = '<img src="../images/bearkat-head.png" alt="Bearkat Mascot">';
-    mascotContainer.appendChild(mascot);
-    
-    // Track mouse position with some lag for smooth following
-    let mouseX = 0;
-    let mouseY = 0;
-    let mascotX = 0;
-    let mascotY = 0;
-    
-    // Update mouse position on mouse move
-    document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+    // Function to create a paw print that flies up from the bottom
+    function createFlyingPawPrint() {
+        const pawPrint = document.createElement('div');
+        pawPrint.className = 'flying-paw-print';
+        pawPrint.innerHTML = '🐾';
         
-        // Create paw prints where the mouse moves
-        createPawPrint(e.clientX, e.clientY);
-    });
-    
-    // Create paw print at mouse position
-    function createPawPrint(x, y) {
-        // Only create a paw print occasionally (1 in 5 mouse movements)
-        if (Math.random() > 0.8) {
-            const pawPrint = document.createElement('div');
-            pawPrint.className = 'paw-print';
-            
-            // Randomly choose between different paw orientations
-            const rotation = Math.random() * 360;
-            pawPrint.innerHTML = '🐾';
-            pawPrint.style.left = x + 'px';
-            pawPrint.style.top = y + 'px';
-            pawPrint.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-            
-            document.body.appendChild(pawPrint);
-            
-            // Remove paw print after animation completes
-            setTimeout(() => {
-                pawPrint.remove();
-            }, 1000);
-        }
+        // Random horizontal position
+        const randomX = Math.random() * window.innerWidth;
+        pawPrint.style.left = randomX + 'px';
+        
+        // Start from bottom
+        pawPrint.style.bottom = '-50px';
+        
+        // Random rotation
+        const rotation = Math.random() * 360;
+        pawPrint.style.transform = `rotate(${rotation}deg)`;
+        
+        // Random size variation
+        const size = 20 + Math.random() * 20;
+        pawPrint.style.fontSize = `${size}px`;
+        
+        // Add to document
+        document.body.appendChild(pawPrint);
+        
+        // Remove after animation completes
+        setTimeout(() => {
+            pawPrint.remove();
+        }, 6000); // Animation duration + buffer
     }
     
-    // Animation loop for smooth mascot following
-    function animateMascot() {
-        // Calculate distance between mascot and mouse
-        const dx = mouseX - mascotX;
-        const dy = mouseY - mascotY;
-        
-        // Move mascot toward mouse with easing
-        mascotX += dx * 0.1;
-        mascotY += dy * 0.1;
-        
-        // Update mascot position
-        mascotContainer.style.left = mascotX + 'px';
-        mascotContainer.style.top = mascotY + 'px';
-        
-        // Continue animation
-        requestAnimationFrame(animateMascot);
-    }
+    // Create paw prints periodically
+    setInterval(createFlyingPawPrint, 800);
     
-    // Start animation
-    animateMascot();
+    // Create a few paw prints immediately
+    for (let i = 0; i < 5; i++) {
+        setTimeout(createFlyingPawPrint, i * 300);
+    }
     
     // SHSU orange color effect on click
     document.addEventListener('click', function(e) {
@@ -78,8 +46,14 @@ document.addEventListener('DOMContentLoaded', function() {
         orangeFlash.style.top = e.clientY + 'px';
         document.body.appendChild(orangeFlash);
         
+        // Create extra paw prints on click
+        for (let i = 0; i < 3; i++) {
+            setTimeout(createFlyingPawPrint, i * 100);
+        }
+        
         setTimeout(() => {
             orangeFlash.remove();
         }, 500);
     });
 });
+
