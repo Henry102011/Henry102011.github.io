@@ -3,216 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACE Project - ITSA</title>
+    <meta name="description" content="Academic Community Engagement (ACE) - ITSA's community service initiative at Sam Houston State University">
+    <meta name="keywords" content="ACE, Academic Community Engagement, ITSA, Sam Houston State University, SHSU, community service">
+    <title>ACE Project - ITSA at Sam Houston State University</title>
+    <link rel="stylesheet" href="styles/ITSA.css">
+    <script src="script.js" defer></script>
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
+        /* Additional styles specific to the ACE page */
+        .ace-hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/shsu-campus.jpg');
+            background-size: cover;
+            background-position: center;
             color: white;
-            overflow-x: hidden;
-        }
-
-        #youtube-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .content {
-            position: relative;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            margin: 50px auto;
-            max-width: 800px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        header {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
             text-align: center;
+            padding: 100px 20px;
         }
 
-        h1 {
-            color: #4CAF50;
+        .ace-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #f15a22; /* SHSU orange */
+        }
+
+        .ace-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .ace-section {
+            margin-bottom: 40px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .ace-section h2 {
+            color: #f15a22; /* SHSU orange */
+            border-bottom: 2px solid #f15a22;
+            padding-bottom: 10px;
             margin-bottom: 20px;
         }
 
-        h2 {
-            color: #2196F3;
+        .ace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin-top: 30px;
         }
 
-        p {
-            line-height: 1.6;
+        .ace-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .ace-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .ace-card h3 {
+            color: #4a4a4a;
             margin-bottom: 15px;
         }
 
-        .nav {
-            display: flex;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 10px;
+        .ace-card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #f15a22;
         }
 
-        .nav a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 5px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .nav a:hover {
-            background-color: #4CAF50;
-        }
-
-        .btn {
+        .video-button {
             display: inline-block;
-            background-color: #4CAF50;
+            background-color: #f15a22; /* SHSU orange */
             color: white;
-            padding: 10px 20px;
-            text-decoration: none;
+            padding: 12px 25px;
             border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
             margin-top: 20px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
 
-        .btn:hover {
-            background-color: #45a049;
+        .video-button:hover {
+            background-color: #d14c1a;
         }
 
-        footer {
+        .shsu-colors {
+            color: #f15a22; /* SHSU orange */
+        }
+
+        .contact-ace {
+            background-color: #1e1e1e;
+            color: white;
+            padding: 40px 20px;
             text-align: center;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
-            margin-top: 50px;
+            border-radius: 8px;
+        }
+
+        .contact-ace h2 {
+            color: #f15a22;
+        }
+
+        .contact-ace a {
+            color: #f15a22;
+            text-decoration: underline;
+        }
+
+        .contact-ace a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .ace-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="youtube-background"></div>
+    <section class="top-nav">
+        <div><p>ITSA</p></div>
+        <input id="menu-toggle" type="checkbox">
+        <label class="menu-button-container" for="menu-toggle">
+            <div class="menu-button"></div>
+        </label>
+        <ul class="menu">
+            <li><a href="ITSA.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="pages/events.html">Events</a></li>
+            <li><a href="ACE.html" class="current">ACE Project</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </section>
 
-    <header>
-        <h1>ACE: Academic Community Engagement</h1>
+    <header class="ace-hero">
+        <div class="hero-content">
+            <h1>Academic Community Engagement</h1>
+            <p>Connecting SHSU students with meaningful community service opportunities</p>
+            <a href="https://www.youtube.com/watch?v=Zy1K0RHrIhc" target="_blank" class="video-button">What is ACE?</a>
+        </div>
     </header>
 
-    <div class="nav">
-        <a href="itsa.html">Home</a>
-        <a href="ace-project.html">ACE Project</a>
-        <a href="#">Events</a>
-        <a href="#">ACE Project</a>
-        <a href="#">Contact</a>
-    </div>
+    <main class="ace-content">
+        <section class="ace-section">
+            <h2>About Academic Community Engagement</h2>
+            <p>Academic Community Engagement (ACE) at Sam Houston State University is a transformative program that connects classroom learning with community service. Through ACE, ITSA members apply their technical skills to address real community needs while gaining valuable experience and developing a sense of civic responsibility.</p>
+            <p>The ACE program at SHSU is designed to create mutually beneficial partnerships between students and community organizations, fostering meaningful relationships that enhance both educational experiences and community development.</p>
+            <a href="https://www.shsu.edu/academics/cce/ace/" target="_blank" class="secondary-button">Visit SHSU ACE Website</a>
+        </section>
 
-    <div class="content">
-        <h2>What is ACE?</h2>
-        <p>
-            Academic Community Engagement (ACE) is a program designed to bridge the gap between academic learning and community service. 
-            Through ACE, students apply their classroom knowledge to real-world challenges, working with community partners to create 
-            meaningful solutions while developing professional skills and civic responsibility.
-        </p>
+        <section class="ace-section">
+            <h2>Key Components of ACE</h2>
+            <div class="ace-grid">
+                <div class="ace-card">
+                    <div class="ace-card-icon">📚</div>
+                    <h3>Service Learning</h3>
+                    <p>Integrating meaningful community service with instruction and reflection to enrich the learning experience, teach civic responsibility, and strengthen communities.</p>
+                </div>
+                <div class="ace-card">
+                    <div class="ace-card-icon">🤝</div>
+                    <h3>Community Partnerships</h3>
+                    <p>Building sustainable relationships with local organizations, businesses, and government agencies to address community needs.</p>
+                </div>
+                <div class="ace-card">
+                    <div class="ace-card-icon">💻</div>
+                    <h3>Technology Solutions</h3>
+                    <p>Applying IT skills to develop technological solutions for community challenges, from website development to database management.</p>
+                </div>
+                <div class="ace-card">
+                    <div class="ace-card-icon">🎓</div>
+                    <h3>Professional Development</h3>
+                    <p>Gaining real-world experience that enhances resumes, builds portfolios, and develops the soft skills employers value.</p>
+                </div>
+            </div>
+        </section>
 
-        <h2>Our Mission</h2>
-        <p>
-            The ACE Project aims to foster meaningful connections between educational institutions and their surrounding communities. 
-            By engaging students in service-learning opportunities, we create a mutually beneficial relationship where students gain 
-            practical experience while communities receive valuable assistance and resources.
-        </p>
+        <section class="ace-section">
+            <h2>ITSA's Current ACE Projects</h2>
+            <p>Our Information Technology Student Association is actively involved in several ACE initiatives that allow our members to apply their technical skills to benefit the community:</p>
+            <ul>
+                <li><strong>Digital Literacy Workshops</strong> - Teaching basic computer skills to underserved populations</li>
+                <li><strong>Nonprofit Website Development</strong> - Creating and maintaining websites for local nonprofit organizations</li>
+                <li><strong>Technology Recycling Program</strong> - Refurbishing donated computers for schools and community centers</li>
+                <li><strong>Cybersecurity Awareness Training</strong> - Educating community members about online safety</li>
+                <li><strong>App Development for Community Needs</strong> - Building mobile applications to address local challenges</li>
+            </ul>
+        </section>
 
-        <h2>Key Components</h2>
-        <p>
-            <strong>Service Learning:</strong> Integrating community service with academic instruction to enrich learning experiences.
-        </p>
-        <p>
-            <strong>Community Partnerships:</strong> Building sustainable relationships with local organizations and businesses.
-        </p>
-        <p>
-            <strong>Student Development:</strong> Enhancing students' professional skills, leadership abilities, and civic engagement.
-        </p>
-        <p>
-            <strong>Social Impact:</strong> Addressing community needs through collaborative projects and initiatives.
-        </p>
+        <section class="ace-section">
+            <h2>Get Involved</h2>
+            <p>There are many ways ITSA members can participate in ACE projects:</p>
+            <div class="ace-grid">
+                <div class="ace-card">
+                    <h3>Join an Existing Project</h3>
+                    <p>Become part of one of our ongoing community engagement initiatives.</p>
+                </div>
+                <div class="ace-card">
+                    <h3>Propose a New Project</h3>
+                    <p>Have an idea for a community service project? We want to hear it!</p>
+                </div>
+                <div class="ace-card">
+                    <h3>Volunteer for Events</h3>
+                    <p>Help with one-time community service events throughout the semester.</p>
+                </div>
+                <div class="ace-card">
+                    <h3>Become an ACE Leader</h3>
+                    <p>Take on a leadership role in coordinating our community engagement efforts.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://www.youtube.com/watch?v=Zy1K0RHrIhc" target="_blank" class="video-button">Watch ACE Video</a>
+            </div>
+        </section>
 
-        <h2>Get Involved</h2>
-        <p>
-            There are numerous ways to participate in the ACE program:
-        </p>
-        <ul>
-            <li>Join an existing ACE project</li>
-            <li>Propose a new community partnership</li>
-            <li>Volunteer for community service events</li>
-            <li>Integrate ACE components into coursework</li>
-            <li>Attend ACE workshops and training sessions</li>
-        </ul>
-
-        <a href="#" class="btn">Join ACE Today</a>
-    </div>
+        <section class="contact-ace">
+            <h2>Connect with ACE</h2>
+            <p>For more information about Academic Community Engagement at SHSU or to get involved with ITSA's ACE projects, contact:</p>
+            <p>Email: <a href="mailto:ace@shsu.edu">ace@shsu.edu</a></p>
+            <p>Visit the <a href="https://www.shsu.edu/academics/cce/ace/" target="_blank">SHSU ACE website</a> for additional resources and information.</p>
+        </section>
+    </main>
 
     <footer>
-        <p>&copy; 2023 ITSA - Academic Community Engagement. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>kamphol@shsu.edu</p>
+                <p>Phone: 936-294-4049</p>
+                <p>Office: Smith Hutson, Room 335</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="forms.html">Join ITSA</a></li>
+                    <li><a href="ACE.html">ACE Project</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/samhoustonstate/" target="_blank">Instagram</a>
+                    <a href="https://twitter.com/itsa" target="_blank">Twitter</a>
+                    <a href="https://www.linkedin.com/school/sam-houston-state-university/" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/itsa" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Sam Houston State University. All rights reserved | <a href="pages/privacy.html">Privacy Policy</a></p>
+        </div>
     </footer>
-
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-background', {
-                videoId: 'Zy1K0RHrIhc', // The YouTube video ID
-                playerVars: {
-                    'autoplay': 1,
-                    'controls': 0,
-                    'showinfo': 0,
-                    'modestbranding': 1,
-                    'loop': 1,
-                    'fs': 0,
-                    'cc_load_policy': 0,
-                    'iv_load_policy': 3,
-                    'autohide': 0,
-                    'mute': 1, // Muted as requested
-                    'playlist': 'Zy1K0RHrIhc' // Required for looping
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            event.target.mute(); // Ensure video is muted
-            event.target.playVideo();
-            
-            // Resize the player to cover the background
-            resizePlayer();
-            window.addEventListener('resize', resizePlayer);
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-                player.playVideo(); // Restart if ended
-            }
-        }
-
-        function resizePlayer() {
-            var width = window.innerWidth;
-            var height = window.innerHeight;
-            var aspectRatio = 16/9;
-            
-            if (width / height > aspectRatio) {
-                player.setSize(width, width / aspectRatio);
-            } else {
-                player.setSize(height * aspectRatio, height);
-            }
-        }
-    </script>
 </body>
 </html>
