@@ -440,12 +440,6 @@ footer {
     text-decoration: underline;
 }
 
-@media (max-width: 768px) {
-    .leadership-team {
-        flex-direction: column;
-    }
-}
-
 /* Flying paw print animation */
 .flying-paw-print {
     position: fixed;
@@ -539,5 +533,9 @@ footer {
     }
     
     .hero h1 {
-        font-size: 2
-
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
