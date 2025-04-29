@@ -67,7 +67,7 @@
 }
 
 @media (max-width: 768px) {
-    .leadership-team {
+    .leadership-team 
         flex-direction: column;
     }
     .paw-print {
