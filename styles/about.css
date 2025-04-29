@@ -70,27 +70,11 @@
     .leadership-team {
         flex-direction: column;
     }
-}/* Paw print effect */
-.paw-print {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-image: url('../images/paw.png'); /* You will need a cute lion paw image */
-    background-size: contain;
-    background-repeat: no-repeat;
-    pointer-events: none; /* Don't block clicking */
-    transform: translate(-50%, -50%);
-    animation: fadeOut 1s forwards;
-    z-index: 1000;
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+    .paw-print {
+        position: absolute;
+        font-size: 24px;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        animation: fadeOut 1s forwards;
+        z-index: 1000;
     }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(2);
-    }
-}
