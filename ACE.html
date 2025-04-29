@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACE Project - ITSA</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        #youtube-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .content {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            margin: 50px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2196F3;
+            margin-top: 30px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav a:hover {
+            background-color: #4CAF50;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="youtube-background"></div>
+
+    <header>
+        <h1>ACE: Academic Community Engagement</h1>
+    </header>
+
+    <div class="nav">
+        <a href="itsa.html">Home</a>
+        <a href="ace-project.html">ACE Project</a>
+        <a href="#">Events</a>
+        <a href="#">Resources</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="content">
+        <h2>What is ACE?</h2>
+        <p>
+            Academic Community Engagement (ACE) is a program designed to bridge the gap between academic learning and community service. 
+            Through ACE, students apply their classroom knowledge to real-world challenges, working with community partners to create 
+            meaningful solutions while developing professional skills and civic responsibility.
+        </p>
+
+        <h2>Our Mission</h2>
+        <p>
+            The ACE Project aims to foster meaningful connections between educational institutions and their surrounding communities. 
+            By engaging students in service-learning opportunities, we create a mutually beneficial relationship where students gain 
+            practical experience while communities receive valuable assistance and resources.
+        </p>
+
+        <h2>Key Components</h2>
+        <p>
+            <strong>Service Learning:</strong> Integrating community service with academic instruction to enrich learning experiences.
+        </p>
+        <p>
+            <strong>Community Partnerships:</strong> Building sustainable relationships with local organizations and businesses.
+        </p>
+        <p>
+            <strong>Student Development:</strong> Enhancing students' professional skills, leadership abilities, and civic engagement.
+        </p>
+        <p>
+            <strong>Social Impact:</strong> Addressing community needs through collaborative projects and initiatives.
+        </p>
+
+        <h2>Get Involved</h2>
+        <p>
+            There are numerous ways to participate in the ACE program:
+        </p>
+        <ul>
+            <li>Join an existing ACE project</li>
+            <li>Propose a new community partnership</li>
+            <li>Volunteer for community service events</li>
+            <li>Integrate ACE components into coursework</li>
+            <li>Attend ACE workshops and training sessions</li>
+        </ul>
+
+        <a href="#" class="btn">Join ACE Today</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 ITSA - Academic Community Engagement. All rights reserved.</p>
+    </footer>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-background', {
+                videoId: 'Zy1K0RHrIhc', // The YouTube video ID
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'showinfo': 0,
+                    'modestbranding': 1,
+                    'loop': 1,
+                    'fs': 0,
+                    'cc_load_policy': 0,
+                    'iv_load_policy': 3,
+                    'autohide': 0,
+                    'mute': 1, // Muted as requested
+                    'playlist': 'Zy1K0RHrIhc' // Required for looping
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.mute(); // Ensure video is muted
+            event.target.playVideo();
+            
+            // Resize the player to cover the background
+            resizePlayer();
+            window.addEventListener('resize', resizePlayer);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                player.playVideo(); // Restart if ended
+            }
+        }
+
+        function resizePlayer() {
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+            var aspectRatio = 16/9;
+            
+            if (width / height > aspectRatio) {
+                player.setSize(width, width / aspectRatio);
+            } else {
+                player.setSize(height * aspectRatio, height);
+            }
+        }
+    </script>
+</body>
+</html>
