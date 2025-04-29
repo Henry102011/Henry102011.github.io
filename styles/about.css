@@ -69,7 +69,8 @@
 @media (max-width: 768px) {
     .leadership-team 
         flex-direction; col }
-    .paw-print {
+    
+        .paw-print {
         position: absolute;
         font-size: 24px;
         pointer-events: none;
