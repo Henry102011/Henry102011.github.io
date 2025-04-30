@@ -1190,3 +1190,60 @@
  }
  
  /*# sourceMappingURL=style.css.map */
+ /* Center the flowers better */
+body {
+    display: flex;
+    align-items: center; /* Changed from flex-end to center */
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--dark-color);
+    overflow: hidden;
+    perspective: 1000px;
+    padding: 0; /* Removed padding to center better */
+  }
+  
+  .flowers {
+    position: relative;
+    transform: scale(0.9);
+    margin-top: 10vh; /* Added margin to adjust vertical position */
+  }
+  
+  /* Add falling flower petals */
+  .falling-petals {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  
+  .petal {
+    position: absolute;
+    width: 8vmin;
+    height: 11vmin;
+    border-radius: 51% 49% 47% 53%/44% 45% 55% 69%;
+    background-image: linear-gradient(to top, var(--flower-color-dark), var(--flower-color-light));
+    opacity: 0.8;
+    box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.5);
+    animation: falling-petal-animation 10s linear infinite;
+  }
+  
+  .petal--blue {
+    background-image: linear-gradient(to top, #39c6d6, #a7ffee);
+  }
+  
+  @keyframes falling-petal-animation {
+    0% {
+      transform: translateY(-10vh) rotate(0deg) translateX(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg) translateX(calc(20vw * var(--direction)));
+      opacity: 0;
+    }
+  }
