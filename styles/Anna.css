@@ -5,7 +5,7 @@
   }
   
   :root {
-    --dark-color: #000;
+    --dark-color: #f8f5f5b2;
     --flower-color: #ff80bf; /* New pink color for flowers */
     --flower-color-dark: #d94a8c; /* Darker pink for gradients */
     --flower-color-light: #ffb3d9; /* Lighter pink for gradients */
