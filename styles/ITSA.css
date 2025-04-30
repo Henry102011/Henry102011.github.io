@@ -1,4 +1,3 @@
-
 html, body {
     margin: 0;
     height: 100%;
@@ -11,13 +10,12 @@ html, body {
     box-sizing: border-box;
 }
 
-
 .top-nav {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: #1E1E1E; 
+    background-color: #1E1E1E;
     color: #FFF;
     height: 4em;
     padding: 1em 2em;
@@ -30,7 +28,7 @@ html, body {
     font-size: 1.5em;
     font-weight: bold;
     margin: 0;
-    color: #F78F1E; 
+    color: #F78F1E;
 }
 
 .menu {
@@ -104,31 +102,68 @@ html, body {
 }
 
 .menu a:hover, a.current {
-    color: #F78F1E; 
+    color: #F78F1E;
     text-decoration: none;
-    border-bottom: 2px solid #F78F1E; 
+    border-bottom: 2px solid #F78F1E;
     padding-bottom: 5px;
 }
 
-
+/* Slideshow styles */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
+    position: relative;
     color: white;
     text-align: center;
     padding: 6rem 2rem;
+    overflow: hidden;
+    height: 500px; /* Fixed height for the slideshow */
+}
+
+.slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+}
+
+.slide.active {
+    opacity: 1;
 }
 
 .hero-content {
+    position: relative;
     max-width: 800px;
     margin: 0 auto;
+    z-index: 1;
 }
 
 .hero h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: #F78F1E; 
+    color: #F78F1E;
 }
 
 .hero p {
@@ -138,7 +173,7 @@ html, body {
 
 .cta-button {
     display: inline-block;
-    background-color: #F78F1E; 
+    background-color: #F78F1E;
     color: white;
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
@@ -151,13 +186,12 @@ html, body {
     background-color: #D97A17;
 }
 
-
+/* Rest of your CSS remains the same */
 main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
 }
-
 
 .features {
     display: flex;
@@ -175,7 +209,7 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease;
-    border-top: 4px solid #F78F1E; 
+    border-top: 4px solid #F78F1E;
 }
 
 .feature-card:hover {
@@ -191,10 +225,9 @@ main {
 }
 
 .feature-card h2 {
-    color: #1E1E1E; 
+    color: #1E1E1E;
     margin-bottom: 0.5rem;
 }
-
 
 .about-preview {
     background-color: #f8f9fa;
@@ -202,11 +235,11 @@ main {
     border-radius: 8px;
     margin: 3rem 0;
     text-align: center;
-    border-left: 4px solid #F78F1E; 
+    border-left: 4px solid #F78F1E;
 }
 
 .about-preview h2 {
-    color: #1E1E1E; 
+    color: #1E1E1E;
     margin-bottom: 1rem;
 }
 
@@ -219,7 +252,7 @@ main {
 .secondary-button {
     display: inline-block;
     background-color: transparent;
-    color: #F78F1E; 
+    color: #F78F1E;
     border: 2px solid #F78F1E;
     padding: 0.6rem 1.2rem;
     border-radius: 5px;
@@ -233,10 +266,9 @@ main {
     color: white;
 }
 
-
 .upcoming-events h2 {
     text-align: center;
-    color: #1E1E1E; 
+    color: #1E1E1E;
     margin-bottom: 2rem;
 }
 
@@ -283,7 +315,7 @@ main {
 
 .event-details h3 {
     margin-top: 0;
-    color: #1E1E1E; 
+    color: #1E1E1E;
 }
 
 .event-location {
@@ -297,7 +329,6 @@ main {
     width: fit-content;
     margin: 0 auto;
 }
-
 
 footer {
     background-color: #1E1E1E;
@@ -322,7 +353,7 @@ footer {
 .footer-section h3 {
     margin-bottom: 1rem;
     font-size: 1.2rem;
-    color: #F78F1E; 
+    color: #F78F1E;
 }
 
 .footer-section p, .footer-section ul {
@@ -345,7 +376,7 @@ footer {
 }
 
 .footer-section a:hover {
-    color: #F78F1E; 
+    color: #F78F1E;
 }
 
 .social-links {
@@ -368,10 +399,9 @@ footer {
 }
 
 .footer-bottom a {
-    color: #F78F1E; 
+    color: #F78F1E;
     text-decoration: none;
 }
-
 
 .page-header {
     background-color: #2c3e50;
@@ -440,10 +470,9 @@ footer {
     text-decoration: underline;
 }
 
-
 .flying-paw-print {
     position: fixed;
-    color: #F78F1E; 
+    color: #F78F1E;
     pointer-events: none;
     z-index: 1000;
     opacity: 0;
@@ -467,7 +496,6 @@ footer {
     }
 }
 
-
 .orange-flash {
     position: absolute;
     width: 50px;
@@ -485,10 +513,7 @@ footer {
     100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
 }
 
-
 @media (max-width: 768px) {
-    
-}
     .menu-button-container {
         display: flex;
     }
@@ -502,7 +527,7 @@ footer {
         width: 100%;
         justify-content: center;
         align-items: center;
-        background-color: #1E1E1E; 
+        background-color: #1E1E1E;
     }
     
     #menu-toggle ~ .menu li {
@@ -527,7 +552,7 @@ footer {
         padding: 0.5em 0;
         width: 100%;
         color: white;
-        background-color: #1E1E1E; 
+        background-color: #1E1E1E;
     }
     
     .menu > li:not(:last-child) {
@@ -541,3 +566,7 @@ footer {
     .hero p {
         font-size: 1rem;
     }
+    
+    /* Adjust slideshow for mobile */
+    .hero {
+        height: 400px;}
