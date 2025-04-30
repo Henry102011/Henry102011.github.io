@@ -7,17 +7,10 @@
     <link rel="stylesheet" href="../styles/ITSA.css">
     <link rel="stylesheet" href="../styles/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-
-        .advisor-photo {
-            width: 200px;  
-            height: 200px; 
-        }
-    </style>
+    <!-- Remove the inline style as we've added it to the CSS file -->
 </head>
 <body>
-   
-    <nav class="top-nav">
+   <nav class="top-nav">
         <div>
             <p>SHSU ITSA</p>
         </div>
@@ -33,7 +26,6 @@
             <li><a href="faq.html">FAQ</a></li>
         </ul>
     </nav>
-
    
     <header class="page-header">
         <div class="hero-content">
@@ -48,7 +40,7 @@
                 <div class="contact-info-card">
                     <h2>Faculty Advisor</h2>
                     <div class="advisor-photo">
-                        <img src="images/image.png" alt="Faculty Advisor" id="advisor-photo">
+                        <img src="images/image.png" alt="Faculty Advisor">
                     </div>
                     <div class="contact-details">
                         <p><i class="fas fa-user"></i> Dr. Kamphol Wipachon</p>
@@ -57,13 +49,12 @@
                         <p><i class="fas fa-map-marker-alt"></i> Smith Hutson, Room 335</p>
                     </div>
                 </div>
-
                 <div class="contact-info-card">
                     <h2>Executive Board</h2>
                     <div class="officer-grid">
                         <div class="officer">
                             <div class="officer-photo">
-                                <img src="images/Horizontal_orange.png" alt="President" id="officer-photo">
+                                <img src="images/Horizontal_orange.png" alt="President">
                             </div>
                             <h3>President</h3>
                             <p>Phoenix Philpot</p>
@@ -71,7 +62,7 @@
                         </div>
                         <div class="officer">
                             <div class="officer-photo">
-                                <img src="images/Horizontal_orange.png" alt="Secretary" id="officer-photo">
+                                <img src="images/Horizontal_orange.png" alt="Vice President">
                             </div>
                             <h3>Vice President</h3>
                             <p>Dylan Smith</p>
@@ -79,15 +70,15 @@
                         </div>
                         <div class="officer">
                             <div class="officer-photo">
-                                <img src="images/Horizontal_orange.png" alt="Secretary" id="officer-photo">
+                                <img src="images/Horizontal_orange.png" alt="Secretary">
                             </div>
                             <h3>Secretary</h3>
                             <p>Position Open</p>
                             <p><a href="mailto:itsa@shsu.edu">Apply Now</a></p>
                         </div>
                         <div class="officer">
-                            <img src="images/Horizontal_orange.png" alt="Secretary" id="officer-photo">
                             <div class="officer-photo">
+                                <img src="images/Horizontal_orange.png" alt="Treasurer">
                             </div>
                             <h3>Treasurer</h3>
                             <p>Position Open</p>
@@ -98,6 +89,7 @@
             </div>
         </section>
 
+        <!-- Rest of the HTML remains unchanged -->
         <section class="contact-form-section">
             <h2>Send Us A Message</h2>
             <form class="contact-form" id="contactForm">
@@ -120,7 +112,6 @@
                 <button type="submit" class="cta-button">Send Message</button>
             </form>
         </section>
-
         <section class="location-section">
             <h2>How To Find Us</h2>
             <div class="location-container">
@@ -137,9 +128,9 @@
             </div>
         </section>
     </main>
-
    
     <footer>
+        <!-- Footer content remains unchanged -->
         <div class="footer-content">
             <div class="footer-section">
                 <h3>SHSU ITSA</h3>
@@ -149,10 +140,10 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="../ITSA.html">Home</a></li>
-            <li><a href="../about.html">About</a></li>
-            <li><a href="../Forms.html">Join ITSA</a></li>
-            <li><a href="ACE.html">ACE Project</a></li>
-            <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../Forms.html">Join ITSA</a></li>
+                    <li><a href="ACE.html">ACE Project</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -164,10 +155,9 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy;  2025 Sam Houston State University. All rights reserved.</p>
+            <p>&copy; 2025 Sam Houston State University. All rights reserved.</p>
         </div>
     </footer>
-
     <script>
         // Simple form submission handler
         document.getElementById('contactForm').addEventListener('submit', function(e) {
