@@ -40,7 +40,7 @@
   }
   
   .flower {
-    position: absolute;
+    position: cover;
     bottom: 10vmin;
     transform-origin: bottom center;
     z-index: 10;
