@@ -15,13 +15,13 @@
   
   body {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-end; /* Keep as flex-end to align at bottom */
     justify-content: center;
     min-height: 100vh;
     background-color: var(--dark-color);
     overflow: hidden;
     perspective: 1000px;
-    padding: 50px 0px;
+    padding-bottom: 20px; /* Add some padding at the bottom */
   }
   
   .night {
@@ -37,14 +37,50 @@
   .flowers {
     position: relative;
     transform: scale(0.9);
+    margin-bottom: 0; /* Ensure it stays at the bottom */
   }
   
-  .flower {
+  /* Rest of your CSS remains the same */
+  
+  /* Add falling flower petals */
+  .falling-petals {
     position: absolute;
-    bottom: 10vmin;
-    transform-origin: bottom center;
-    z-index: 10;
-    --fl-speed: 0.8s;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  
+  .petal {
+    position: absolute;
+    width: 8vmin;
+    height: 11vmin;
+    border-radius: 51% 49% 47% 53%/44% 45% 55% 69%;
+    background-image: linear-gradient(to top, var(--flower-color-dark), var(--flower-color-light));
+    opacity: 0.8;
+    box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.5);
+    animation: falling-petal-animation 10s linear infinite;
+  }
+  
+  .petal--blue {
+    background-image: linear-gradient(to top, #39c6d6, #a7ffee);
+  }
+  
+  @keyframes falling-petal-animation {
+    0% {
+      transform: translateY(-10vh) rotate(0deg) translateX(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg) translateX(calc(20vw * var(--direction)));
+      opacity: 0;
+    }
+  }
   }
   
   .flower--1 {
