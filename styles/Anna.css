@@ -1037,3 +1037,44 @@
 .not-loaded * {
   animation-play-state: paused !important;
 }
+/* Add this to your existing CSS file */
+.message {
+    position: absolute;
+    bottom: 10vmin;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 2vmin;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2vmin;
+    border-radius: 1vmin;
+    max-width: 80vmin;
+    animation: fade-in 3s ease-in-out 2s backwards;
+  }
+  
+  .message p {
+    margin: 0.5vmin 0;
+  }
+  
+  .message p:last-child {
+    font-style: italic;
+    font-size: 1.8vmin;
+    margin-top: 1vmin;
+  }
+  
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(10vmin);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+  
+  
