@@ -290,3 +290,31 @@
         padding: 1.5rem 1rem;
     }
 }
+/* Add these styles to your contact.css file */
+.advisor-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+}
+
+.advisor-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.officer-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 15px;
+}
+
+.officer-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
