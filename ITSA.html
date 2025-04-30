@@ -27,7 +27,7 @@
     </nav>
 
     <header class="hero">
-        <!-- Slideshow container -->
+       
         <div class="slideshow">
             <div class="slide" style="background-image: url('images/op 1.jpg');"></div>
             <div class="slide" style="background-image: url('images/op 2.jpg');"></div>
@@ -139,29 +139,29 @@
         </div>
     </footer>
 
-    <!-- Add JavaScript for the slideshow -->
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Slideshow functionality
+          
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
             
-            // Set the first slide as active initially
+            
             slides[0].classList.add('active');
             
-            // Function to change slides
+         
             function nextSlide() {
-                // Remove active class from current slide
+          
                 slides[currentSlide].classList.remove('active');
                 
-                // Move to next slide or back to first slide if at the end
+              
                 currentSlide = (currentSlide + 1) % slides.length;
                 
-                // Add active class to new current slide
+       
                 slides[currentSlide].classList.add('active');
             }
             
-            // Change slides every 5 seconds
+           
             setInterval(nextSlide, 5000);
         });
     </script>
