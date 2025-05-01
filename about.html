@@ -163,27 +163,27 @@
     </footer>
 
     <script>
-        // Slideshow functionality
+       
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
             
-            // Show the first slide initially
+          
             slides[0].classList.add('active');
             
-            // Function to change slides
+         
             function nextSlide() {
-                // Remove active class from current slide
+                
                 slides[currentSlide].classList.remove('active');
                 
-                // Move to next slide or back to first slide
+              
                 currentSlide = (currentSlide + 1) % slides.length;
                 
-                // Add active class to new current slide
+               
                 slides[currentSlide].classList.add('active');
             }
             
-            // Change slides every 5 seconds
+           
             setInterval(nextSlide, 5000);
         });
     </script>
