@@ -8,7 +8,30 @@
     <title>FAQ - ITSA Information Technology Student Association</title>
     <link rel="stylesheet" href="../styles/ITSA.css">
     <link rel="stylesheet" href="../styles/faq.css">
-    <script src="" defer></script>
+    <style>
+        body {
+            background-image: url("images/111.png");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        
+        /* Add some transparency to main content sections for better readability */
+        main section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* Ensure text is readable against the background */
+        .hero-content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     <section class="top-nav">
@@ -20,23 +43,21 @@
         <ul class="menu">
             <li><a href="ITSA.html">Home</a></li>
             <li><a href="about.html">About us</a></li>
-               <li><a href="forms.html">Join ITSA</a></li>
+            <li><a href="forms.html">Join ITSA</a></li>
             <li><a href="ACE.html">ACE Project</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </section>
-
     <header class="hero">
         <div class="hero-content">
             <h1>Frequently Asked Questions</h1>
             <p>Find answers to common questions about ITSA</p>
         </div>
     </header>
-
     <main>
         <section class="faq-container">
             <h2>Common Questions</h2>
-            
+                        
             <div class="faq-list">
                 <div class="faq-item">
                     <div class="faq-question">
@@ -47,7 +68,7 @@
                         <p>The Information Technology Student Association (ITSA) is a student-run organization dedicated to providing opportunities for students interested in technology. We organize workshops, networking events, hackathons, and other activities to help members develop technical skills and professional connections.</p>
                     </div>
                 </div>
-                
+                                
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>How do I become a member?</h3>
@@ -57,7 +78,7 @@
                         <p>You can become a member by filling out our <a href="forms.html">registration form</a>. Membership is open to all students interested in information technology, regardless of major or experience level.</p>
                     </div>
                 </div>
-                
+                                
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>What are the benefits of joining ITSA?</h3>
@@ -75,7 +96,7 @@
                         </ul>
                     </div>
                 </div>
-                
+                                
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>How much does membership cost?</h3>
@@ -85,7 +106,7 @@
                         <p>There is no membership cost to join.</p>
                     </div>
                 </div>
-                
+                                
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>Do I need to be a Computer Science or IT major to join?</h3>
@@ -95,7 +116,7 @@
                         <p>No, ITSA welcomes students from all majors who are interested in technology. Whether you're studying business, arts, engineering, or any other field, if you're interested in technology, you're welcome to join!</p>
                     </div>
                 </div>
-                
+                                
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>How often does ITSA meet?</h3>
@@ -107,22 +128,22 @@
                 </div>
             </div>
         </section>
-        
+                
         <section class="question-form-container">
             <h2>Ask a Question</h2>
             <p>Don't see your question answered above? Send us your question or comment below.</p>
-            
+                        
             <form action="submit_question.php" method="post" id="question_form">
                 <div class="form-group">
                     <label for="name">Your Name:</label>
                     <input type="text" id="name" name="name" required>
                 </div>
-                
+                                
                 <div class="form-group">
                     <label for="email">Email Address:</label>
                     <input type="email" id="email" name="email" required>
                 </div>
-                
+                                
                 <div class="form-group">
                     <label for="subject">Subject:</label>
                     <select id="subject" name="subject">
@@ -133,14 +154,12 @@
                         <option value="other">Other</option>
                     </select>
                 </div>
-                
+                                
                 <div class="form-group">
                     <label for="question">Your Question/Comment:</label>
                     <textarea id="question" name="question" rows="5" required></textarea>
                 </div>
-                
-              
-                
+                                                              
                 <div class="form-buttons">
                     <button type="submit" class="cta-button">Submit Question</button>
                     <button type="reset" class="secondary-button">Clear Form</button>
@@ -148,7 +167,6 @@
             </form>
         </section>
     </main>
-
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -162,7 +180,7 @@
                 <ul>
                     <li><a href="ITSA.html">Home</a></li>
                     <li><a href="about.html">About us</a></li>
-                       <li><a href="forms.html">Join ITSA</a></li>
+                    <li><a href="forms.html">Join ITSA</a></li>
                     <li><a href="ACE.html">ACE Project</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -181,21 +199,20 @@
             <p>&copy;  2025 Sam Houston State University. All rights reserved | <a href="privacy.html">Privacy Policy</a></p>
         </div>
     </footer>
-
     <script>
         // JavaScript for FAQ accordion functionality
         document.addEventListener('DOMContentLoaded', function() {
             const faqItems = document.querySelectorAll('.faq-question');
-            
+                        
             faqItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const parent = this.parentElement;
                     const answer = this.nextElementSibling;
                     const icon = this.querySelector('.toggle-icon');
-                    
+                                        
                     // Toggle the active class
                     parent.classList.toggle('active');
-                    
+                                        
                     // Toggle the icon
                     if (parent.classList.contains('active')) {
                         icon.textContent = '-';
