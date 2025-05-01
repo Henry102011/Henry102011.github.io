@@ -8,7 +8,7 @@
     <title>Join ITSA - Information Technology Student Association</title>
     <link rel="stylesheet" href="styles/ITSA.css">
     <link rel="stylesheet" href="styles/forms.css">
-    <script src="" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <section class="top-nav">
@@ -25,14 +25,14 @@
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </section>
-
+    
     <header class="hero">
         <div class="hero-content">
             <h1>Join ITSA</h1>
             <p>Become a member of our technology community</p>
         </div>
     </header>
-
+    
     <main>
         <section class="form-container">
             <h2>Membership Registration</h2>
@@ -41,81 +41,125 @@
             <form action="register_account.html" method="post" id="registration_form">
                 <fieldset>
                     <legend>Registration Information</legend>
-                    <label for="email">E-Mail:</label>
-                    <input type="email" name="email" id="email" autofocus required autocomplete="on"><br>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" id="password" required
-                        placeholder="At least 6 letters or numbers"
-                        pattern="[a-zA-Z0-9]{6,}"
-                        title="Must be at least 6 alphanumeric characters"><br>
-                    <label for="verify">Verify Password:</label>
-                    <input type="password" name="verify" id="verify" required><br>
+                    <div class="form-group">
+                        <label for="email">E-Mail:</label>
+                        <input type="email" name="email" id="email" autofocus required autocomplete="on">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password" required
+                            placeholder="At least 6 letters or numbers"
+                            pattern="[a-zA-Z0-9]{6,}"
+                            title="Must be at least 6 alphanumeric characters">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="verify">Verify Password:</label>
+                        <input type="password" name="verify" id="verify" required>
+                    </div>
                 </fieldset>
                 
                 <fieldset>
                     <legend>Member Information</legend>
-                    <label for="first_name">First Name:</label>
-                    <input type="text" name="first_name" id="first_name"
-                        required autocomplete="on"><br>
-                    <label for="state">State:</label>
-                    <input type="text" name="state" id="state" required
-                        maxlength="2"
-                        placeholder="2-character code"
-                        autocomplete="on"><br>
-                    <label for="zip">ZIP Code:</label>
-                    <input type="text" name="zip" id="zip" required
-                        placeholder="5 or 9 digits"
-                        pattern="^\d{5}(-\d{4})?$"
-                        title="Either 5 or 9 digits"
-                        autocomplete="on"><br>
-                    <label for="phone">Phone Number:</label>
-                    <input type="tel" name="phone" id="phone"
-                        placeholder="999-999-9999"
-                        pattern="\d{3}[\-]\d{3}[\-]\d{4}"
-                        title="Must be 999-999-999 format"
-                        autocomplete="on"><br>
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" name="first_name" id="first_name"
+                            required autocomplete="on">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input type="text" name="state" id="state" required
+                            maxlength="2"
+                            placeholder="2-character code"
+                            autocomplete="on">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="zip">ZIP Code:</label>
+                        <input type="text" name="zip" id="zip" required
+                            placeholder="5 or 9 digits"
+                            pattern="^\d{5}(-\d{4})?$"
+                            title="Either 5 or 9 digits"
+                            autocomplete="on">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" name="phone" id="phone"
+                            placeholder="999-999-9999"
+                            pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+                            title="Must be 999-999-999 format"
+                            autocomplete="on">
+                    </div>
                 </fieldset>
                 
                 <fieldset>
                     <legend>Membership Information</legend>
-                    <label for="membership_type">Membership Type:</label>
-                    <select name="membership_type" id="membership_type">
-                        <option value="junior">Junior</option>
-                        <option value="regular">Regular</option>
-                        <option value="charter">Charter</option>
-                    </select><br>
-                    <label for="starting_date">Starting Date:</label>
-                    <input type="date" name="starting_date" id="starting_date" required><br>
-                    <label for="tickets">Tickets:</label>
-                    <input type="number" name="tickets" id="tickets" min="1" max="4" value="2"><br>
+                    <div class="form-group">
+                        <label for="membership_type">Membership Type:</label>
+                        <select name="membership_type" id="membership_type">
+                            <option value="junior">Junior</option>
+                            <option value="regular">Regular</option>
+                            <option value="charter">Charter</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="starting_date">Starting Date:</label>
+                        <input type="date" name="starting_date" id="starting_date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tickets">Tickets:</label>
+                        <input type="number" name="tickets" id="tickets" min="1" max="4" value="2">
+                    </div>
                 </fieldset>
                 
                 <fieldset>
                     <legend>How Did You Hear About Us?</legend>
-                    <input type="radio" name="hear_about" id="search_engine" value="search_engine">
-                    <label for="search_engine">Search Engine</label><br>
-                    <input type="radio" name="hear_about" id="friend" value="friend">
-                    <label for="friend">Friend</label><br>
-                    <input type="radio" name="hear_about" id="social_media" value="social_media">
-                    <label for="social_media">Social Media</label><br>
-                    <input type="radio" name="hear_about" id="other" value="other">
-                    <label for="other">Other</label><br>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="hear_about" id="search_engine" value="search_engine">
+                            <label for="search_engine" class="radio-label">Search Engine</label>
+                        </div>
+                        
+                        <div class="radio-option">
+                            <input type="radio" name="hear_about" id="friend" value="friend">
+                            <label for="friend" class="radio-label">Friend</label>
+                        </div>
+                        
+                        <div class="radio-option">
+                            <input type="radio" name="hear_about" id="social_media" value="social_media">
+                            <label for="social_media" class="radio-label">Social Media</label>
+                        </div>
+                        
+                        <div class="radio-option">
+                            <input type="radio" name="hear_about" id="other" value="other">
+                            <label for="other" class="radio-label">Other</label>
+                        </div>
+                    </div>
                 </fieldset>
                 
                 <fieldset>
                     <legend>Comments</legend>
-                    <textarea name="comments" id="comments" placeholder="Please add any comments here"></textarea>
+                    <div class="form-group">
+                        <textarea name="comments" id="comments" placeholder="Please add any comments here"></textarea>
+                    </div>
                 </fieldset>
                 
                 <fieldset id="buttons">
                     <legend>Submit Your Membership</legend>
-                    <input type="submit" value="Register" class="cta-button">
-                    <input type="reset" value="Reset Fields" class="secondary-button">
+                    <div class="button-group">
+                        <input type="submit" value="Register" class="cta-button">
+                        <input type="reset" value="Reset Fields" class="secondary-button">
+                    </div>
                 </fieldset>
             </form>
         </section>
     </main>
-
+    
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -132,7 +176,6 @@
                     <li><a href="faq.html">FAQ</a></li>
                     <li><a href="ACE.html">ACE Project</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                   
                 </ul>
             </div>
             <div class="footer-section">
@@ -146,7 +189,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy;  2025 Sam Houston State University. All rights reserved | <a href="pages/privacy.html">Privacy Policy</a></p>
+            <p>&copy; 2025 Sam Houston State University. All rights reserved | <a href="pages/privacy.html">Privacy Policy</a></p>
         </div>
     </footer>
 </body>
