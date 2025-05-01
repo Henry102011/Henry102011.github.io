@@ -7,9 +7,7 @@
     <meta name="keywords" content="ITSA, Information Technology, Student Association, IT students, USITCC, conference">
     <title>About ITSA - Information Technology Student Association</title>
     <link rel="stylesheet" href="styles/ITSA.css">
-    <script src="" defer></script>
     <style>
-        
         .slideshow-container {
             max-width: 800px;
             position: relative;
@@ -17,20 +15,44 @@
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #0066cc; /* Blue background */
+            height: 400px;
         }
         
-        .slide {
-            display: none;
+        .slideshow-container img {
+            position: absolute;
             width: 100%;
-            height: 400px;
+            height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            animation-name: fadeInOut;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            animation-duration: 20s; /* Total animation cycle for all 4 images */
         }
         
-        .slide.active {
-            display: block;
-            opacity: 1;
+        .slideshow-container img:nth-of-type(1) {
+            animation-delay: 0s;
+        }
+        
+        .slideshow-container img:nth-of-type(2) {
+            animation-delay: 5s;
+        }
+        
+        .slideshow-container img:nth-of-type(3) {
+            animation-delay: 10s;
+        }
+        
+        .slideshow-container img:nth-of-type(4) {
+            animation-delay: 15s;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            5% { opacity: 1; }
+            25% { opacity: 1; }
+            30% { opacity: 0; }
+            100% { opacity: 0; }
         }
         
         .slide-caption {
@@ -41,6 +63,7 @@
             color: white;
             padding: 10px;
             text-align: center;
+            z-index: 10;
         }
     </style>
 </head>
@@ -56,7 +79,7 @@
             <li><a href="forms.html">Join ITSA</a></li>
             <li><a href="ACE.html">ACE Project</a></li>
             <li><a href="contact.html">Contact</a></li>
-            <li><a href="faq.html">FAQ</a></li>                                
+            <li><a href="faq.html">FAQ</a></li>                                        
         </ul>
     </section>
     <header class="page-header">
@@ -65,20 +88,18 @@
     <main class="about-content">
         <section class="about-section">
             <h2>Who We Are</h2>
-            <p>The Information Technology Student Association (ITSA) is dedicated to providing students with opportunities to develop their technical skills, professional network, and career readiness. We organize workshops, hackathons, industry tours, and social events to create a vibrant community of technology enthusiasts.</p>
-                        
+            <p>The Information Technology Student Association (ITSA) is dedicated to providing students with opportunities to develop their technical skills, professional network, and career readiness. We organize workshops, hackathons, industry tours, and social events to create a vibrant community of technology enthusiasts.</p>                                    
             <p>We are an organization that helps with social networking and events in the field of IT by bringing students closer to business professionals and preparing them for after school by talking with guest speakers, reviewing for certifications, and going to conferences to bolster the readiness of students for a successful life in the IT world.</p>
         </section>
-        
-        
+                        
         <section class="slideshow-container">
-            <img src="images/100.png" alt="ITSA Conference 2023" class="slide">
-            <img src="images/101.png" alt="ITSA" class="slide">
-            <img src="images/102.png" alt="ITSA" class="slide">
-            <img src="images/103.png" alt="ITSA" class="slide">
+            <img src="images/100.png" alt="ITSA Conference 2023">
+            <img src="images/101.png" alt="ITSA">
+            <img src="images/102.png" alt="ITSA">
+            <img src="images/103.png" alt="ITSA">
             <div class="slide-caption">ITSA Events and Activities</div>
         </section>
-        
+                
         <section class="about-section">
             <h2>Past Projects and Achievements</h2>
             <div class="event-highlight">
@@ -88,16 +109,12 @@
                 <p><strong>Participants:</strong> 6 ITSA members (4 club officers and 2 additional members)</p>
             </div>
             <h3>About the Event</h3>
-            <p>The USITCC was produced by the Foundation for IT Education as part of its ongoing efforts to fulfill its mission of promoting information technology research and education and to encourage and support individuals entering and considering entering the information technology profession.</p>
-                        
-            <p>The event in Plano, Texas hosted a variety of competitions for students including Database, System Analysis and Design, and PC Troubleshooting. There were also guest speakers and industry professionals to network with and learn from through hands-on learning and exercises.</p>
-            
+            <p>The USITCC was produced by the Foundation for IT Education as part of its ongoing efforts to fulfill its mission of promoting information technology research and education and to encourage and support individuals entering and considering entering the information technology profession.</p>                                    
+            <p>The event in Plano, Texas hosted a variety of competitions for students including Database, System Analysis and Design, and PC Troubleshooting. There were also guest speakers and industry professionals to network with and learn from through hands-on learning and exercises.</p>                        
             <h3>Impact on Our Members</h3>
-            <p>This event provided our members with significant hands-on experience with projects and connections with professionals in the field. It allowed students to gain a deeper understanding of the information technology field and interact with professionals in a work environment. Our members learned how to better communicate in the business world and networked with various people and companies attending the event.</p>
-            
+            <p>This event provided our members with significant hands-on experience with projects and connections with professionals in the field. It allowed students to gain a deeper understanding of the information technology field and interact with professionals in a work environment. Our members learned how to better communicate in the business world and networked with various people and companies attending the event.</p>                        
             <p>The knowledge and connections gained from this conference continue to benefit our members in their academic and professional journeys, and we're proud to have successfully participated in this prestigious event.</p>
-        </section>
-        
+        </section>                
         <section class="about-section">
             <h2>Our Leadership</h2>
             <div class="leadership-team">
@@ -118,8 +135,7 @@
                     <p>Handling financial matters and budget planning</p>
                 </div>
             </div>
-        </section>
-        
+        </section>                
         <section class="about-section contact-info">
             <h2>College of Business Administration Contact</h2>
             <p>Smith-Hutson Building Suite 100</p>
@@ -127,8 +143,7 @@
             <p>SHSU Box 2056, Huntsville, TX 77341</p>
             <p>Email: <a href="mailto:shani.robinson@shsu.edu">shani.robinson@shsu.edu</a></p>
         </section>
-    </main>
-    
+    </main>        
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -161,31 +176,5 @@
             <p>&copy; 2025 Sam Houston State University. All rights reserved | <a href="https://shsu.edu/dept/innovation/privacy-policy?utm_source=chatgpt.com">Privacy Policy</a></p>
         </div>
     </footer>
-
-    <script>
-       
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.slide');
-            let currentSlide = 0;
-            
-          
-            slides[0].classList.add('active');
-            
-         
-            function nextSlide() {
-                
-                slides[currentSlide].classList.remove('active');
-                
-              
-                currentSlide = (currentSlide + 1) % slides.length;
-                
-               
-                slides[currentSlide].classList.add('active');
-            }
-            
-           
-            setInterval(nextSlide, 5000);
-        });
-    </script>
 </body>
 </html>
