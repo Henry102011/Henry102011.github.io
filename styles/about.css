@@ -80,3 +80,12 @@
     animation: fadeOut 1s forwards;
     z-index: 1000;
 }
+.slideshow-container {
+    max-width: 800px;
+    position: relative;
+    margin: 30px auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #0066cc; /* Added blue background color */
+}
