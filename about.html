@@ -8,6 +8,41 @@
     <title>About ITSA - Information Technology Student Association</title>
     <link rel="stylesheet" href="../styles/ITSA.css">
     <script src="../script.js" defer></script>
+    <style>
+        /* Slideshow styles */
+        .slideshow-container {
+            max-width: 800px;
+            position: relative;
+            margin: 30px auto;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .slide {
+            display: none;
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .slide.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <section class="top-nav">
@@ -33,6 +68,15 @@
             <p>The Information Technology Student Association (ITSA) is dedicated to providing students with opportunities to develop their technical skills, professional network, and career readiness. We organize workshops, hackathons, industry tours, and social events to create a vibrant community of technology enthusiasts.</p>
                         
             <p>We are an organization that helps with social networking and events in the field of IT by bringing students closer to business professionals and preparing them for after school by talking with guest speakers, reviewing for certifications, and going to conferences to bolster the readiness of students for a successful life in the IT world.</p>
+        </section>
+        
+        <!-- Slideshow Section -->
+        <section class="slideshow-container">
+            <img src="../images/itsa-conference-2023.jpg" alt="ITSA Conference 2023" class="slide">
+            <img src="../images/itsa-workshop.jpg" alt="ITSA Workshop" class="slide">
+            <img src="../images/itsa-hackathon.jpg" alt="ITSA Hackathon" class="slide">
+            <img src="../images/itsa-networking.jpg" alt="ITSA Networking Event" class="slide">
+            <div class="slide-caption">ITSA Events and Activities</div>
         </section>
         
         <section class="about-section">
@@ -117,5 +161,31 @@
             <p>&copy; 2025 Sam Houston State University. All rights reserved | <a href="https://shsu.edu/dept/innovation/privacy-policy?utm_source=chatgpt.com">Privacy Policy</a></p>
         </div>
     </footer>
+
+    <script>
+        // Slideshow functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+            
+            // Show the first slide initially
+            slides[0].classList.add('active');
+            
+            // Function to change slides
+            function nextSlide() {
+                // Remove active class from current slide
+                slides[currentSlide].classList.remove('active');
+                
+                // Move to next slide or back to first slide
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                // Add active class to new current slide
+                slides[currentSlide].classList.add('active');
+            }
+            
+            // Change slides every 5 seconds
+            setInterval(nextSlide, 5000);
+        });
+    </script>
 </body>
 </html>
