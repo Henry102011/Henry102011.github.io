@@ -368,7 +368,7 @@ button:focus-visible {
 .flower__leafs {
     position: relative;
     /* use CSS vars so JS can set per-flower durations and delays to keep stem+leafs in sync */
-    animation: blooming-flower var(--bloom-duration, 2s) backwards var(--bloom-delay, 0s);
+    animation: blooming-flower var(--bloom-duration, 2s) ease-out backwards var(--bloom-delay, 0s);
 }
 .flower__leafs--1,
 .flower__leafs--2,
@@ -517,8 +517,24 @@ button:focus-visible {
 @keyframes moving-flower-1 { 0%,100%{ transform: rotate(2deg);} 50%{ transform: rotate(-2deg);} }
 @keyframes moving-flower-2 { 0%,100%{ transform: rotate(18deg);} 50%{ transform: rotate(14deg);} }
 @keyframes moving-flower-3 { 0%,100%{ transform: rotate(-18deg);} 50%{ transform: rotate(-20deg) rotateY(-10deg);} }
-@keyframes blooming-flower { 0%{ transform: scale(0);} }
-@keyframes grow-flower-tree { 0%{ height:0; } }
+@keyframes blooming-flower {
+    0% { transform: translateY(8vmin) scale(0.12) rotate(-6deg); opacity: 0; }
+    60% { transform: translateY(2vmin) scale(1.05) rotate(4deg); opacity: 1; }
+    100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes grow-flower-tree {
+    0% { height: 0; }
+    60% { height: calc(var(--line-target, 55vmin) * 0.9); }
+    100% { height: var(--line-target, 55vmin); }
+}
+
+/* after the initial bloom, have a gentle sway on each petal */
+@keyframes petalSway {
+    0% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+    100% { transform: rotate(-6deg); }
+}
 @keyframes light-ans { 0%{ opacity:0; } 25%{ opacity:1; transform: translateY(-5vmin) translateX(-2vmin);} 100%{ transform: translateY(-30vmin); opacity:0; } }
 
 /* end copied flower styles */
