@@ -1,135 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leilah 💖 Will You Go Out With Me?</title>
-  <link rel="stylesheet" href="styles/Leilah.css">
-=======
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/Leilah.css">
+    <title>Ask Leilah Out</title>
 </head>
 <body>
-<canvas id="fireworks"></canvas>
-<div id="petals"></div>
-<div id="growing-flowers"></div>
-<div id="sparkles"></div>
-
-<div class="cat" id="cat1">🐱</div>
-<div class="cat" id="cat2">😺</div>
-<div class="cat" id="cat3">😻</div>
-
-<div class="center-screen">
-  <div class="card home-card">
-    <h1>Leilah, will you go out with me? 💖</h1>
-    <p class="lead">I wanted to ask in a special way — hope this makes you smile! 🌸</p>
-    <div class="btn-row">
-      <button class="btn btn-yes" id="yesBtn">Yes, of course! 😊</button>
-      <button class="btn btn-no" id="noBtn">No, maybe not 😅</button>
+    <div class="container">
+        <h1>Will You Go Out With Me, Leilah?</h1>
+        <div class="buttons">
+            <button id="yes-button">Yes</button>
+            <button id="no-button">No</button>
+        </div>
+        <div class="flowers"></div>
     </div>
-    <p class="footer-note">(If you click "No", you’ll see a fun surprise — just playful!)</p>
-  </div>
-</div>
-
-<script>
-  // Buttons
-  document.getElementById('yesBtn').addEventListener('click', ()=>{window.location.href='success.html';});
-  document.getElementById('noBtn').addEventListener('click', ()=>{window.location.href='jail.html';});
-
-  // Cats following mouse with bounce
-  const cats = [
-    {el: document.getElementById('cat1'), offset:40, phase:0},
-    {el: document.getElementById('cat2'), offset:70, phase:100},
-    {el: document.getElementById('cat3'), offset:100, phase:200}
-  ];
-  document.addEventListener('mousemove', e=>{
-    cats.forEach(cat=>{
-      cat.el.style.left = e.clientX+cat.offset+'px';
-      cat.el.style.top = e.clientY+cat.offset+'px';
-      cat.el.style.transform = `translateY(${Math.sin(Date.now()/200+cat.phase)*5}px)`;
-    });
-  });
-
-  // Falling petals
-  const petalsContainer = document.getElementById('petals');
-  for(let i=0;i<40;i++){
-    const p = document.createElement('div');
-    p.className = 'petal';
-    p.style.left = Math.random()*100+'vw';
-    p.style.animationDuration = 5 + Math.random()*5+'s';
-    p.style.fontSize = 20+Math.random()*20+'px';
-    petalsContainer.appendChild(p);
-  }
-
-  // Growing flowers
-  const growContainer = document.getElementById('growing-flowers');
-  for(let i=0;i<15;i++){
-    const f = document.createElement('div');
-    f.className='growing-flower';
-    f.innerText='🌸';
-    f.style.left=Math.random()*90+'vw';
-    f.style.animationDelay=Math.random()*5+'s';
-    growContainer.appendChild(f);
-  }
-
-  // Sparkles following cursor
-  const sparklesContainer=document.getElementById('sparkles');
-  document.addEventListener('mousemove', e=>{
-    for(let i=0;i<2;i++){
-      const s=document.createElement('div');
-      s.className='sparkle';
-      s.style.left=e.clientX+Math.random()*10-5+'px';
-      s.style.top=e.clientY+Math.random()*10-5+'px';
-      sparklesContainer.appendChild(s);
-      setTimeout(()=>s.remove(),800);
-    }
-  });
-
-  // Fireworks
-  const canvas=document.getElementById('fireworks');
-  const ctx=canvas.getContext('2d');
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-  const fireworks=[];
-  function Firework(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height*0.7;
-    this.particles=[];
-    const hue=Math.random()*360;
-    for(let i=0;i<40;i++){
-      this.particles.push({
-        x:this.x,y:this.y,
-        vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5,
-        life:50+Math.random()*50,
-        color:`hsl(${hue},100%,60%)`
-      });
-    }
-  }
-  Firework.prototype.update=function(){
-    this.particles.forEach(p=>{
-      p.x+=p.vx;
-      p.y+=p.vy;
-      p.vy+=0.05;
-      p.life--;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,2,0,2*Math.PI);
-      ctx.fillStyle=p.color;
-      ctx.fill();
-    });
-    this.particles=this.particles.filter(p=>p.life>0);
-  }
-  function animate(){
-    ctx.fillStyle='rgba(255,192,203,0.1)';
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    if(Math.random()<0.07) fireworks.push(new Firework());
-    fireworks.forEach((fw,i)=>{
-      fw.update();
-      if(fw.particles.length===0) fireworks.splice(i,1);
-    });
-    requestAnimationFrame(animate);
-  }
-  animate();
-  window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
-</script>
+    <script src="Leilah.js"></script>
 </body>
 </html>
