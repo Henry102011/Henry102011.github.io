@@ -12,6 +12,8 @@
 html, body {
   height: 100%;
   font-family: var(--font);
+  overflow: hidden;
+  position: relative;
 }
 
 .center-screen {
@@ -33,6 +35,7 @@ html, body {
   text-align: center;
   position: relative;
   animation: float 2s ease-in-out infinite;
+  z-index: 10;
 }
 
 @keyframes float {
@@ -122,3 +125,32 @@ p.lead {
 }
 .small-muted { font-size:0.9rem; color:rgba(255,255,255,0.85); }
 .footer-note { font-size:0.85rem; color:rgba(0,0,0,0.45); margin-top:14px; }
+
+/* Falling flowers */
+.flowers::before, .flowers::after {
+  content: "🌸🌸🌸🌸🌸🌸";
+  position: absolute;
+  font-size: 24px;
+  animation: fall 10s linear infinite;
+  opacity: 0.7;
+  left: 0;
+  top: -100px;
+}
+
+.flowers::after {
+  animation-delay: 5s;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* Cat followers */
+.cat {
+  position: absolute;
+  font-size: 2rem;
+  pointer-events: none;
+  transition: left 0.1s, top 0.1s;
+  z-index: 15;
+}
