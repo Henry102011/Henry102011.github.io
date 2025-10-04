@@ -90,43 +90,36 @@ setTimeout(() => {
 const garden = document.querySelector('.garden');
 function createBloom() {
     if (!garden) return;
-    const bloom = document.createElement('div');
-    bloom.className = 'bloom';
-    const left = Math.random() * 92 + 4; // keep inside edges
-    bloom.style.left = left + 'vw';
+    const flower = document.createElement('div');
+    flower.className = 'flower flower--' + (Math.floor(Math.random()*3)+1);
+    const left = Math.random() * 92 + 4;
+    flower.style.left = left + 'vw';
 
-    const stem = document.createElement('div');
-    stem.className = 'stem';
-
-    // create 5 petals around
-    for (let i = 0; i < 5; i++) {
-        const pet = document.createElement('div');
-        pet.className = 'petal';
-        const angle = (i / 5) * Math.PI * 2;
-        const rx = Math.cos(angle) * 10;
-        const ry = Math.sin(angle) * 8;
-        pet.style.left = (50 + rx) + '%';
-        pet.style.bottom = (8 + ry) + 'px';
-        pet.style.transform = `translateX(-50%) rotate(${(i-2)*18}deg)`;
-        pet.style.animation = `petalSway ${3 + Math.random()*3}s ease-in-out ${Math.random()*0.6}s infinite`;
-        bloom.appendChild(pet);
+    // leafs wrapper
+    const leafs = document.createElement('div');
+    leafs.className = 'flower__leafs flower__leafs--' + (Math.floor(Math.random()*3)+1);
+    // add 4 leaf elements
+    for (let i=1;i<=4;i++){
+        const lf = document.createElement('div');
+        lf.className = 'flower__leaf flower__leaf--' + i;
+        leafs.appendChild(lf);
     }
+    // white circle and some lights
+    const white = document.createElement('div'); white.className='flower__white-circle'; leafs.appendChild(white);
+    for (let i=0;i<6;i++){ const l=document.createElement('div'); l.className='flower__light flower__light--'+(i+1); leafs.appendChild(l); }
 
-    const center = document.createElement('div');
-    center.className = 'center';
+    // stem/line
+    const line = document.createElement('div'); line.className='flower__line';
+    for (let i=1;i<=6;i++){ const ll=document.createElement('div'); ll.className='flower__line__leaf flower__line__leaf--'+i; line.appendChild(ll); }
 
-    bloom.appendChild(stem);
-    bloom.appendChild(center);
-    garden.appendChild(bloom);
+    flower.appendChild(leafs);
+    flower.appendChild(line);
+    garden.appendChild(flower);
 
-    // remove after a while (but leave many to create a garden)
-    setTimeout(() => {
-        bloom.style.opacity = '0';
-        setTimeout(() => bloom.remove(), 1200);
-    }, 7000 + Math.random()*8000);
+    // auto-fade/remove to avoid infinite DOM growth
+    setTimeout(()=>{ flower.style.opacity='0'; setTimeout(()=>flower.remove(),1200); }, 12000 + Math.random()*8000);
 }
 
-setInterval(createBloom, 1200);
 
 // Heart animation
 function createHeart(x, y) {
