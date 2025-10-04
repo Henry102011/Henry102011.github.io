@@ -451,39 +451,58 @@ button:focus-visible {
     --w: 7vmin;
     --h: calc(var(--w) + 2vmin);
     position: absolute;
-    top: 20%;
-    left: 90%;
     width: var(--w);
     height: var(--h);
-    border-top-right-radius: var(--h);
-    border-bottom-left-radius: var(--h);
-    background-image: linear-gradient(to top, rgba(20, 117, 38, 0.4), var(--stem-color));
+    background-image: linear-gradient(to top, rgba(20, 117, 38, 0.45), var(--stem-color));
+    box-shadow: inset 0 0 1vmin rgba(0,0,0,0.06);
+    transform-origin: left center;
 }
 .flower__line__leaf--1 {
-    transform: rotate(70deg) rotateY(30deg);
+    top: 8%;
+    left: calc(100% + 0.6vmin);
+    border-top-right-radius: var(--h);
+    border-bottom-left-radius: var(--h);
+    transform: rotate(70deg) rotateY(20deg);
 }
 .flower__line__leaf--2 {
-    top: 45%;
-    transform: rotate(70deg) rotateY(30deg);
+    top: 28%;
+    left: calc(100% + 0.6vmin);
+    border-top-right-radius: var(--h);
+    border-bottom-left-radius: var(--h);
+    transform: rotate(70deg) rotateY(20deg);
 }
-.flower__line__leaf--3,
-.flower__line__leaf--4,
-.flower__line__leaf--6 {
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 0;
+.flower__line__leaf--3 {
+    top: 46%;
+    left: calc(-1 * var(--w) - 4vmin);
     border-top-left-radius: var(--h);
     border-bottom-right-radius: var(--h);
-    left: -460%;
-    top: 12%;
-    transform: rotate(-70deg) rotateY(30deg);
+    transform-origin: right center;
+    transform: rotate(-70deg) rotateY(20deg);
 }
-.flower__line__leaf--4 { top: 40%; }
+.flower__line__leaf--4 {
+    top: 66%;
+    left: calc(-1 * var(--w) - 4vmin);
+    border-top-left-radius: var(--h);
+    border-bottom-right-radius: var(--h);
+    transform-origin: right center;
+    transform: rotate(-70deg) rotateY(20deg);
+}
 .flower__line__leaf--5 {
-    top: 0;
-    transform-origin: left;
-    transform: rotate(70deg) rotateY(30deg) scale(0.6);
+    top: 82%;
+    left: calc(100% + 0.6vmin);
+    border-top-right-radius: var(--h);
+    border-bottom-left-radius: var(--h);
+    transform-origin: left center;
+    transform: rotate(70deg) rotateY(20deg) scale(0.66);
 }
-.flower__line__leaf--6 { top: -2%; left: -450%; transform-origin: right; transform: rotate(-70deg) rotateY(30deg) scale(0.6); }
+.flower__line__leaf--6 {
+    top: 92%;
+    left: calc(-1 * var(--w) - 4vmin);
+    border-top-left-radius: var(--h);
+    border-bottom-right-radius: var(--h);
+    transform-origin: right center;
+    transform: rotate(-70deg) rotateY(20deg) scale(0.66);
+}
 
 .flower__light { position: absolute; bottom: 0; width: 6px; height: 6px; border-radius:50%; background:#ffd600; filter: blur(0.1vmin); animation: light-ans 4s linear infinite backwards; }
 .flower__light:nth-child(odd){ background: #ff80bf; }
