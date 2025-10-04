@@ -337,3 +337,43 @@ button:focus-visible {
 @keyframes heroIn {
     to { transform: translateY(0) scale(1); opacity: 1; }
 }
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+    .card {
+        padding: 22px 16px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    .subtitle {
+        font-size: 0.95rem;
+    }
+    .message {
+        font-size: 0.98rem;
+    }
+    .hero-photo {
+        width: min(260px, 92%);
+        max-height: 220px;
+        border-radius: 12px;
+    }
+    .flower {
+        width: 28px;
+        height: 28px;
+    }
+    .heart {
+        width: 28px;
+        height: 28px;
+    }
+    .garden {
+        height: 110px;
+    }
+    .garden .bloom {
+        width: 22px;
+        height: 22px;
+    }
+    .bloom .petal {
+        width: 10px;
+        height: 14px;
+    }
+}

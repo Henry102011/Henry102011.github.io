@@ -30,24 +30,54 @@ const flowerImages = [
     'https://media.discordapp.net/attachments/481247735387914241/1423875728516186184/Screenshot_20250921_235604_TikTok.jpg?ex=68e1e71c&is=68e0959c&hm=ea05c87234c78a77b9d134b73ab59c92a5a2045532b42859d9fe41e44266a9bc&=&format=webp&width=1469&height=778'
 ];
 
-function createFlower() {
+function createFlower(size = 44) {
     if (!flowersContainer) return;
     const flower = document.createElement('div');
     flower.classList.add('flower');
+    flower.style.width = size + 'px';
+    flower.style.height = size + 'px';
     const img = flowerImages[Math.floor(Math.random() * flowerImages.length)];
     flower.style.backgroundImage = `url('${img}')`;
     flower.style.left = Math.random() * 98 + 'vw';
-    flower.style.animationDuration = (Math.random() * 2.5 + 3.5).toFixed(2) + 's';
+    const duration = (Math.random() * 2.5 + 3.5).toFixed(2);
+    flower.style.animationDuration = duration + 's';
     flower.style.top = '-60px';
     flower.style.transform = `rotate(${Math.random()*360}deg)`;
     flowersContainer.appendChild(flower);
 
     setTimeout(() => {
         flower.remove();
-    }, 6000);
+    }, Math.max(4200, parseFloat(duration) * 1000 + 800));
 }
 
-const flowerInterval = setInterval(createFlower, 350);
+let flowerInterval = null;
+let bloomInterval = null;
+let isMobile = window.matchMedia('(max-width: 600px)').matches;
+
+function startIntervals() {
+    // clear existing intervals
+    if (flowerInterval) clearInterval(flowerInterval);
+    if (bloomInterval) clearInterval(bloomInterval);
+
+    if (isMobile) {
+        flowerInterval = setInterval(() => createFlower(30), 600);
+        bloomInterval = setInterval(createBloom, 1800);
+    } else {
+        flowerInterval = setInterval(() => createFlower(44), 350);
+        bloomInterval = setInterval(createBloom, 1200);
+    }
+}
+
+startIntervals();
+
+// Restart intervals when viewport changes (responsive)
+window.addEventListener('resize', () => {
+    const mobileNow = window.matchMedia('(max-width: 600px)').matches;
+    if (mobileNow !== isMobile) {
+        isMobile = mobileNow;
+        startIntervals();
+    }
+});
 
 // add subtle animated bg and floating name element
 const animatedBg = document.createElement('div');
