@@ -67,6 +67,48 @@ setTimeout(() => {
     }
 }, 700);
 
+// Garden blooms
+const garden = document.querySelector('.garden');
+function createBloom() {
+    if (!garden) return;
+    const bloom = document.createElement('div');
+    bloom.className = 'bloom';
+    const left = Math.random() * 92 + 4; // keep inside edges
+    bloom.style.left = left + 'vw';
+
+    const stem = document.createElement('div');
+    stem.className = 'stem';
+
+    // create 5 petals around
+    for (let i = 0; i < 5; i++) {
+        const pet = document.createElement('div');
+        pet.className = 'petal';
+        const angle = (i / 5) * Math.PI * 2;
+        const rx = Math.cos(angle) * 10;
+        const ry = Math.sin(angle) * 8;
+        pet.style.left = (50 + rx) + '%';
+        pet.style.bottom = (8 + ry) + 'px';
+        pet.style.transform = `translateX(-50%) rotate(${(i-2)*18}deg)`;
+        pet.style.animation = `petalSway ${3 + Math.random()*3}s ease-in-out ${Math.random()*0.6}s infinite`;
+        bloom.appendChild(pet);
+    }
+
+    const center = document.createElement('div');
+    center.className = 'center';
+
+    bloom.appendChild(stem);
+    bloom.appendChild(center);
+    garden.appendChild(bloom);
+
+    // remove after a while (but leave many to create a garden)
+    setTimeout(() => {
+        bloom.style.opacity = '0';
+        setTimeout(() => bloom.remove(), 1200);
+    }, 7000 + Math.random()*8000);
+}
+
+setInterval(createBloom, 1200);
+
 // Heart animation
 function createHeart(x, y) {
     const heart = document.createElement('div');

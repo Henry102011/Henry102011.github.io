@@ -242,6 +242,79 @@ button:focus-visible {
     z-index: 2;
 }
 
+/* bottom garden: flowers that grow up for extra aesthetic */
+.garden {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 140px;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.garden .bloom {
+    position: absolute;
+    bottom: 6px;
+    width: 28px;
+    height: 28px;
+    transform-origin: bottom center;
+    opacity: 0;
+    animation: growUp 1400ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+.bloom .stem {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(#6b2b3b, #4a1133);
+    transform: translateX(-50%);
+    border-radius: 2px;
+    animation: stemGrow 1200ms ease forwards;
+}
+
+.bloom .petal {
+    position: absolute;
+    width: 14px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #fff, #ffc0d1 40%, #ff9bb3 100%);
+    border-radius: 60% 60% 40% 40%;
+    transform-origin: bottom center;
+    opacity: 0.98;
+}
+
+.bloom .center {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: #ffd6e0;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(215,38,96,0.12);
+}
+
+@keyframes stemGrow {
+    to { height: 36px; }
+}
+
+@keyframes growUp {
+    0% { transform: translateY(12px) scale(0.6); opacity: 0; }
+    60% { opacity: 1; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* gentle sway for petals */
+@keyframes petalSway {
+    0% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+    100% { transform: rotate(-6deg); }
+}
+
 .hero-wrap {
     width: 100%;
     display: flex;
