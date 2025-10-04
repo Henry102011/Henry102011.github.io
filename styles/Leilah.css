@@ -241,3 +241,26 @@ button:focus-visible {
     pointer-events: none;
     z-index: 2;
 }
+
+.hero-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.hero-photo {
+    width: min(360px, 86%);
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 12px 34px rgba(215,38,96,0.14);
+    border: 1px solid rgba(255,255,255,0.06);
+    transform: translateY(6px) scale(0.99);
+    opacity: 0;
+    animation: heroIn 700ms cubic-bezier(.2,.9,.2,1) forwards 180ms;
+}
+
+@keyframes heroIn {
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
