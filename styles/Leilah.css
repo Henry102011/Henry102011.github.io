@@ -1,100 +1,34 @@
-:root {
-  --pink-light: #ffd1e6;
-  --pink-dark: #ff4d79;
-  --card-bg: #fff0f5;
-  --shadow: 0 12px 30px rgba(255, 77, 121, 0.3);
-  --radius: 25px;
-  --font: 'Poppins', sans-serif;
+:root{
+  --pink-light:#ffd1e6;
+  --pink-dark:#ff4d79;
+  --card-bg:#fff0f5;
+  --shadow:0 12px 30px rgba(255,77,121,0.3);
+  --radius:25px;
+  --font:'Poppins',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:var(--font);overflow:hidden;position:relative;background:linear-gradient(135deg,#ffd1e6,#ff9ecb);}
+#fireworks{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;}
+
+.center-screen{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;z-index:10;}
+.card{background:var(--card-bg);padding:40px 30px;border-radius:var(--radius);box-shadow:var(--shadow);max-width:500px;width:100%;text-align:center;position:relative;animation:float 2s ease-in-out infinite;z-index:15;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+h1{font-size:2rem;color:var(--pink-dark);margin-bottom:15px;}
+p.lead{font-size:1.1rem;color:#ff3366;margin-bottom:25px;}
+.btn-row{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;}
+.btn{font-size:1.1rem;padding:12px 25px;border-radius:15px;border:none;cursor:pointer;transition:transform 0.2s ease,box-shadow 0.2s ease;box-shadow:0 6px 15px rgba(255,77,121,0.25);}
+.btn:active{transform:translateY(2px);}
+.btn-yes{background:linear-gradient(90deg,#ff6b88,#ff4d79);color:white;}
+.btn-yes:hover{background:linear-gradient(90deg,#ff4d79,#ff1a4d);}
+.btn-no{background:#ffc0cb;color:white;}
+.btn-no:hover{background:#ffb6c1;}
+.footer-note{font-size:0.85rem;margin-top:20px;color:#ff3366;}
+
+#petals{position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none;}
+.petal{position:absolute;top:-50px;animation-name:petalFall;animation-timing-function:linear;animation-iteration-count:infinite;}
+@keyframes petalFall{
+  0%{transform:translateY(0) rotate(0deg);}
+  100%{transform:translateY(110vh) rotate(360deg);}
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  height: 100%;
-  font-family: var(--font);
-  overflow: hidden;
-  position: relative;
-  background: linear-gradient(135deg, #ffd1e6, #ff9ecb);
-}
-
-#fireworks { position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; }
-
-.center-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  z-index: 10;
-}
-
-.card {
-  background: var(--card-bg);
-  padding: 40px 30px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  max-width: 500px;
-  width: 100%;
-  text-align: center;
-  position: relative;
-  animation: float 2s ease-in-out infinite;
-  z-index: 15;
-}
-
-@keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)} }
-
-h1 { font-size: 2rem; color: var(--pink-dark); margin-bottom: 15px; }
-p.lead { font-size: 1.1rem; color: #ff3366; margin-bottom: 25px; }
-
-.btn-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-.btn {
-  font-size: 1.1rem;
-  padding: 12px 25px;
-  border-radius: 15px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 6px 15px rgba(255,77,121,0.25);
-}
-.btn:active { transform: translateY(2px); }
-.btn-yes { background: linear-gradient(90deg, #ff6b88, #ff4d79); color:white; }
-.btn-yes:hover { background: linear-gradient(90deg, #ff4d79, #ff1a4d); }
-.btn-no { background: #ffc0cb; color:white; }
-.btn-no:hover { background: #ffb6c1; }
-
-.footer-note { font-size: 0.85rem; margin-top: 20px; color: #ff3366; }
-
-/* Falling flowers */
-#flowers .flower {
-  position: absolute;
-  top: -50px;
-  animation-name: fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-@keyframes fall {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(110vh) rotate(360deg); }
-}
-
-/* Growing flowers */
-#growing-flowers .growing-flower {
-  position: absolute;
-  bottom: 0;
-  font-size: 0;
-  animation: grow 3s ease forwards;
-}
-@keyframes grow {
-  0% { font-size: 0; transform: translateY(0) rotate(0deg); opacity:0; }
-  50% { font-size: 25px; opacity:1; transform: translateY(-20px) rotate(15deg);}
-  100% { font-size: 30px; transform: translateY(-40px) rotate(-15deg); opacity:1; }
-}
-
-/* Cats */
-.cat {
-  position: absolute;
-  font-size: 2rem;
-  pointer-events: none;
-  z-index: 20;
-  transition: left 0.1s ease, top 0.1s ease, transform 0.1s ease;
-}
+.cat{position:absolute;font-size:2rem;pointer-events:none;z-index:20;transition:left 0.1s ease,top 0.1s ease,transform 0.1s ease;}
