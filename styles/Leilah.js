@@ -5,13 +5,13 @@ if (yesBtn) {
     yesBtn.addEventListener('click', () => {
         createHeartBurst();
         setTimeout(() => {
-            window.location.href = "yes.html";
+            window.location.href = "sucess.html";
         }, 1200);
     });
 }
 if (noBtn) {
     noBtn.addEventListener('click', () => {
-        window.location.href = "no.html";
+        window.location.href = "Jail.html";
     });
 }
 
