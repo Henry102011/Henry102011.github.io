@@ -4,9 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Leilah 💖 Will You Go Out With Me?</title>
-  <link rel="stylesheet" href="styles/Leilah.css">
+  <link rel="stylesheet" href="Leilah.css">
 </head>
 <body>
+  <!-- Falling flowers -->
+  <div class="flowers"></div>
+
+  <!-- Cat followers -->
+  <div class="cat" id="cat1">🐱</div>
+  <div class="cat" id="cat2">😺</div>
+  <div class="cat" id="cat3">😻</div>
+
   <div class="center-screen">
     <div class="card home-card">
       <h1>Leilah, will you go out with me? 💖</h1>
@@ -22,6 +30,7 @@
   </div>
 
   <script>
+    // Buttons behavior
     document.getElementById('yesBtn').addEventListener('click', () => {
       window.location.href = 'success.html';
     });
@@ -29,6 +38,22 @@
     document.getElementById('noBtn').addEventListener('click', () => {
       window.location.href = 'jail.html';
     });
+
+    // Cat followers
+    const cats = [
+      document.getElementById('cat1'),
+      document.getElementById('cat2'),
+      document.getElementById('cat3')
+    ];
+
+    document.addEventListener('mousemove', e => {
+      cats.forEach((cat, i) => {
+        const offset = (i + 1) * 30;
+        cat.style.left = (e.clientX + offset) + 'px';
+        cat.style.top = (e.clientY + offset) + 'px';
+      });
+    });
   </script>
 </body>
 </html>
+
