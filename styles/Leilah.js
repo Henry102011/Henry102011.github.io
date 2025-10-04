@@ -1,14 +1,19 @@
 // script.js
-document.getElementById("yes-button").onclick = function() {
-    createHeartBurst();
-    setTimeout(() => {
-        window.location.href = "yes.html";
-    }, 1200);
-};
-
-document.getElementById("no-button").onclick = function() {
-    window.location.href = "no.html";
-};
+const yesBtn = document.getElementById("yes-button");
+const noBtn = document.getElementById("no-button");
+if (yesBtn) {
+    yesBtn.addEventListener('click', () => {
+        createHeartBurst();
+        setTimeout(() => {
+            window.location.href = "yes.html";
+        }, 1200);
+    });
+}
+if (noBtn) {
+    noBtn.addEventListener('click', () => {
+        window.location.href = "no.html";
+    });
+}
 
 // Flower falling animation
 const flowersContainer = document.querySelector('.flowers');
@@ -30,6 +35,7 @@ const flowerImages = [
 ];
 
 function createFlower() {
+    if (!flowersContainer) return;
     const flower = document.createElement('div');
     flower.classList.add('flower');
     const img = flowerImages[Math.floor(Math.random() * flowerImages.length)];
@@ -45,7 +51,7 @@ function createFlower() {
     }, 6000);
 }
 
-setInterval(createFlower, 350);
+const flowerInterval = setInterval(createFlower, 350);
 
 // add subtle animated bg and floating name element
 const animatedBg = document.createElement('div');

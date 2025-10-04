@@ -79,6 +79,8 @@ h1 {
     gap: 30px;
 }
 
+.buttons { position: relative; }
+
 button {
     background: linear-gradient(90deg, #fff6f6 0%, #ffe3ec 100%);
     border: none;
@@ -99,6 +101,11 @@ button:hover {
     color: #fff;
     transform: scale(1.08) rotate(-2deg);
     box-shadow: 0 8px 32px #d7266088;
+}
+
+button:focus-visible {
+    box-shadow: 0 0 0 4px rgba(215,38,96,0.14);
+    transform: none;
 }
 
 .btn-yes {
@@ -209,4 +216,28 @@ button:hover {
     width: 100%;
     height: 100%;
     display: block;
+}
+
+.message.caret::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 1.1em;
+    background: linear-gradient(90deg, rgba(215,38,96,0.9), rgba(215,38,96,0.6));
+    margin-left: 6px;
+    vertical-align: middle;
+    animation: blink 1s steps(2,start) infinite;
+}
+
+@keyframes blink { to { visibility: hidden; } }
+
+/* confetti canvas sits above flowers but under UI */
+#confetti-canvas {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 2;
 }
