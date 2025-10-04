@@ -1,130 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leilah 💖 Will You Go Out With Me?</title>
-  <link rel="stylesheet" href="Leilah.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leilah 💖 Will You Go Out With Me?</title>
+<link rel="stylesheet" href="Leilah.css">
 </head>
 <body>
-  <!-- Fireworks canvas -->
-  <canvas id="fireworks"></canvas>
+<canvas id="fireworks"></canvas>
+<div id="petals"></div>
+<div id="growing-flowers"></div>
+<div id="sparkles"></div>
 
-  <!-- Falling flowers -->
-  <div id="flowers"></div>
+<div class="cat" id="cat1">🐱</div>
+<div class="cat" id="cat2">😺</div>
+<div class="cat" id="cat3">😻</div>
 
-  <!-- Growing flowers -->
-  <div id="growing-flowers"></div>
-
-  <!-- Cats following mouse -->
-  <div class="cat" id="cat1">🐱</div>
-  <div class="cat" id="cat2">😺</div>
-  <div class="cat" id="cat3">😻</div>
-
-  <div class="center-screen">
-    <div class="card home-card">
-      <h1>Leilah, will you go out with me? 💖</h1>
-      <p class="lead">I wanted to ask in a special way — hope this makes you smile! 🌸</p>
-
-      <div class="btn-row">
-        <button class="btn btn-yes" id="yesBtn">Yes, of course! 😊</button>
-        <button class="btn btn-no" id="noBtn">No, maybe not 😅</button>
-      </div>
-
-      <p class="footer-note">(If you click "No", you’ll see a fun surprise — just playful!)</p>
+<div class="center-screen">
+  <div class="card home-card">
+    <h1>Leilah, will you go out with me? 💖</h1>
+    <p class="lead">I wanted to ask in a special way — hope this makes you smile! 🌸</p>
+    <div class="btn-row">
+      <button class="btn btn-yes" id="yesBtn">Yes, of course! 😊</button>
+      <button class="btn btn-no" id="noBtn">No, maybe not 😅</button>
     </div>
+    <p class="footer-note">(If you click "No", you’ll see a fun surprise — just playful!)</p>
   </div>
+</div>
 
-  <script>
-    // Buttons redirect
-    document.getElementById('yesBtn').addEventListener('click', () => {
-      window.location.href = 'success.html';
-    });
-    document.getElementById('noBtn').addEventListener('click', () => {
-      window.location.href = 'jail.html';
-    });
+<script>
+  // Buttons
+  document.getElementById('yesBtn').addEventListener('click', ()=>{window.location.href='success.html';});
+  document.getElementById('noBtn').addEventListener('click', ()=>{window.location.href='jail.html';});
 
-    // Cat followers with bounce
-    const cats = [
-      {el: document.getElementById('cat1'), offset: 40, phase: 0},
-      {el: document.getElementById('cat2'), offset: 70, phase: 100},
-      {el: document.getElementById('cat3'), offset: 100, phase: 200}
-    ];
-    document.addEventListener('mousemove', e => {
-      cats.forEach(cat => {
-        cat.el.style.left = e.clientX + cat.offset + 'px';
-        cat.el.style.top = e.clientY + cat.offset + 'px';
-        cat.el.style.transform = `translateY(${Math.sin(Date.now()/200 + cat.phase)*5}px)`;
+  // Cats following mouse with bounce
+  const cats = [
+    {el: document.getElementById('cat1'), offset:40, phase:0},
+    {el: document.getElementById('cat2'), offset:70, phase:100},
+    {el: document.getElementById('cat3'), offset:100, phase:200}
+  ];
+  document.addEventListener('mousemove', e=>{
+    cats.forEach(cat=>{
+      cat.el.style.left = e.clientX+cat.offset+'px';
+      cat.el.style.top = e.clientY+cat.offset+'px';
+      cat.el.style.transform = `translateY(${Math.sin(Date.now()/200+cat.phase)*5}px)`;
+    });
+  });
+
+  // Falling petals
+  const petalsContainer = document.getElementById('petals');
+  for(let i=0;i<40;i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random()*100+'vw';
+    p.style.animationDuration = 5 + Math.random()*5+'s';
+    p.style.fontSize = 20+Math.random()*20+'px';
+    petalsContainer.appendChild(p);
+  }
+
+  // Growing flowers
+  const growContainer = document.getElementById('growing-flowers');
+  for(let i=0;i<15;i++){
+    const f = document.createElement('div');
+    f.className='growing-flower';
+    f.innerText='🌸';
+    f.style.left=Math.random()*90+'vw';
+    f.style.animationDelay=Math.random()*5+'s';
+    growContainer.appendChild(f);
+  }
+
+  // Sparkles following cursor
+  const sparklesContainer=document.getElementById('sparkles');
+  document.addEventListener('mousemove', e=>{
+    for(let i=0;i<2;i++){
+      const s=document.createElement('div');
+      s.className='sparkle';
+      s.style.left=e.clientX+Math.random()*10-5+'px';
+      s.style.top=e.clientY+Math.random()*10-5+'px';
+      sparklesContainer.appendChild(s);
+      setTimeout(()=>s.remove(),800);
+    }
+  });
+
+  // Fireworks
+  const canvas=document.getElementById('fireworks');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  const fireworks=[];
+  function Firework(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height*0.7;
+    this.particles=[];
+    const hue=Math.random()*360;
+    for(let i=0;i<40;i++){
+      this.particles.push({
+        x:this.x,y:this.y,
+        vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5,
+        life:50+Math.random()*50,
+        color:`hsl(${hue},100%,60%)`
       });
-    });
-
-    // Falling flowers
-    const flowersContainer = document.getElementById('flowers');
-    const flowerCount = 20;
-    for (let i = 0; i < flowerCount; i++) {
-      const flower = document.createElement('div');
-      flower.classList.add('flower');
-      flower.innerText = "🌸";
-      flower.style.left = Math.random() * 100 + 'vw';
-      flower.style.animationDuration = (5 + Math.random() * 5) + 's';
-      flower.style.fontSize = (20 + Math.random() * 20) + 'px';
-      flowersContainer.appendChild(flower);
     }
-
-    // Growing flowers
-    const growingContainer = document.getElementById('growing-flowers');
-    const growCount = 10;
-    for (let i = 0; i < growCount; i++) {
-      const gf = document.createElement('div');
-      gf.classList.add('growing-flower');
-      gf.innerText = "🌸";
-      gf.style.left = Math.random() * 90 + 'vw';
-      gf.style.animationDelay = Math.random() * 5 + 's';
-      growingContainer.appendChild(gf);
-    }
-
-    // Fireworks canvas
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const fireworks = [];
-    function Firework() {
-      this.x = Math.random()*canvas.width;
-      this.y = Math.random()*canvas.height;
-      this.radius = 1 + Math.random()*2;
-      this.color = `hsl(${Math.random()*360},100%,60%)`;
-      this.vx = (Math.random()-0.5)*2;
-      this.vy = (Math.random()-0.5)*2;
-      this.life = 100 + Math.random()*100;
-    }
-    Firework.prototype.update = function() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.life--;
+  }
+  Firework.prototype.update=function(){
+    this.particles.forEach(p=>{
+      p.x+=p.vx;
+      p.y+=p.vy;
+      p.vy+=0.05;
+      p.life--;
       ctx.beginPath();
-      ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
-      ctx.fillStyle = this.color;
+      ctx.arc(p.x,p.y,2,0,2*Math.PI);
+      ctx.fillStyle=p.color;
       ctx.fill();
-    }
-
-    function animate() {
-      ctx.fillStyle = 'rgba(255,192,203,0.1)';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-      if (Math.random() < 0.1) fireworks.push(new Firework());
-      for (let i = fireworks.length-1; i>=0; i--) {
-        fireworks[i].update();
-        if (fireworks[i].life <= 0) fireworks.splice(i,1);
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
     });
-  </script>
+    this.particles=this.particles.filter(p=>p.life>0);
+  }
+  function animate(){
+    ctx.fillStyle='rgba(255,192,203,0.1)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    if(Math.random()<0.07) fireworks.push(new Firework());
+    fireworks.forEach((fw,i)=>{
+      fw.update();
+      if(fw.particles.length===0) fireworks.splice(i,1);
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+  window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+</script>
 </body>
 </html>
