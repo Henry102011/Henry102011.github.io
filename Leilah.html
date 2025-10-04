@@ -7,10 +7,16 @@
   <link rel="stylesheet" href="styles/Leilah.css">
 </head>
 <body>
-  <!-- Falling flowers -->
-  <div class="flowers"></div>
+  <!-- Fireworks canvas -->
+  <canvas id="fireworks"></canvas>
 
-  <!-- Cat followers -->
+  <!-- Falling flowers -->
+  <div id="flowers"></div>
+
+  <!-- Growing flowers -->
+  <div id="growing-flowers"></div>
+
+  <!-- Cats following mouse -->
   <div class="cat" id="cat1">🐱</div>
   <div class="cat" id="cat2">😺</div>
   <div class="cat" id="cat3">😻</div>
@@ -30,30 +36,95 @@
   </div>
 
   <script>
-    // Buttons behavior
+    // Buttons redirect
     document.getElementById('yesBtn').addEventListener('click', () => {
       window.location.href = 'success.html';
     });
-
     document.getElementById('noBtn').addEventListener('click', () => {
       window.location.href = 'jail.html';
     });
 
-    // Cat followers
+    // Cat followers with bounce
     const cats = [
-      document.getElementById('cat1'),
-      document.getElementById('cat2'),
-      document.getElementById('cat3')
+      {el: document.getElementById('cat1'), offset: 40, phase: 0},
+      {el: document.getElementById('cat2'), offset: 70, phase: 100},
+      {el: document.getElementById('cat3'), offset: 100, phase: 200}
     ];
-
     document.addEventListener('mousemove', e => {
-      cats.forEach((cat, i) => {
-        const offset = (i + 1) * 30;
-        cat.style.left = (e.clientX + offset) + 'px';
-        cat.style.top = (e.clientY + offset) + 'px';
+      cats.forEach(cat => {
+        cat.el.style.left = e.clientX + cat.offset + 'px';
+        cat.el.style.top = e.clientY + cat.offset + 'px';
+        cat.el.style.transform = `translateY(${Math.sin(Date.now()/200 + cat.phase)*5}px)`;
       });
+    });
+
+    // Falling flowers
+    const flowersContainer = document.getElementById('flowers');
+    const flowerCount = 20;
+    for (let i = 0; i < flowerCount; i++) {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      flower.innerText = "🌸";
+      flower.style.left = Math.random() * 100 + 'vw';
+      flower.style.animationDuration = (5 + Math.random() * 5) + 's';
+      flower.style.fontSize = (20 + Math.random() * 20) + 'px';
+      flowersContainer.appendChild(flower);
+    }
+
+    // Growing flowers
+    const growingContainer = document.getElementById('growing-flowers');
+    const growCount = 10;
+    for (let i = 0; i < growCount; i++) {
+      const gf = document.createElement('div');
+      gf.classList.add('growing-flower');
+      gf.innerText = "🌸";
+      gf.style.left = Math.random() * 90 + 'vw';
+      gf.style.animationDelay = Math.random() * 5 + 's';
+      growingContainer.appendChild(gf);
+    }
+
+    // Fireworks canvas
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const fireworks = [];
+    function Firework() {
+      this.x = Math.random()*canvas.width;
+      this.y = Math.random()*canvas.height;
+      this.radius = 1 + Math.random()*2;
+      this.color = `hsl(${Math.random()*360},100%,60%)`;
+      this.vx = (Math.random()-0.5)*2;
+      this.vy = (Math.random()-0.5)*2;
+      this.life = 100 + Math.random()*100;
+    }
+    Firework.prototype.update = function() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life--;
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(255,192,203,0.1)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      if (Math.random() < 0.1) fireworks.push(new Firework());
+      for (let i = fireworks.length-1; i>=0; i--) {
+        fireworks[i].update();
+        if (fireworks[i].life <= 0) fireworks.splice(i,1);
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
   </script>
 </body>
 </html>
-
