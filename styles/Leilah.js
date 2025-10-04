@@ -120,6 +120,16 @@ function createBloom() {
     flower.appendChild(line);
     garden.appendChild(flower);
 
+    // set per-flower animation timing so stem, leafs and lights animate in sync
+    const bloomDelay = (Math.random() * 0.9 + 0.2).toFixed(2) + 's'; // small random delay
+    const bloomDur = (Math.random() * 1.6 + 1.6).toFixed(2) + 's'; // 1.6s - 3.2s
+    const stemDur = (parseFloat(bloomDur) * (Math.random() * 0.5 + 1.0)).toFixed(2) + 's';
+    const lightDur = (Math.random() * 2 + 3).toFixed(2) + 's';
+    flower.style.setProperty('--bloom-delay', bloomDelay);
+    flower.style.setProperty('--bloom-duration', bloomDur);
+    flower.style.setProperty('--stem-duration', stemDur);
+    flower.style.setProperty('--light-duration', lightDur);
+
     // auto-fade/remove to avoid infinite DOM growth; keep longer so moving animations finish
     setTimeout(()=>{ flower.style.opacity='0'; setTimeout(()=>flower.remove(),1200); }, 25000 + Math.random()*10000);
 }
