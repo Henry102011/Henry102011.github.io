@@ -94,6 +94,10 @@ function createBloom() {
     flower.className = 'flower flower--' + (Math.floor(Math.random()*3)+1);
     const left = Math.random() * 92 + 4;
     flower.style.left = left + 'vw';
+    // small vertical offset per variant to mimic original layout
+    const variantIndex = parseInt(flower.className.replace(/[^0-9]/g,''),10) || 1;
+    const bottomOffset = variantIndex === 1 ? '10vmin' : (variantIndex === 2 ? '8vmin' : '12vmin');
+    flower.style.bottom = bottomOffset;
 
     // leafs wrapper
     const leafs = document.createElement('div');
@@ -116,8 +120,8 @@ function createBloom() {
     flower.appendChild(line);
     garden.appendChild(flower);
 
-    // auto-fade/remove to avoid infinite DOM growth
-    setTimeout(()=>{ flower.style.opacity='0'; setTimeout(()=>flower.remove(),1200); }, 12000 + Math.random()*8000);
+    // auto-fade/remove to avoid infinite DOM growth; keep longer so moving animations finish
+    setTimeout(()=>{ flower.style.opacity='0'; setTimeout(()=>flower.remove(),1200); }, 25000 + Math.random()*10000);
 }
 
 
