@@ -47,6 +47,24 @@ function createFlower() {
 
 setInterval(createFlower, 350);
 
+// add subtle animated bg and floating name element
+const animatedBg = document.createElement('div');
+animatedBg.className = 'animated-bg';
+document.body.appendChild(animatedBg);
+
+const nameEl = document.createElement('div');
+nameEl.className = 'floating-name';
+nameEl.textContent = 'Leilah';
+document.body.appendChild(nameEl);
+
+// Startup charm: a few flowers and hearts
+setTimeout(() => {
+    for (let i = 0; i < 6; i++) {
+        setTimeout(createFlower, i * 240);
+        setTimeout(() => createHeart(window.innerWidth/2 + (i-3)*20, window.innerHeight/2 - 30), i*200 + 100);
+    }
+}, 700);
+
 // Heart animation
 function createHeart(x, y) {
     const heart = document.createElement('div');

@@ -5,17 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/Leilah.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <title>Ask Leilah Out</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Will You Go Out With Me, Leilah?</h1>
-        <div class="buttons">
-            <button id="yes-button">Yes</button>
-            <button id="no-button">No</button>
+    <div class="container" role="main" aria-labelledby="main-title">
+        <div class="card">
+            <h1 id="main-title">Will You Go Out With Me, Leilah?</h1>
+            <p class="subtitle">I couldn't stop thinking about asking — want to make a memory with me?</p>
+            <p class="message">Pick a choice below. I promise good coffee, laughs, and a great time.</p>
+
+            <div class="buttons">
+                <button id="yes-button" class="btn-yes" aria-label="Yes, I will go out">Yes</button>
+                <button id="no-button" class="btn-no" aria-label="No, thanks">No</button>
+            </div>
         </div>
-        <div class="flowers"></div>
+
+        <div class="flowers" aria-hidden="true"></div>
+        <div class="vignette" aria-hidden="true"></div>
     </div>
-    <script src="Leilah.js"></script>
+    <script src="styles/Leilah.js"></script>
 </body>
 </html>

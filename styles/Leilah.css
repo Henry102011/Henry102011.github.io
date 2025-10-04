@@ -8,11 +8,60 @@ body {
     position: relative;
 }
 
+/* subtle animated gradient */
+.animated-bg {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255,255,255,0.03), rgba(255,200,230,0.02));
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+    animation: bgShift 8s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.03) rotate(1.5deg); }
+}
+
 .container {
     text-align: center;
     padding-top: 12vh;
     position: relative;
     z-index: 2;
+}
+
+.card {
+    width: min(720px, 90vw);
+    margin: 0 auto;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px) saturate(120%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    border-radius: 18px;
+    padding: 36px 28px;
+    box-shadow: 0 10px 40px rgba(215,38,96,0.12), inset 0 1px 0 rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.card { transform: translateY(18px) scale(0.98); opacity: 0; animation: cardIn 800ms cubic-bezier(.2,.9,.2,1) forwards 300ms; }
+
+@keyframes cardIn {
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    color: #4a1133;
+    margin-top: -6px;
+    margin-bottom: 8px;
+    opacity: 0.95;
+}
+
+.message {
+    color: #5a1b3a;
+    margin: 6px 0 20px 0;
+    font-size: 1.05rem;
 }
 
 h1 {
@@ -52,6 +101,41 @@ button:hover {
     box-shadow: 0 8px 32px #d7266088;
 }
 
+.btn-yes {
+    background: linear-gradient(90deg,#ff6b9f,#ff9bb3);
+    color: white;
+}
+.btn-no {
+    background: transparent;
+    color: #7a2945;
+    border: 2px solid rgba(122,41,69,0.12);
+    box-shadow: none;
+}
+
+.vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(60% 40% at 50% 30%, rgba(255,255,255,0.02), transparent 20%),
+                radial-gradient(50% 30% at 10% 90%, rgba(255,230,240,0.06), transparent 25%),
+                linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 100%);
+    z-index: 0;
+}
+
+/* small sparkle effect */
+.flowers::before {
+    content: '';
+    position: absolute;
+    left: 10%;
+    top: 5%;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #fff8 0%, #ffd6 50%, transparent 60%);
+    box-shadow: 40vw 10vh #fff2, 70vw 40vh #ffd6, 20vw 60vh #fff2, 85vw 25vh #ffd6;
+    filter: blur(6px);
+    opacity: 0.18;
+}
+
 .flowers {
     position: fixed;
     left: 0;
@@ -60,6 +144,26 @@ button:hover {
     height: 100vh;
     pointer-events: none;
     z-index: 1;
+}
+
+.floating-name {
+    font-family: 'Great Vibes', cursive;
+    color: rgba(255,255,255,0.9);
+    font-size: 3.2rem;
+    position: absolute;
+    top: 6vh;
+    left: 50%;
+    transform: translateX(-50%);
+    text-shadow: 0 6px 30px rgba(215,38,96,0.18);
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    animation: floatIn 900ms cubic-bezier(.2,.9,.2,1) forwards 500ms;
+}
+
+@keyframes floatIn {
+    from { transform: translateX(-50%) translateY(-8px) scale(0.95); opacity: 0; }
+    to { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
 }
 
 @keyframes pop {
