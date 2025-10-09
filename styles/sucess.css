@@ -4,11 +4,13 @@
 html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Poppins', sans-serif;background:linear-gradient(180deg,#fff6fb,#ffeef4);color:#222}
 /* ensure heart canvas sits behind content */
 canvas{position:fixed;inset:0;z-index:0}
+/* dreamy star overlay */
+.star-layer{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);background-size:20px 20px;mix-blend-mode:screen;opacity:0.9;}
 .center-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px;position:relative}
-.card.plan-card{position:relative;z-index:2;max-width:920px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,250,251,0.95));border-radius:14px;padding:28px;box-shadow:0 14px 50px rgba(180,60,120,0.12);border:1px solid rgba(255,200,220,0.6)}
+.card.plan-card{position:relative;z-index:3;max-width:920px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,250,251,0.95));border-radius:18px;padding:28px;box-shadow:0 20px 80px rgba(220,80,140,0.14);border:1px solid rgba(255,200,220,0.6);backdrop-filter:blur(6px)}
 .card-head{display:flex;align-items:center;gap:18px}
 .success-emoji{font-size:34px}
-.card-head h1{margin:0;font-size:1.6rem;color:var(--muted)}
+.card-head h1{margin:0;font-size:1.6rem;color:#6b4453;text-shadow:0 6px 24px rgba(255,120,160,0.12)}
 .lead{margin:6px 0 0;color:#6b4453}
 .activities{margin-top:18px}
 .activities h2{font-size:1rem;margin:0 0 10px;color:#8a4a66}
@@ -24,7 +26,7 @@ canvas{position:fixed;inset:0;z-index:0}
 .card-foot{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:18px}
 .btn-row{display:flex;gap:12px}
 .btn{padding:10px 18px;border-radius:10px;border:none;cursor:pointer}
-.btn-yes{background:linear-gradient(90deg,var(--accent),#ff9bb3);color:#fff}
+.btn-yes{background:linear-gradient(90deg,var(--accent),#ff9bb3);color:#fff;box-shadow:0 10px 36px rgba(255,120,170,0.18);padding:12px 20px}
 .btn-no{background:transparent;color:var(--muted);border:1px solid rgba(150,100,120,0.12)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 8px 22px rgba(140,60,100,0.12);z-index:4}
 @media (max-width:640px){.card.plan-card{padding:18px}.activity-grid{grid-template-columns:repeat(2,1fr)}.card-head h1{font-size:1.1rem}}
