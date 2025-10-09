@@ -11,6 +11,10 @@ renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
 renderer.setSize(window.innerWidth, window.innerHeight);
 // let the page handle pointer events — heart background shouldn't block UI
 renderer.domElement.style.pointerEvents = 'none';
+renderer.domElement.style.position = 'fixed';
+renderer.domElement.style.left = '0';
+renderer.domElement.style.top = '0';
+renderer.domElement.style.zIndex = '0';
 document.body.appendChild(renderer.domElement);
 
 /* CONTROLS */

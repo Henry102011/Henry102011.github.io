@@ -1,23 +1,28 @@
 /* styles/sucess.css */
 :root{--accent:#ff6b9f;--muted:#6b3746;--bg:rgba(255,255,255,0.85)}
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Poppins', sans-serif;background:linear-gradient(180deg,#fff6fb,#ffeef4);color:#222}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Poppins', sans-serif;background:linear-gradient(180deg,#ffd9ec,#ffeefc);color:#222}
 /* ensure heart canvas sits behind content */
-canvas{position:fixed;inset:0;z-index:0}
+canvas{position:fixed;inset:0;z-index:0;width:100vw;height:100vh}
+/* nebula backdrop behind heart */
+body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradient(40% 40% at 20% 20%, rgba(255,150,220,0.12), transparent 10%), radial-gradient(60% 40% at 80% 80%, rgba(140,80,180,0.12), transparent 10%), linear-gradient(180deg,#ffd9ec,#ffeefc);mix-blend-mode:screen;filter:blur(24px) saturate(120%)}
 /* dreamy star overlay */
 .star-layer{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);background-size:20px 20px;mix-blend-mode:screen;opacity:0.9;}
+/* twinkling micro-stars */
+.star-layer::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 10% 20%, rgba(255,255,255,0.18) 0px, transparent 6vmin), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.12) 0px, transparent 8vmin);opacity:0.75;filter:blur(6px);animation:starTwinkle 6s linear infinite}
+@keyframes starTwinkle{0%{opacity:0.5}50%{opacity:1}100%{opacity:0.5}}
 .center-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px;position:relative}
-.card.plan-card{position:relative;z-index:3;max-width:920px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,250,251,0.95));border-radius:18px;padding:28px;box-shadow:0 20px 80px rgba(220,80,140,0.14);border:1px solid rgba(255,200,220,0.6);backdrop-filter:blur(6px)}
+.card.plan-card{position:relative;z-index:3;max-width:720px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,250,251,0.95));border-radius:18px;padding:28px;box-shadow:0 26px 110px rgba(220,80,140,0.18);border:1px solid rgba(255,200,220,0.6);backdrop-filter:blur(6px)}
 .card-head{display:flex;align-items:center;gap:18px}
-.success-emoji{font-size:34px}
-.card-head h1{margin:0;font-size:1.6rem;color:#6b4453;text-shadow:0 6px 24px rgba(255,120,160,0.12)}
+.success-emoji{font-size:46px}
+.card-head h1{margin:0;font-size:1.6rem;color:#6b4453;text-shadow:0 10px 34px rgba(255,120,160,0.18)}
 .lead{margin:6px 0 0;color:#6b4453}
 .activities{margin-top:18px}
 .activities h2{font-size:1rem;margin:0 0 10px;color:#8a4a66}
-.activity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.activity-card{background:linear-gradient(180deg,#fff,#fff6f8);border-radius:12px;padding:14px;font-size:0.98rem;border:1px solid rgba(240,180,200,0.5);cursor:pointer;box-shadow:0 6px 18px rgba(180,60,120,0.06);transition:transform .14s ease,box-shadow .14s ease}
-.activity-card:hover{transform:translateY(-6px);box-shadow:0 18px 30px rgba(200,80,140,0.12)}
-.activity-card.active{background:linear-gradient(180deg,var(--accent),#ff9bb3);color:#fff;border-color:transparent;box-shadow:0 22px 36px rgba(220,80,140,0.18)}
+.activity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.activity-card{background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,245,250,0.98));border-radius:14px;padding:14px;font-size:0.98rem;border:1px solid rgba(240,180,200,0.4);cursor:pointer;box-shadow:0 10px 26px rgba(200,80,140,0.06);transition:transform .2s cubic-bezier(.2,.9,.2,1),box-shadow .2s}
+.activity-card:hover{transform:translateY(-8px) rotate(-0.6deg);box-shadow:0 28px 46px rgba(230,90,160,0.14)}
+.activity-card.active{background:linear-gradient(180deg,var(--accent),#ff9bb3);color:#fff;border-color:transparent;box-shadow:0 28px 56px rgba(255,110,170,0.22);transform:translateY(-6px) scale(1.02)}
 .availability{margin-top:18px}
 .availability h2{font-size:1rem;margin:0 0 10px;color:#8a4a66}
 .times-row{display:flex;flex-wrap:wrap;gap:8px}
