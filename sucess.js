@@ -11,6 +11,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
     a.classList.toggle('active');
   }));
 
+  // staged entrance: add 'enter' class with staggered delays so options pop in like the short
+  function stagedEntrance(){
+    activities.forEach((a,i)=>{
+      a.classList.add('enter');
+      a.style.animationDelay = (i * 80) + 'ms';
+    });
+    const rows = [document.querySelector('.times-row'), document.querySelector('.time-select'), document.querySelector('.card-foot')];
+    rows.forEach((el, idx)=>{ if(!el) return; el.classList.add('enter'); el.style.animationDelay = (activities.length*80 + idx*140) + 'ms'; });
+  }
+  stagedEntrance();
+
   backBtn.addEventListener('click', ()=> location.href='Leilah.html');
 
   function showToast(msg){
