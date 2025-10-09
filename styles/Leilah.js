@@ -137,8 +137,13 @@ function createBloom() {
     const lineTarget = variantIndex === 1 ? '32vmin' : (variantIndex === 2 ? '28vmin' : '24vmin');
     flower.style.setProperty('--line-target', lineTarget);
 
-    // auto-fade/remove to avoid infinite DOM growth; keep longer so moving animations finish
-    setTimeout(()=>{ flower.style.opacity='0'; setTimeout(()=>flower.remove(),1200); }, 25000 + Math.random()*10000);
+    // auto-fade/remove after 5s to avoid blocking UI
+    setTimeout(()=>{
+        flower.style.transition = 'opacity 600ms ease, transform 600ms ease';
+        flower.style.opacity='0';
+        flower.style.transform = 'translateY(8px) scale(0.98)';
+        setTimeout(()=>flower.remove(),700);
+    }, 5000);
 }
 
 
@@ -191,7 +196,9 @@ function attachButtonParticles(btn) {
             const rect = btn.getBoundingClientRect();
             const x = rect.left + rect.width/2 + (Math.random()*rect.width - rect.width/2)*0.6;
             const y = rect.top + rect.height/2 + (Math.random()*rect.height - rect.height/2)*0.2;
-            const color = Math.random() > 0.5 ? 'rgba(255,120,180,0.95)' : 'rgba(255,210,230,0.95)';
+            // rainbow palette
+            const palette = ['#ff004d','#ff7a00','#ffee00','#2ad400','#00b3ff','#6a00ff','#ff4da6'];
+            const color = palette[Math.floor(Math.random()*palette.length)];
             makeBtnParticle(x, y, color);
         });
     }
