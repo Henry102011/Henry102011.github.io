@@ -355,10 +355,14 @@ button:focus-visible {
 
 .flower {
     position: absolute;
-    bottom: 10vmin;
+    /* sit closer to the bottom so stems don't reach into the card area */
+    bottom: 4vmin;
     transform-origin: bottom center;
-    z-index: 10;
+    /* render flowers behind the card (container z-index:2) */
+    z-index: 1;
     --fl-speed: 0.8s;
+    /* default (short) stem target; JS will override per-variant */
+    --line-target: 28vmin;
 }
 
 .flower--1 { animation: moving-flower-1 4s linear infinite; }

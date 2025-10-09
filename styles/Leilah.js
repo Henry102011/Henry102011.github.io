@@ -96,7 +96,8 @@ function createBloom() {
     flower.style.left = left + 'vw';
     // small vertical offset per variant to mimic original layout
     const variantIndex = parseInt(flower.className.replace(/[^0-9]/g,''),10) || 1;
-    const bottomOffset = variantIndex === 1 ? '10vmin' : (variantIndex === 2 ? '8vmin' : '12vmin');
+    // keep flowers lower (closer to bottom) so they don't overlap the card
+    const bottomOffset = variantIndex === 1 ? '4vmin' : (variantIndex === 2 ? '3vmin' : '5vmin');
     flower.style.bottom = bottomOffset;
 
     // leafs wrapper
@@ -132,7 +133,8 @@ function createBloom() {
     flower.style.setProperty('--light-duration', lightDur);
 
     // per-variant line target to allow grow-flower-tree to reach correct heights
-    const lineTarget = variantIndex === 1 ? '70vmin' : (variantIndex === 2 ? '60vmin' : '55vmin');
+    // much shorter stems so flowers remain beneath the card and don't block text
+    const lineTarget = variantIndex === 1 ? '32vmin' : (variantIndex === 2 ? '28vmin' : '24vmin');
     flower.style.setProperty('--line-target', lineTarget);
 
     // auto-fade/remove to avoid infinite DOM growth; keep longer so moving animations finish
