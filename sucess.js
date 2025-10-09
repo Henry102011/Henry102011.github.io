@@ -39,6 +39,52 @@ document.addEventListener('DOMContentLoaded', ()=>{
     showToast('Saved — I will message you soon!');
     console.log('Plan payload', payload);
 
-    // optionally send to server here (fetch POST)
+    // --- Attempt to open SMS composer on the device (or use Web Share) ---
+    const phoneNumber = '+19369001876'; // destination phone number provided
+    const messageLines = [
+      `Plan for Leilah`,
+      `Activities: ${chosen.join(', ')}`,
+      `Days: ${days.join(', ')}`,
+      `Time: ${prefTime.value || 'Any time'}`,
+      `\nSent from your planning page.`
+    ];
+    const messageText = messageLines.join('\n');
+
+    // If the browser supports the Web Share API, open the share sheet first
+    if (navigator.share) {
+      navigator.share({ title: 'Plan for Leilah', text: messageText }).catch(err=>{
+        // fallback to sms: URI if share is cancelled or unsupported for SMS
+        const smsUri = `sms:${phoneNumber}?body=${encodeURIComponent(messageText)}`;
+        window.location.href = smsUri;
+      });
+    } else {
+      // Try to open the SMS composer (works on most phones). Note: desktop browsers may ignore this.
+      const smsUri = `sms:${phoneNumber}?body=${encodeURIComponent(messageText)}`;
+      window.location.href = smsUri;
+    }
+
+    // If you want automatic sending (server-side), use a small server endpoint (example below).
+    // WARNING: Sending SMS from a server requires credentials (Twilio, etc.) and must be done from a secure backend — do NOT include credentials in client JS.
+    /*
+    // Example (Node/Express + Twilio) - run on your server and call via fetch from this client
+    // server/send-sms.js (example)
+    const express = require('express');
+    const bodyParser = require('body-parser');
+    const twilio = require('twilio');
+    const app = express();
+    app.use(bodyParser.json());
+    const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+    app.post('/send-sms', async (req, res) => {
+      const { to, body } = req.body;
+      try {
+        const msg = await client.messages.create({ body, from: process.env.TWILIO_FROM, to });
+        res.json({ ok: true, sid: msg.sid });
+      } catch (e) { res.status(500).json({ ok:false, error: e.message }); }
+    });
+    app.listen(3000);
+
+    // Then from the client you could call:
+    // fetch('/send-sms', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ to: phoneNumber, body: messageText }) })
+    */
   });
 });
