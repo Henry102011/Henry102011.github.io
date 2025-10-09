@@ -17,8 +17,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   function updateThemeFromSelection(){
     const active = activities.filter(a=> a.classList.contains('active'));
-    // remove existing theme classes (those starting with 'theme-')
-    document.body.classList.forEach(c=>{ if(c.startsWith('theme-')) document.body.classList.remove(c); });
+    // remove existing theme classes (those starting with 'theme-') - do this safely
+    try{
+      Array.from(document.body.classList).filter(c=> c.startsWith('theme-')).forEach(c => document.body.classList.remove(c));
+    }catch(e){
+      // defensive fallback: if anything goes wrong, make sure we don't leave the UI broken
+      console.error('Failed to clear theme classes', e);
+    }
     if(active.length===0) return; // leave default appearance
     const last = active[active.length-1].dataset.activity || active[active.length-1].textContent;
     const theme = 'theme-' + slugify(last);
@@ -77,28 +82,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       window.location.href = smsUri;
     }
 
-    // If you want automatic sending (server-side), use a small server endpoint (example below).
-    // WARNING: Sending SMS from a server requires credentials (Twilio, etc.) and must be done from a secure backend — do NOT include credentials in client JS.
-    /*
-    // Example (Node/Express + Twilio) - run on your server and call via fetch from this client
-    // server/send-sms.js (example)
-    const express = require('express');
-    const bodyParser = require('body-parser');
-    const twilio = require('twilio');
-    const app = express();
-    app.use(bodyParser.json());
-    const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
-    app.post('/send-sms', async (req, res) => {
-      const { to, body } = req.body;
-      try {
-        const msg = await client.messages.create({ body, from: process.env.TWILIO_FROM, to });
-        res.json({ ok: true, sid: msg.sid });
-      } catch (e) { res.status(500).json({ ok:false, error: e.message }); }
-    });
-    app.listen(3000);
-
-    // Then from the client you could call:
-    // fetch('/send-sms', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ to: phoneNumber, body: messageText }) })
-    */
+    
   });
 });
