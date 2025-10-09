@@ -7,9 +7,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const backBtn = document.getElementById('back-btn');
   const toast = document.getElementById('toast');
 
-  activities.forEach(a=> a.addEventListener('click', ()=>{
+  // toggle activity selection and update the page theme to match the last-selected activity
+  activities.forEach(a=> a.addEventListener('click', (e)=>{
     a.classList.toggle('active');
+    updateThemeFromSelection();
   }));
+
+  function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+  function updateThemeFromSelection(){
+    const active = activities.filter(a=> a.classList.contains('active'));
+    // remove existing theme classes (those starting with 'theme-')
+    document.body.classList.forEach(c=>{ if(c.startsWith('theme-')) document.body.classList.remove(c); });
+    if(active.length===0) return; // leave default appearance
+    const last = active[active.length-1].dataset.activity || active[active.length-1].textContent;
+    const theme = 'theme-' + slugify(last);
+    document.body.classList.add(theme);
+  }
 
   // staged entrance: add 'enter' class with staggered delays so options pop in like the short
   function stagedEntrance(){
