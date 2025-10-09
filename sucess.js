@@ -6,12 +6,72 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const saveBtn = document.getElementById('save-btn');
   const backBtn = document.getElementById('back-btn');
   const toast = document.getElementById('toast');
+  const starLayer = document.querySelector('.star-layer');
 
-  // toggle activity selection and update the page theme to match the last-selected activity
+  // per-activity detail lists and theme updates
+  const activityDetailsMap = {
+    Coffee: ['Try a cozy cafe', 'Bring a book to share', 'Swap favorite playlists'],
+    Walk: ['Pick a scenic route', 'Bring a picnic snack', 'Walk + photo walk challenge'],
+    Movies: ['Indie cinema or stream at home', 'Bring a blanket & snacks', 'Vote on a genre'],
+    Picnic: ['Choose a park spot', 'Bring homemade treats', 'Pack a small speaker'],
+    Museum: ['Check current exhibits', 'Bring student ID for discounts', 'Sketch favorite piece'],
+    Dinner: ['Try a new restaurant', 'Cook together at home', 'Themed dinner night']
+  };
+
   activities.forEach(a=> a.addEventListener('click', (e)=>{
     a.classList.toggle('active');
+    toggleActivityDetails(a);
     updateThemeFromSelection();
   }));
+
+  function toggleActivityDetails(card){
+    const name = card.dataset.activity || card.textContent.trim();
+    const key = name;
+    let details = card.querySelector('.activity-details');
+    if(details){
+      // collapse
+      details.classList.toggle('open');
+      if(!details.classList.contains('open')){
+        // remove after animation
+        details.addEventListener('animationend', ()=> details.remove(), { once: true });
+        details.classList.add('closing');
+      }
+      return;
+    }
+    // build details
+    const items = activityDetailsMap[key] || ['Plan together!'];
+    details = document.createElement('div');
+    details.className = 'activity-details open';
+    const ul = document.createElement('ul');
+    items.forEach(it=>{ const li = document.createElement('li'); li.textContent = it; ul.appendChild(li); });
+    details.appendChild(ul);
+    card.appendChild(details);
+  }
+
+  // star-glaze: spawn gentle shooting stars periodically on the star layer
+  let starInterval = null;
+  function spawnShootingStar(){
+    if(!starLayer) return;
+    const s = document.createElement('div');
+    s.className = 'shooting-star';
+    // randomize start position and length
+    const top = Math.random() * 60 + 5; // 5%..65%
+    s.style.top = top + '%';
+    s.style.left = '-10%';
+    // randomize timing slightly via inline style
+    s.style.animationDuration = (800 + Math.random()*700) + 'ms';
+    starLayer.appendChild(s);
+    s.addEventListener('animationend', ()=> s.remove());
+  }
+
+  function startStars(){
+    // lower frequency on small screens
+    const interval = window.matchMedia('(max-width:480px)').matches ? 1800 : 1100;
+    starInterval = setInterval(spawnShootingStar, interval);
+    // spawn an initial scatter
+    for(let i=0;i<3;i++) setTimeout(spawnShootingStar, i*300);
+  }
+  startStars();
 
   function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
 

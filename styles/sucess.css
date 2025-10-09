@@ -71,6 +71,31 @@ body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradi
 	.center-screen{padding:18px}
 }
 
+/* Activity details (appears inside the activity card) */
+.activity-details{margin-top:10px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.92);box-shadow:inset 0 2px 8px rgba(230,100,150,0.03);animation:detailsOpen .28s cubic-bezier(.2,.9,.2,1) forwards}
+.activity-details.closing{animation:detailsClose .22s ease forwards}
+.activity-details ul{margin:0;padding:0 6px 0 18px;color:#5b2e40}
+.activity-details li{margin:6px 0;font-size:0.9rem}
+@keyframes detailsOpen{0%{opacity:0;transform:translateY(-6px) scale(0.98)}100%{opacity:1;transform:none}}
+@keyframes detailsClose{0%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-6px) scale(0.98)}}
+
+/* Shooting star visuals */
+.shooting-star{position:absolute;left:-10%;width:28vmax;height:2px;background:linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,200,230,0.7), rgba(255,120,180,0.1));filter:blur(4px);transform:skewX(-20deg);z-index:2;pointer-events:none;opacity:0.95;animation:shoot 1100ms linear forwards}
+@keyframes shoot{
+	0%{transform:translateX(0) skewX(-20deg) scaleX(0.1);opacity:0}
+	12%{opacity:1}
+	80%{transform:translateX(140vw) skewX(-22deg) scaleX(1)}
+	100%{transform:translateX(170vw) skewX(-24deg) scaleX(1.1);opacity:0}
+}
+
+/* slightly different tint per theme */
+body.theme-coffee .shooting-star{background:linear-gradient(90deg, rgba(255,244,230,0.95), rgba(220,180,120,0.7), rgba(200,160,90,0.08));}
+body.theme-walk .shooting-star{background:linear-gradient(90deg, rgba(230,255,246,0.95), rgba(160,240,200,0.7), rgba(120,200,160,0.08));}
+body.theme-movies .shooting-star{background:linear-gradient(90deg, rgba(240,240,255,0.95), rgba(180,180,255,0.7), rgba(120,120,200,0.08));}
+body.theme-picnic .shooting-star{background:linear-gradient(90deg, rgba(255,250,235,0.95), rgba(255,210,140,0.7), rgba(220,160,90,0.08));}
+body.theme-museum .shooting-star{background:linear-gradient(90deg, rgba(250,240,255,0.95), rgba(210,170,240,0.7), rgba(180,130,200,0.08));}
+body.theme-dinner .shooting-star{background:linear-gradient(90deg, rgba(255,240,245,0.95), rgba(255,160,190,0.7), rgba(220,110,150,0.08));}
+
 /* Activity themes - toggled by JS (body.class = theme-<slug>) */
 body.theme-coffee{ --accent: #8b5e34; --muted: #4b2f20; }
 body.theme-coffee{ background: linear-gradient(180deg,#fff7ef,#fff3ea); }
