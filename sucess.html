@@ -4,18 +4,66 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Yay!</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles/sucess.css">
 </head>
 <body>
+  <!-- Heart animation SVG (used by heart.js) -->
+  <svg style="display:none;" viewBox="0 0 600 552" aria-hidden="true">
+    <path d="M300,107.77C284.68,55.67,239.76,0,162.31,0,64.83,0,0,82.08,0,171.71c0,.48,0,.95,0,1.43-.52,19.5,0,217.94,299.87,379.69v0l0,0,.05,0,0,0,0,0v0C600,391.08,600.48,192.64,600,173.14c0-.48,0-.95,0-1.43C600,82.08,535.17,0,437.69,0,360.24,0,315.32,55.67,300,107.77" fill="#ee5282"/>
+  </svg>
+
   <div class="center-screen">
-    <div class="card">
-      <div class="success-emoji">🎉 💖</div>
-      <div class="success-text">Yay! I'm so glad, Leilah. Let's plan something fun soon.</div>
-      <p style="margin-top:12px;color:#555">Thanks for saying yes — I'll follow up with a message. :)</p>
-      <div class="btn-row" style="margin-top:18px">
-        <button class="btn btn-yes" onclick="window.location.href='Leilah.html'">Back to start</button>
-      </div>
+    <div class="card plan-card" role="region" aria-labelledby="plan-title">
+      <header class="card-head">
+        <div class="success-emoji">🎉 💖</div>
+        <h1 id="plan-title">Plan something together</h1>
+        <p class="lead">Choose activities you'd like, and tell me when you're free — I'll take care of the rest.</p>
+      </header>
+
+      <section class="activities" aria-label="Activities">
+        <h2>Activities</h2>
+        <div class="activity-grid">
+          <button class="activity-card" data-activity="Coffee">☕ Coffee</button>
+          <button class="activity-card" data-activity="Walk">🌳 Walk in the park</button>
+          <button class="activity-card" data-activity="Movies">🎬 Movie night</button>
+          <button class="activity-card" data-activity="Picnic">🧺 Picnic</button>
+          <button class="activity-card" data-activity="Museum">🎨 Museum</button>
+          <button class="activity-card" data-activity="Dinner">🍽️ Dinner</button>
+        </div>
+      </section>
+
+      <section class="availability" aria-label="Availability">
+        <h2>When are you free?</h2>
+        <div class="times-row">
+          <label><input type="checkbox" value="Mon"> Mon</label>
+          <label><input type="checkbox" value="Tue"> Tue</label>
+          <label><input type="checkbox" value="Wed"> Wed</label>
+          <label><input type="checkbox" value="Thu"> Thu</label>
+          <label><input type="checkbox" value="Fri"> Fri</label>
+          <label><input type="checkbox" value="Sat"> Sat</label>
+          <label><input type="checkbox" value="Sun"> Sun</label>
+        </div>
+        <div class="time-select">
+          <label>Preferred time: <input type="time" id="pref-time" value="19:00"></label>
+        </div>
+      </section>
+
+      <footer class="card-foot">
+        <div class="btn-row">
+          <button id="save-btn" class="btn btn-yes">Save & Send</button>
+          <button id="back-btn" class="btn btn-no">Back</button>
+        </div>
+        <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+      </footer>
     </div>
   </div>
+
+  <!-- heart animation scripts (three, controls, gsap, and the heart renderer) -->
+  <link rel="stylesheet" href="styles/heart.css">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+  <script src="heart.js"></script>
+  <script src="sucess.js" defer></script>
 </body>
 </html>
