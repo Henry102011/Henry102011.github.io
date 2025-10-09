@@ -170,3 +170,35 @@ document.body.addEventListener('click', function(e) {
         createHeart(e.clientX, e.clientY);
     }
 });
+
+/* Button hover particle effects */
+function makeBtnParticle(x, y, color) {
+    const p = document.createElement('div');
+    p.className = 'btn-particle';
+    p.style.left = x + 'px';
+    p.style.top = y + 'px';
+    p.style.background = color || 'rgba(255,150,200,0.95)';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1000);
+}
+
+function attachButtonParticles(btn) {
+    if (!btn) return;
+    let raf = null;
+    function onMove(e) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+            const rect = btn.getBoundingClientRect();
+            const x = rect.left + rect.width/2 + (Math.random()*rect.width - rect.width/2)*0.6;
+            const y = rect.top + rect.height/2 + (Math.random()*rect.height - rect.height/2)*0.2;
+            const color = Math.random() > 0.5 ? 'rgba(255,120,180,0.95)' : 'rgba(255,210,230,0.95)';
+            makeBtnParticle(x, y, color);
+        });
+    }
+    btn.addEventListener('mouseenter', onMove);
+    btn.addEventListener('mousemove', onMove);
+    btn.addEventListener('mouseleave', () => { if (raf) cancelAnimationFrame(raf); });
+}
+
+attachButtonParticles(yesBtn);
+attachButtonParticles(noBtn);
