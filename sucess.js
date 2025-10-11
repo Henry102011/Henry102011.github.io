@@ -247,29 +247,24 @@ function degToRad(deg) {
 	}
 
 	// occasionally spawn a falling star; also on user click spawn a star near cursor
-	function scheduleFallingStars(){
-		clearInterval(fallingStarTimer);
-		fallingStarTimer = setInterval(function(){
-			// 60% chance to spawn
-			if (Math.random() < 0.7) spawnFallingStar();
-		}, 2200 + Math.random()*3000);
-	}
-	scheduleFallingStars();
+		function scheduleFallingStars(){
+			clearInterval(fallingStarTimer);
+			// slower, more cinematic cadence
+			fallingStarTimer = setInterval(function(){
+				if (Math.random() < 0.45) spawnFallingStar();
+			}, 4200 + Math.random()*4800);
+		}
+		scheduleFallingStars();
 
-	// clicking anywhere spawns a star where they click
-	document.addEventListener('click', function(e){
-		// ignore clicks on modal
-		if (modal && modal.contains(e.target)) return;
-		var s = document.createElement('div');
-		s.className = 'falling-star shoot';
-		s.style.left = (e.clientX - 8) + 'px';
-		s.style.top = (e.clientY - 8) + 'px';
-		var trail = document.createElement('div'); trail.className = 'trail';
-		s.appendChild(trail);
-		document.body.appendChild(s);
-		s.addEventListener('click', function(ev){ ev.stopPropagation(); openModal(); });
-		s.addEventListener('animationend', function(){ s.remove(); });
-	});
+		// When user clicks, only open modal if they clicked a falling star element
+		document.addEventListener('click', function(e){
+			if (modal && modal.contains(e.target)) return;
+			var el = e.target;
+			if (el.classList && el.classList.contains('falling-star')){
+				// star click handled by spawn listener, but ensure modal opens
+				openModal();
+			}
+		});
 
 	// form submit: validate, show toast and set a theme class
 	if (sgForm){
