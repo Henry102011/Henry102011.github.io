@@ -97,18 +97,27 @@ body.theme-museum .shooting-star{background:linear-gradient(90deg, rgba(250,240,
 body.theme-dinner .shooting-star{background:linear-gradient(90deg, rgba(255,240,245,0.95), rgba(255,160,190,0.7), rgba(220,110,150,0.08));}
 
 /* Activity themes - toggled by JS (body.class = theme-<slug>) */
+/* vivid, theme-specific nebula overlays using the body::before pseudo-element for dramatic full-screen backgrounds */
 body.theme-coffee{ --accent: #8b5e34; --muted: #4b2f20; }
-body.theme-coffee{ background: linear-gradient(180deg,#fff7ef,#fff3ea); }
+body.theme-coffee::before{ background: radial-gradient(40% 40% at 10% 20%, rgba(255,240,220,0.9), transparent 12%), radial-gradient(60% 40% at 80% 80%, rgba(220,180,120,0.7), transparent 12%), linear-gradient(180deg,#fff7ef,#fff3ea); }
+
 body.theme-walk{ --accent: #4bb78b; --muted:#245c3a; }
-body.theme-walk{ background: linear-gradient(180deg,#e6fff5,#eafffb); }
+body.theme-walk::before{ background: radial-gradient(40% 40% at 20% 10%, rgba(220,255,240,0.9), transparent 12%), radial-gradient(60% 40% at 80% 90%, rgba(160,240,200,0.7), transparent 12%), linear-gradient(180deg,#e6fff5,#eafffb); }
+
 body.theme-movies{ --accent: #6b63ff; --muted:#2f2a6b; }
-body.theme-movies{ background: linear-gradient(180deg,#f2f0ff,#eef0ff); }
+body.theme-movies::before{ background: radial-gradient(40% 40% at 15% 20%, rgba(240,240,255,0.95), transparent 12%), radial-gradient(60% 40% at 85% 70%, rgba(180,180,255,0.75), transparent 12%), linear-gradient(180deg,#f2f0ff,#eef0ff); }
+
 body.theme-picnic{ --accent: #ff9b4b; --muted:#6b3f1f; }
-body.theme-picnic{ background: linear-gradient(180deg,#fff7e6,#fffaf0); }
+body.theme-picnic::before{ background: radial-gradient(40% 40% at 10% 20%, rgba(255,250,235,0.95), transparent 12%), radial-gradient(60% 40% at 80% 80%, rgba(255,210,140,0.75), transparent 12%), linear-gradient(180deg,#fff7e6,#fffaf0); }
+
 body.theme-museum{ --accent: #c56bd6; --muted:#4a2b4f; }
-body.theme-museum{ background: linear-gradient(180deg,#fff0fb,#fbf0ff); }
+body.theme-museum::before{ background: radial-gradient(40% 40% at 20% 10%, rgba(250,240,255,0.95), transparent 12%), radial-gradient(60% 40% at 80% 90%, rgba(210,170,240,0.75), transparent 12%), linear-gradient(180deg,#fff0fb,#fbf0ff); }
+
 body.theme-dinner{ --accent: #ff4b8b; --muted:#4a2331; }
-body.theme-dinner{ background: linear-gradient(180deg,#fff0f6,#fff0f4); }
+body.theme-dinner::before{ background: radial-gradient(40% 40% at 15% 25%, rgba(255,240,245,0.95), transparent 12%), radial-gradient(60% 40% at 80% 75%, rgba(255,160,190,0.75), transparent 12%), linear-gradient(180deg,#fff0f6,#fff0f4); }
+
+/* smooth transitions for dramatic background changes */
+body::before{ transition: background 520ms cubic-bezier(.2,.9,.2,1), filter 420ms ease; }
 
 /* make the nebula and star tint follow the accent color */
 body[class^="theme-"]::before{ filter: blur(26px) saturate(140%); }

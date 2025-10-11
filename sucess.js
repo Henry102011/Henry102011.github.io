@@ -18,11 +18,50 @@ document.addEventListener('DOMContentLoaded', ()=>{
     Dinner: ['Try a new restaurant', 'Cook together at home', 'Themed dinner night']
   };
 
-  activities.forEach(a=> a.addEventListener('click', (e)=>{
-    a.classList.toggle('active');
-    toggleActivityDetails(a);
-    updateThemeFromSelection();
-  }));
+  // clicking an activity toggles its active state but always sets its theme immediately
+  // (last-click wins). Hovering previews the theme without changing the clicked state.
+  let currentTheme = null; // stores the class name of the active theme
+  activities.forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      const wasActive = a.classList.contains('active');
+      // toggle active visual
+      a.classList.toggle('active');
+      toggleActivityDetails(a);
+
+      // apply theme of the clicked card
+      const theme = 'theme-' + slugify(a.dataset.activity || a.textContent.trim());
+      // always remove other theme classes then add this one
+      try{ Array.from(document.body.classList).filter(c=> c.startsWith('theme-')).forEach(c=> document.body.classList.remove(c)); }catch(e){}
+      // if card was activated by this click, set as current theme; if it was deactivated, try to fall back to last active
+      if(!wasActive){
+        document.body.classList.add(theme);
+        currentTheme = theme;
+      } else {
+        // card was turned off — find another active card to set as theme, or clear
+        const remaining = activities.filter(x=> x.classList.contains('active'));
+        if(remaining.length){
+          const last = remaining[remaining.length-1];
+          const t = 'theme-' + slugify(last.dataset.activity || last.textContent.trim());
+          document.body.classList.add(t);
+          currentTheme = t;
+        } else {
+          currentTheme = null;
+        }
+      }
+    });
+
+    // hover preview: temporarily show the hovered activity's theme
+    a.addEventListener('pointerenter', ()=>{
+      const preview = 'theme-' + slugify(a.dataset.activity || a.textContent.trim());
+      try{ Array.from(document.body.classList).filter(c=> c.startsWith('theme-')).forEach(c=> document.body.classList.remove(c)); }catch(e){}
+      document.body.classList.add(preview);
+    });
+    a.addEventListener('pointerleave', ()=>{
+      // restore persisted theme (if any) otherwise clear
+      try{ Array.from(document.body.classList).filter(c=> c.startsWith('theme-')).forEach(c=> document.body.classList.remove(c)); }catch(e){}
+      if(currentTheme) document.body.classList.add(currentTheme);
+    });
+  });
 
   function toggleActivityDetails(card){
     const name = card.dataset.activity || card.textContent.trim();
