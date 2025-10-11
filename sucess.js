@@ -1,94 +1,194 @@
-// sucess.js — interactive plan page with stargaze modal and starry animations
-document.addEventListener('DOMContentLoaded', ()=>{
-  const activities = Array.from(document.querySelectorAll('.activity-card'));
-  const times = Array.from(document.querySelectorAll('.times-row input'));
-  const prefTime = document.getElementById('pref-time');
-  const saveBtn = document.getElementById('save-btn');
-  const backBtn = document.getElementById('back-btn');
-  const toast = document.getElementById('toast');
-  const starLayer = document.querySelector('.star-layer');
+function Star(id, x, y){
+	this.id = id;
+	this.x = x;
+	this.y = y;
+	this.r = Math.floor(Math.random()*2)+1;
+	var alpha = (Math.floor(Math.random()*10)+1)/10/2;
+	this.color = "rgba(255,255,255,"+alpha+")";
+}
 
-  // small map of activity details
-  const activityDetailsMap = {
-    Coffee: ['Try a cozy cafe', 'Bring a book to share', 'Swap favorite playlists'],
-    Walk: ['Pick a scenic route', 'Bring a picnic snack', 'Walk + photo walk challenge'],
-    Movies: ['Indie cinema or stream at home', 'Bring a blanket & snacks', 'Vote on a genre'],
-    Picnic: ['Choose a park spot', 'Bring homemade treats', 'Pack a small speaker'],
-    Museum: ['Check current exhibits', 'Bring student ID for discounts', 'Sketch favorite piece'],
-    Dinner: ['Try a new restaurant', 'Cook together at home', 'Themed dinner night'],
-    Stargaze: ['Find a dark spot', 'Bring a blanket and warm drinks', 'Check the weather and moon phase']
-  };
+Star.prototype.draw = function() {
+	ctx.fillStyle = this.color;
+	ctx.shadowBlur = this.r * 2;
+	ctx.beginPath();
+	ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+	ctx.closePath();
+	ctx.fill();
+}
 
-  // utilities
-  function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
-  function showToast(msg){ if(!toast) return; toast.textContent = msg; toast.hidden=false; toast.style.opacity=1; setTimeout(()=>{ toast.style.opacity=0; setTimeout(()=> toast.hidden=true,400); }, 2600); }
+Star.prototype.move = function() {
+	this.y -= .15 + params.backgroundSpeed/100;
+	if (this.y <= -10) this.y = HEIGHT + 10;
+	this.draw();
+}
 
-  // theme management
-  let currentTheme = null;
-  function applyTheme(theme){ try{ Array.from(document.body.classList).filter(c=> c.startsWith('theme-')).forEach(c=> document.body.classList.remove(c)); }catch(e){} if(theme){ document.body.classList.add(theme); currentTheme = theme; } else currentTheme = null; }
 
-  // activity interactions: click toggles active; click sets theme; hover previews
-  activities.forEach(a=>{
-    a.addEventListener('click', ()=>{
-      const wasActive = a.classList.contains('active');
-      a.classList.toggle('active');
-      toggleActivityDetails(a);
-      const t = 'theme-' + slugify(a.dataset.activity || a.textContent.trim());
-      if(!wasActive){ applyTheme(t); } else {
-        // find fallback
-        const remaining = activities.filter(x=> x.classList.contains('active'));
-        if(remaining.length) applyTheme('theme-' + slugify(remaining[remaining.length-1].dataset.activity)); else applyTheme(null);
-      }
-    });
-    a.addEventListener('pointerenter', ()=>{ const p = 'theme-' + slugify(a.dataset.activity || a.textContent.trim()); try{ Array.from(document.body.classList).filter(c=> c.startsWith('theme-')).forEach(c=> document.body.classList.remove(c)); }catch(e){} document.body.classList.add(p); });
-    a.addEventListener('pointerleave', ()=>{ try{ Array.from(document.body.classList).filter(c=> c.startsWith('theme-')).forEach(c=> document.body.classList.remove(c)); }catch(e){} if(currentTheme) document.body.classList.add(currentTheme); });
-  });
+function Dot(id, x, y, r) {
+	this.id = id;
+	this.x = x;
+	this.y = y;
+	this.r = Math.floor(Math.random()*5)+1;
+	this.maxLinks = 2;
+	this.speed = .5;
+	this.a = .5;
+	this.aReduction = .005;
+	this.color = "rgba(255,255,255,"+this.a+")";
+	this.linkColor = "rgba(255,255,255,"+this.a/4+")";
 
-  // details drawer inside activity card
-  function toggleActivityDetails(card){
-    const name = card.dataset.activity || card.textContent.trim();
-    const items = activityDetailsMap[name] || ['Plan together!'];
-    let details = card.querySelector('.activity-details');
-    if(details){ details.remove(); return; }
-    details = document.createElement('div'); details.className = 'activity-details open'; const ul = document.createElement('ul'); items.forEach(it=>{ const li = document.createElement('li'); li.textContent = it; ul.appendChild(li); }); details.appendChild(ul); card.appendChild(details);
-  }
+	this.dir = Math.floor(Math.random()*140)+200;
+}
 
-  // shooting stars (background accents)
-  function spawnShootingStar(){ if(!starLayer) return; const s = document.createElement('div'); s.className='shooting-star'; const top = Math.random()*60 + 5; s.style.top = top + '%'; s.style.left='-10%'; s.style.animationDuration = (900 + Math.random()*900)+'ms'; starLayer.appendChild(s); s.addEventListener('animationend', ()=> s.remove()); }
-  setInterval(()=>{ if(Math.random() < 0.6) spawnShootingStar(); }, 900);
+Dot.prototype.draw = function() {
+	ctx.fillStyle = this.color;
+	ctx.shadowBlur = this.r * 2;
+	ctx.beginPath();
+	ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+	ctx.closePath();
+	ctx.fill();
+}
 
-  // falling star CTA and modal wiring
-  const modal = document.getElementById('stargaze-modal');
-  const sgForm = document.getElementById('stargaze-form');
-  const sgDate = document.getElementById('sg-date');
-  const sgTime = document.getElementById('sg-time');
-  const stargazeCard = activities.find(a=> a.dataset.activity === 'Stargaze');
+Dot.prototype.link = function() {
+	if (this.id == 0) return;
+	var previousDot1 = getPreviousDot(this.id, 1);
+	var previousDot2 = getPreviousDot(this.id, 2);
+	var previousDot3 = getPreviousDot(this.id, 3);
+	if (!previousDot1) return;
+	ctx.strokeStyle = this.linkColor;
+	ctx.moveTo(previousDot1.x, previousDot1.y);
+	ctx.beginPath();
+	ctx.lineTo(this.x, this.y);
+	if (previousDot2 != false) ctx.lineTo(previousDot2.x, previousDot2.y);
+	if (previousDot3 != false) ctx.lineTo(previousDot3.x, previousDot3.y);
+	ctx.stroke();
+	ctx.closePath();
+}
 
-  function spawnFallingStar(){ const s = document.createElement('div'); s.className='falling-star'; s.style.left = (30 + Math.random()*40)+'vw'; s.style.top = '-6vh'; s.title='Tap to plan a stargazing date'; document.body.appendChild(s); s.addEventListener('click', ()=>{ openModal(); s.remove(); }); requestAnimationFrame(()=> s.classList.add('shoot')); setTimeout(()=> s.remove(), 1800); }
-  setInterval(()=>{ if(Math.random() < 0.35) spawnFallingStar(); }, 2400);
+function getPreviousDot(id, stepback) {
+	if (id == 0 || id - stepback < 0) return false;
+	if (typeof dots[id - stepback] != "undefined") return dots[id - stepback];
+	else return false;//getPreviousDot(id - stepback);
+}
 
-  function openModal(){ if(!modal) return; modal.hidden = false; }
-  function closeModal(){ if(!modal) return; modal.hidden = true; }
-  document.addEventListener('click', (e)=>{ const close = e.target.closest('[data-close]'); if(close) closeModal(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+Dot.prototype.move = function() {
+	this.a -= this.aReduction;
+	if (this.a <= 0) {
+		this.die();
+		return
+	}
+	this.color = "rgba(255,255,255,"+this.a+")";
+	this.linkColor = "rgba(255,255,255,"+this.a/4+")";
+	this.x = this.x + Math.cos(degToRad(this.dir))*(this.speed+params.dotsSpeed/100),
+	this.y = this.y + Math.sin(degToRad(this.dir))*(this.speed+params.dotsSpeed/100);
 
-  sgForm && sgForm.addEventListener('submit', (e)=>{ e.preventDefault(); if(!sgDate.value || !sgTime.value) return; if(stargazeCard && !stargazeCard.classList.contains('active')) stargazeCard.classList.add('active'); applyTheme('theme-' + slugify('Stargaze')); showToast(`Stargaze planned: ${sgDate.value} ${sgTime.value}`); closeModal(); prefTime.value = sgTime.value; });
+	this.draw();
+	this.link();
+}
 
-  // staged entrance
-  function stagedEntrance(){ activities.forEach((a,i)=>{ a.classList.add('enter'); a.style.animationDelay = (i*80)+'ms'; }); const rows = [document.querySelector('.times-row'), document.querySelector('.time-select'), document.querySelector('.card-foot')]; rows.forEach((el,idx)=>{ if(!el) return; el.classList.add('enter'); el.style.animationDelay = (activities.length*80 + idx*140)+'ms'; }); }
-  stagedEntrance();
+Dot.prototype.die = function() {
+    dots[this.id] = null;
+    delete dots[this.id];
+}
 
-  // back button
-  backBtn && backBtn.addEventListener('click', ()=> location.href='Leilah.html');
 
-  // save button (keeps previous SMS behavior)
-  saveBtn && saveBtn.addEventListener('click', ()=>{
-    const chosen = activities.filter(a=> a.classList.contains('active')).map(a=> a.dataset.activity);
-    const days = times.filter(i=> i.checked).map(i=> i.value);
-    if(chosen.length===0){ showToast('Pick at least one activity ❤️'); return; }
-    if(days.length===0){ showToast('Select a day you are free'); return; }
-    const payload = { activities: chosen, days, time: prefTime.value };
-    showToast('Saved — I will message you soon!'); console.log('Plan payload', payload);
-    const phoneNumber = '+19369001876'; const messageLines = [ `Plan for Leilah`, `Activities: ${chosen.join(', ')}`, `Days: ${days.join(', ')}`, `Time: ${prefTime.value || 'Any time'}`, `\nSent from your planning page.` ]; const messageText = messageLines.join('\n'); if(navigator.share){ navigator.share({ title:'Plan for Leilah', text: messageText }).catch(()=> window.location.href = `sms:${phoneNumber}?body=${encodeURIComponent(messageText)}`); } else { window.location.href = `sms:${phoneNumber}?body=${encodeURIComponent(messageText)}`; }
-  });
-});
+var canvas  = document.getElementById('canvas'),
+	ctx = canvas.getContext('2d'),
+	WIDTH,
+	HEIGHT,
+	mouseMoving = false,
+	mouseMoveChecker,
+	mouseX,
+	mouseY,
+	stars = [],
+	initStarsPopulation = 80,
+	dots = [],
+	dotsMinDist = 2,
+	params = {
+		maxDistFromCursor: 50,
+		dotsSpeed: 0,
+		backgroundSpeed: 0
+	};
+
+var gui;
+gui = new dat.GUI();
+gui.add(params, 'maxDistFromCursor').min(0).max(100).step(10).name('Size');
+gui.add(params, 'dotsSpeed').min(0).max(100).step(.5).name('Speed');
+gui.add(params, 'backgroundSpeed').min(0).max(150).step(1).name('Sky speed');
+gui.open();
+
+setCanvasSize();
+init();
+
+function setCanvasSize() {
+	WIDTH = document.documentElement.clientWidth,
+    HEIGHT = document.documentElement.clientHeight;                      
+
+	canvas.setAttribute("width", WIDTH);
+	canvas.setAttribute("height", HEIGHT);
+}
+
+function init() {
+	ctx.strokeStyle = "white";
+	ctx.shadowColor = "white";
+	for (var i = 0; i < initStarsPopulation; i++) {
+		stars[i] = new Star(i, Math.floor(Math.random()*WIDTH), Math.floor(Math.random()*HEIGHT));
+		//stars[i].draw();
+	}
+	ctx.shadowBlur = 0;
+	animate();
+}
+
+function animate() {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+    for (var i in stars) {
+    	stars[i].move();
+    }
+    for (var i in dots) {
+    	dots[i].move();
+    }
+    drawIfMouseMoving();
+    requestAnimationFrame(animate);
+}
+
+window.onmousemove = function(e){
+	mouseMoving = true;
+	mouseX = e.clientX;
+	mouseY = e.clientY;
+	clearInterval(mouseMoveChecker);
+	mouseMoveChecker = setTimeout(function() {
+		mouseMoving = false;
+	}, 100);
+}
+
+
+function drawIfMouseMoving(){
+	if (!mouseMoving) return;
+
+	if (dots.length == 0) {
+		dots[0] = new Dot(0, mouseX, mouseY);
+		dots[0].draw();
+		return;
+	}
+
+	var previousDot = getPreviousDot(dots.length, 1);
+	var prevX = previousDot.x; 
+	var prevY = previousDot.y; 
+
+	var diffX = Math.abs(prevX - mouseX);
+	var diffY = Math.abs(prevY - mouseY);
+
+	if (diffX < dotsMinDist || diffY < dotsMinDist) return;
+
+	var xVariation = Math.random() > .5 ? -1 : 1;
+	xVariation = xVariation*Math.floor(Math.random()*params.maxDistFromCursor)+1;
+	var yVariation = Math.random() > .5 ? -1 : 1;
+	yVariation = yVariation*Math.floor(Math.random()*params.maxDistFromCursor)+1;
+	dots[dots.length] = new Dot(dots.length, mouseX+xVariation, mouseY+yVariation);
+	dots[dots.length-1].draw();
+	dots[dots.length-1].link();
+}
+//setInterval(drawIfMouseMoving, 17);
+
+function degToRad(deg) {
+	return deg * (Math.PI / 180);
+}
