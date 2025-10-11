@@ -1,3 +1,30 @@
 <div class="landscape"></div>
 <div class="filter"></div>
 <canvas id="canvas"></canvas>
+
+<!-- help text and modal added by script -->
+<div class="stargaze-help">Click a shooting star to plan a stargazing date ✨</div>
+
+<!-- Stargaze modal (hidden by default) -->
+<div id="stargaze-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="stargaze-title" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="document">
+    <button class="modal-close" aria-label="Close" data-close>✕</button>
+    <h2 id="stargaze-title">Stargazing date & time</h2>
+    <p>Pick a date and time for a stargazing date. We'll add it to your plan.</p>
+    <form id="stargaze-form">
+      <label>Date: <input type="date" id="sg-date" required></label>
+      <label>Time: <input type="time" id="sg-time" required></label>
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-yes">Confirm</button>
+        <button type="button" class="btn btn-no" data-close>Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- simple toast -->
+<div id="sg-toast" class="sg-toast" aria-live="polite" hidden></div>
+
+<!-- UI: help text, modal and toast -->
+<div class="stargaze-help">Click anywhere to summon a shooting star ✨</div>

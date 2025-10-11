@@ -192,3 +192,116 @@ function drawIfMouseMoving(){
 function degToRad(deg) {
 	return deg * (Math.PI / 180);
 }
+
+/* ----- Stargaze interaction: falling-star CTA, modal open/close, form handling ----- */
+(function(){
+	// small helpers
+	function qs(sel, ctx){ return (ctx||document).querySelector(sel); }
+	function qsa(sel, ctx){ return (ctx||document).querySelectorAll(sel); }
+
+	var stargazeHelp = qs('.stargaze-help');
+	var modal = qs('#stargaze-modal');
+	var sgForm = qs('#stargaze-form');
+	var sgDate = qs('#sg-date');
+	var sgTime = qs('#sg-time');
+	var sgToast = qs('#sg-toast');
+	var fallingStarTimer;
+
+	// open/close modal
+	function openModal(){
+		if(!modal) return;
+		modal.removeAttribute('hidden');
+		modal.classList.add('open');
+		// trap focus lightly
+		setTimeout(function(){ if(sgDate) sgDate.focus(); }, 120);
+	}
+	function closeModal(){
+		if(!modal) return;
+		modal.setAttribute('hidden','');
+		modal.classList.remove('open');
+	}
+
+	// backdrop/close buttons
+	document.addEventListener('click', function(e){
+		var el = e.target;
+		if (el && el.hasAttribute && el.hasAttribute('data-close')) { closeModal(); }
+	});
+	document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+	// spawn a falling star DOM element at random x near top and animate it across the screen
+	function spawnFallingStar(){
+		var s = document.createElement('div');
+		s.className = 'falling-star shoot';
+		var startX = Math.floor(Math.random() * (window.innerWidth*0.8)) + 20;
+		s.style.left = startX + 'px';
+		s.style.top = '-20px';
+		var trail = document.createElement('div'); trail.className = 'trail';
+		s.appendChild(trail);
+		document.body.appendChild(s);
+
+		// click opens modal to plan
+		s.addEventListener('click', function(ev){ ev.stopPropagation(); openModal(); });
+
+		// remove after animation
+		s.addEventListener('animationend', function(){ s.remove(); });
+	}
+
+	// occasionally spawn a falling star; also on user click spawn a star near cursor
+	function scheduleFallingStars(){
+		clearInterval(fallingStarTimer);
+		fallingStarTimer = setInterval(function(){
+			// 60% chance to spawn
+			if (Math.random() < 0.7) spawnFallingStar();
+		}, 2200 + Math.random()*3000);
+	}
+	scheduleFallingStars();
+
+	// clicking anywhere spawns a star where they click
+	document.addEventListener('click', function(e){
+		// ignore clicks on modal
+		if (modal && modal.contains(e.target)) return;
+		var s = document.createElement('div');
+		s.className = 'falling-star shoot';
+		s.style.left = (e.clientX - 8) + 'px';
+		s.style.top = (e.clientY - 8) + 'px';
+		var trail = document.createElement('div'); trail.className = 'trail';
+		s.appendChild(trail);
+		document.body.appendChild(s);
+		s.addEventListener('click', function(ev){ ev.stopPropagation(); openModal(); });
+		s.addEventListener('animationend', function(){ s.remove(); });
+	});
+
+	// form submit: validate, show toast and set a theme class
+	if (sgForm){
+		sgForm.addEventListener('submit', function(e){
+			e.preventDefault();
+			var dateVal = sgDate.value;
+			var timeVal = sgTime.value;
+			if (!dateVal || !timeVal) {
+				showToast('Please pick both date and time.');
+				return;
+			}
+			closeModal();
+			applyStargazeTheme(dateVal, timeVal);
+			showToast('Stargazing saved for ' + dateVal + ' at ' + timeVal + ' ✨');
+			// optionally persist
+			try{ localStorage.setItem('stargaze', JSON.stringify({date:dateVal,time:timeVal})); }catch(e){}
+		});
+	}
+
+	function applyStargazeTheme(dateVal, timeVal){
+		document.body.classList.remove('theme-coffee','theme-park','theme-cafe');
+		document.body.classList.add('theme-stargaze');
+		// if you want to display chosen time somewhere, you can set an element text here
+		var existing = qs('.stargaze-when');
+		if(!existing){ existing = document.createElement('div'); existing.className='stargaze-when'; document.body.appendChild(existing); }
+		existing.textContent = 'Stargaze: ' + dateVal + ' ' + timeVal;
+		existing.style.position = 'fixed'; existing.style.left='18px'; existing.style.bottom='18px'; existing.style.zIndex=50; existing.style.padding='8px 10px'; existing.style.background='rgba(0,0,0,0.36)'; existing.style.color='#fff'; existing.style.borderRadius='10px';
+	}
+
+	function showToast(msg){
+		if(!sgToast) return; sgToast.textContent = msg; sgToast.removeAttribute('hidden'); sgToast.classList.add('show');
+		setTimeout(function(){ sgToast.classList.remove('show'); sgToast.setAttribute('hidden',''); }, 3200);
+	}
+
+})();
