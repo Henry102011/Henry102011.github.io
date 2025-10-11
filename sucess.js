@@ -90,10 +90,7 @@ Dot.prototype.die = function() {
 }
 
 
-var canvas  = document.getElementById('canvas'),
-	ctx = canvas.getContext('2d'),
-	WIDTH,
-	HEIGHT,
+var canvas, ctx, WIDTH, HEIGHT,
 	mouseMoving = false,
 	mouseMoveChecker,
 	mouseX,
@@ -108,15 +105,57 @@ var canvas  = document.getElementById('canvas'),
 		backgroundSpeed: 0
 	};
 
+// dat.GUI is optional; guard against missing library or initialization errors
 var gui;
-gui = new dat.GUI();
-gui.add(params, 'maxDistFromCursor').min(0).max(100).step(10).name('Size');
-gui.add(params, 'dotsSpeed').min(0).max(100).step(.5).name('Speed');
-gui.add(params, 'backgroundSpeed').min(0).max(150).step(1).name('Sky speed');
-gui.open();
+try{
+	if (typeof dat !== 'undefined' && dat && dat.GUI) {
+		gui = new dat.GUI();
+		gui.add(params, 'maxDistFromCursor').min(0).max(100).step(10).name('Size');
+		gui.add(params, 'dotsSpeed').min(0).max(100).step(.5).name('Speed');
+		gui.add(params, 'backgroundSpeed').min(0).max(150).step(1).name('Sky speed');
+		gui.open();
+	} else {
+		console.warn('dat.GUI not found — continuing without runtime controls.');
+	}
+}catch(e){
+	console.warn('dat.GUI init failed:', e);
+}
 
-setCanvasSize();
-init();
+// Initialize canvas and start animation only after DOM is ready
+function _startCanvasIfReady(){
+	canvas = document.getElementById('canvas');
+	if (!canvas) {
+		console.warn('Canvas element not found: animation will be disabled.');
+		return;
+	}
+	ctx = canvas.getContext('2d');
+	if (!ctx) {
+		console.warn('Unable to get 2D context from canvas.');
+		return;
+	}
+	try{
+		setCanvasSize();
+		init();
+	}catch(e){ console.warn('Canvas init error', e); }
+}
+
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+	// DOM already parsed
+	_startCanvasIfReady();
+} else {
+	document.addEventListener('DOMContentLoaded', _startCanvasIfReady);
+}
+
+// make sure canvas updates if the window is resized or device orientation changes
+window.addEventListener('resize', function(){
+	// debounce resize to avoid thrashing
+	clearTimeout(window._sucessResizeTimer);
+	window._sucessResizeTimer = setTimeout(function(){
+		try{
+			setCanvasSize();
+		}catch(e){ console.warn('setCanvasSize error', e); }
+	}, 120);
+});
 
 function setCanvasSize() {
 	WIDTH = document.documentElement.clientWidth,
@@ -138,16 +177,19 @@ function init() {
 }
 
 function animate() {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+	if (!ctx) { requestAnimationFrame(animate); return; }
+	ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
-    for (var i in stars) {
-    	stars[i].move();
-    }
-    for (var i in dots) {
-    	dots[i].move();
-    }
-    drawIfMouseMoving();
-    requestAnimationFrame(animate);
+	for (var i in stars) {
+		if (!stars[i]) continue;
+		if (typeof stars[i].move === 'function') stars[i].move();
+	}
+	for (var j in dots) {
+		if (!dots[j]) continue;
+		if (typeof dots[j].move === 'function') dots[j].move();
+	}
+	drawIfMouseMoving();
+	requestAnimationFrame(animate);
 }
 
 window.onmousemove = function(e){
