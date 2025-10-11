@@ -1,33 +1,70 @@
-<link rel="stylesheet" href="styles/sucess.css">
-<div class="landscape"></div>
-<div class="filter"></div>
-<canvas id="canvas"></canvas>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stargazing with Leilah</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-<!-- help text and modal added by script -->
-<div class="stargaze-help">Click a shooting star to plan a stargazing date ✨</div>
+    .message-box {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(27, 39, 53, 0.8); /* matches background */
+      padding: 20px 30px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.5em;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
 
-<!-- Stargaze modal (hidden by default) -->
-<div id="stargaze-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="stargaze-title" hidden>
-  <div class="modal-backdrop" data-close></div>
-  <div class="modal-panel" role="document">
-    <button class="modal-close" aria-label="Close" data-close>✕</button>
-    <h2 id="stargaze-title">Stargazing date & time</h2>
-    <p>Pick a date and time for a stargazing date. We'll add it to your plan.</p>
-    <form id="stargaze-form">
-      <label>Date: <input type="date" id="sg-date" required></label>
-      <label>Time: <input type="time" id="sg-time" required></label>
-      <div class="modal-actions">
-        <button type="submit" class="btn btn-yes">Confirm</button>
-        <button type="button" class="btn btn-no" data-close>Cancel</button>
-      </div>
-    </form>
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      animation: shoot 1.5s linear forwards;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-300px, 300px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="message-box">
+    Stargazing and picnic with me, Leilah?
   </div>
-</div>
 
-<!-- simple toast -->
-<div id="sg-toast" class="sg-toast" aria-live="polite" hidden></div>
+  <script>
+    function spawnShootingStar() {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * window.innerHeight + 'px';
+      star.style.left = Math.random() * window.innerWidth + 'px';
+      document.body.appendChild(star);
 
-<!-- UI: help text, modal and toast -->
-<div class="stargaze-help">Click anywhere to summon a shooting star ✨</div>
+      setTimeout(() => {
+        star.remove();
+      }, 1500);
+    }
 
-<script src="sucess.js" defer></script>
+    // Spawn a shooting star every 2 seconds
+    setInterval(spawnShootingStar, 2000);
+  </script>
+</body>
+</html>
