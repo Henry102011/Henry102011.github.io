@@ -128,6 +128,10 @@
 		.invite-heart { position: absolute; width: 320px; height: 220px; opacity: .12; filter: blur(0.6px); transform: translateY(-6px); }
 		.invite .message-box { z-index: 43; pointer-events: auto; background: linear-gradient(180deg, rgba(0,0,0,0.32), rgba(255,255,255,0.02)); }
 
+		/* when the heart uses an image pattern, make it a bit more visible and ensure it's responsive */
+		.invite-heart { opacity: 0.98; filter: saturate(.95) drop-shadow(0 6px 24px rgba(0,0,0,0.45)); pointer-events: none; }
+		.invite-heart path { stroke: rgba(255,255,255,0.06); stroke-width: 2; }
+
 		/* modal actions used in HTML */
 		.modal-actions, .modal .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }
 		.modal-close { position: absolute; right: 10px; top: 10px; background: transparent; border: none; color: #fff; font-size: 1.05rem; cursor: pointer; }
