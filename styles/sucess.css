@@ -1,4 +1,4 @@
-/* styles/sucess.css */
+
 :root{--accent:#ff6b9f;--muted:#6b3746;--bg:rgba(255,255,255,0.85)}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Poppins', sans-serif;background:linear-gradient(180deg,#ffd9ec,#ffeefc);color:#222}
