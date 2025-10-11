@@ -257,13 +257,33 @@ function degToRad(deg) {
 		scheduleFallingStars();
 
 		// When user clicks, only open modal if they clicked a falling star element
+		// spawn a burst of falling stars from an (x,y) origin
+		function spawnStarsBurst(x, y, count){
+			count = count || 6;
+			for (var i=0;i<count;i++){
+				var s = document.createElement('div');
+				s.className = 'falling-star shoot';
+				// offset start a bit randomly from click
+				var ox = (Math.random()-0.5)*40;
+				var oy = (Math.random()-0.5)*20;
+				s.style.left = (x + ox) + 'px';
+				s.style.top = (y + oy) + 'px';
+				var trail = document.createElement('div'); trail.className = 'trail';
+				s.appendChild(trail);
+				document.body.appendChild(s);
+				s.addEventListener('click', function(ev){ ev.stopPropagation(); openModal(); });
+				s.addEventListener('animationend', function(){ s.remove(); });
+			}
+		}
+
+		// When user clicks anywhere (not on modal), spawn a burst at the click point
 		document.addEventListener('click', function(e){
 			if (modal && modal.contains(e.target)) return;
 			var el = e.target;
-			if (el.classList && el.classList.contains('falling-star')){
-				// star click handled by spawn listener, but ensure modal opens
-				openModal();
-			}
+			// clicking an existing falling star should open the modal (handled on star click handler)
+			if (el.classList && el.classList.contains('falling-star')){ openModal(); return; }
+			// spawn a burst centered at the click location
+			spawnStarsBurst(e.clientX, e.clientY, 6 + Math.floor(Math.random()*5));
 		});
 
 	// form submit: validate, show toast and set a theme class
