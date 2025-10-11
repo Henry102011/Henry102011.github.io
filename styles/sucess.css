@@ -116,3 +116,26 @@
 			.modal-panel{ padding: 14px; }
 			.stargaze-help{ top: 12px; right: 12px; padding: 8px 10px; }
 		}
+
+		/* message box (moved from inline in earlier HTML) */
+		.message-box{
+			position: absolute;
+			top: 14vh;
+			left: 50%;
+			transform: translateX(-50%);
+			background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+			color: #fff;
+			padding: 18px 26px;
+			border-radius: 12px;
+			font-size: 1.2rem;
+			text-align: center;
+			z-index: 45;
+			box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+		}
+
+		/* modal actions used in HTML */
+		.modal-actions, .modal .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }
+		.modal-close { position: absolute; right: 10px; top: 10px; background: transparent; border: none; color: #fff; font-size: 1.05rem; cursor: pointer; }
+
+		/* small helper for showing chosen time */
+		.stargaze-when{ font-weight:700; letter-spacing: .2px }
