@@ -290,6 +290,13 @@ function degToRad(deg) {
 		s.appendChild(head); s.appendChild(tail);
 		document.body.appendChild(s);
 
+		// force reflow then start the CSS animation class so vars are applied
+		// (adding the class after append avoids the animation not picking up CSS vars)
+		void s.offsetWidth;
+		s.classList.add('shoot');
+		// also set inline animation as a fallback (uses the computed dur string)
+		try{ s.style.animation = 'fall ' + dur + ' cubic-bezier(.22,.9,.16,1) forwards'; }catch(e){}
+
 		// click opens modal to plan
 		s.addEventListener('click', function(ev){ ev.stopPropagation(); openModal(); });
 
@@ -325,6 +332,11 @@ function degToRad(deg) {
 				var tail = document.createElement('div'); tail.className='tail';
 				s.appendChild(head); s.appendChild(tail);
 				document.body.appendChild(s);
+				// trigger animation after insertion
+				void s.offsetWidth;
+				s.classList.add('shoot');
+				// inline animation fallback using computed duration
+				try{ s.style.animation = 'fall ' + dur + ' cubic-bezier(.22,.9,.16,1) forwards'; }catch(e){}
 				s.addEventListener('click', function(ev){ ev.stopPropagation(); openModal(); });
 				s.addEventListener('animationend', function(){ s.remove(); });
 			}
