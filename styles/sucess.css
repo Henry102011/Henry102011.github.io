@@ -138,6 +138,9 @@
 		.invite-heart { opacity: 0.98; filter: none; pointer-events: none; will-change: transform, opacity; }
 		.invite-heart path { stroke: rgba(255,255,255,0.06); stroke-width: 2; }
 
+		/* ensure embedded SVG images repaint and show animation */
+		.invite-heart image { display: block; opacity: 1; image-rendering: auto; }
+
 		/* modal actions used in HTML */
 		.modal-actions, .modal .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }
 		.modal-close { position: absolute; right: 10px; top: 10px; background: transparent; border: none; color: #fff; font-size: 1.05rem; cursor: pointer; }
