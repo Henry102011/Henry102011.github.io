@@ -89,26 +89,12 @@
 		.btn { cursor: pointer; padding: 8px 12px; border-radius: 10px; border: none; background: linear-gradient(180deg,#7fb7ff,#3b82f6); color: #061428; font-weight: 700; box-shadow: 0 8px 28px rgba(59,130,246,0.12); }
 		.btn.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.06); box-shadow: none; }
 
-		/* Falling star CTA (DOM element layered above the canvas) */
-		.falling-star {
-			position: absolute;
-			width: 18px; height: 18px; border-radius: 50%;
-			background: radial-gradient(circle at 30% 30%, #fff 0%, #ffe9b6 28%, #ffb6c1 60%, rgba(255,120,200,0.05) 100%);
-			box-shadow: 0 0 18px rgba(255,255,255,0.95), 0 0 44px rgba(255,150,200,0.35), 0 18px 50px rgba(0,0,0,0.45);
-			pointer-events: auto; z-index: 40; transform: translate3d(0,0,0) rotate(18deg);
-		}
-		.falling-star .trail {
-			position: absolute; left: -160px; top: 6px; width: 220px; height: 12px; transform-origin: left center;
-			background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,230,180,0.6), rgba(255,150,200,0.08)); filter: blur(8px); border-radius: 999px; opacity: 0.95;
-		}
-		@keyframes fall {
-			0% { transform: translateY(-8vh) translateX(0) rotate(10deg) scale(1); opacity: 1 }
-			60% { opacity: 0.95 }
-			100% { transform: translateY(85vh) translateX(40vw) rotate(80deg) scale(.55); opacity: 0 }
-		}
-
-		/* Utility for animating a falling-star instance with inline style animation */
-		.falling-star.shoot { animation: fall 2600ms cubic-bezier(.22,.9,.16,1) forwards; }
+		/* Falling star CTA (DOM element layered above the canvas) - improved shape */
+		.falling-star{ --tx: 40vw; --rot: 70deg; --dur: 2600ms; position: absolute; z-index: 40; pointer-events: auto; transform-origin: center; }
+		.falling-star .head{ width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fff 0%, #ffd 35%, #ff9fbf 65%); box-shadow: 0 0 18px rgba(255,255,255,0.95), 0 0 36px rgba(255,120,180,0.28);} 
+		.falling-star .tail{ position: absolute; left: -180px; top: 6px; width: 240px; height: 14px; transform-origin: left center; background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,220,140,0.6), rgba(255,140,190,0.1)); filter: blur(8px); border-radius: 999px; opacity: 0.95; }
+		@keyframes fall { 0%{ transform: translateY(-6vh) translateX(0) rotate(calc(var(--rot) * 0.12)) scale(1); opacity:1 } 60%{ opacity:0.95 } 100%{ transform: translateY(94vh) translateX(var(--tx)) rotate(var(--rot)) scale(.56); opacity:0 } }
+		.falling-star.shoot{ animation: fall var(--dur) cubic-bezier(.22,.9,.16,1) forwards; }
 
 		/* Toast notification */
 		.sg-toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 28px; background: linear-gradient(90deg,#071026,#12203a); color: #e6f0ff; padding: 10px 14px; border-radius: 10px; z-index: 80; box-shadow: 0 10px 36px rgba(2,6,23,0.6); display: none; }

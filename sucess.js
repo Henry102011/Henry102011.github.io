@@ -231,12 +231,21 @@ function degToRad(deg) {
 	// spawn a falling star DOM element at random x near top and animate it across the screen
 	function spawnFallingStar(){
 		var s = document.createElement('div');
-		s.className = 'falling-star shoot';
+		s.className = 'falling-star';
 		var startX = Math.floor(Math.random() * (window.innerWidth*0.8)) + 20;
 		s.style.left = startX + 'px';
-		s.style.top = '-20px';
-		var trail = document.createElement('div'); trail.className = 'trail';
-		s.appendChild(trail);
+		s.style.top = '-30px';
+		// randomize trajectory vars
+		var tx = (30 + Math.random()*50) + 'vw';
+		var rot = (40 + Math.random()*60) + 'deg';
+		var dur = (2200 + Math.random()*1400) + 'ms';
+		s.style.setProperty('--tx', tx);
+		s.style.setProperty('--rot', rot);
+		s.style.setProperty('--dur', dur);
+		// build inner structure
+		var head = document.createElement('div'); head.className='head';
+		var tail = document.createElement('div'); tail.className='tail';
+		s.appendChild(head); s.appendChild(tail);
 		document.body.appendChild(s);
 
 		// click opens modal to plan
@@ -259,17 +268,20 @@ function degToRad(deg) {
 		// When user clicks, only open modal if they clicked a falling star element
 		// spawn a burst of falling stars from an (x,y) origin
 		function spawnStarsBurst(x, y, count){
-			count = count || 6;
+			count = count || 8;
 			for (var i=0;i<count;i++){
-				var s = document.createElement('div');
-				s.className = 'falling-star shoot';
-				// offset start a bit randomly from click
-				var ox = (Math.random()-0.5)*40;
-				var oy = (Math.random()-0.5)*20;
-				s.style.left = (x + ox) + 'px';
-				s.style.top = (y + oy) + 'px';
-				var trail = document.createElement('div'); trail.className = 'trail';
-				s.appendChild(trail);
+				var s = document.createElement('div'); s.className='falling-star';
+				var ox = (Math.random()-0.5)*60; var oy = (Math.random()-0.5)*30;
+				s.style.left = (x + ox) + 'px'; s.style.top = (y + oy) + 'px';
+				var tx = (20 + Math.random()*60) + 'vw';
+				var rot = (30 + Math.random()*90) + 'deg';
+				var dur = (1800 + Math.random()*2000) + 'ms';
+				s.style.setProperty('--tx', tx);
+				s.style.setProperty('--rot', rot);
+				s.style.setProperty('--dur', dur);
+				var head = document.createElement('div'); head.className='head';
+				var tail = document.createElement('div'); tail.className='tail';
+				s.appendChild(head); s.appendChild(tail);
 				document.body.appendChild(s);
 				s.addEventListener('click', function(ev){ ev.stopPropagation(); openModal(); });
 				s.addEventListener('animationend', function(){ s.remove(); });
