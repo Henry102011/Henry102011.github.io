@@ -137,6 +137,18 @@ function _startCanvasIfReady(){
 		setCanvasSize();
 		init();
 	}catch(e){ console.warn('Canvas init error', e); }
+
+	// wire settings UI if present
+	try{
+		if (clickToggle) {
+			clickToSpawn = !!clickToggle.checked;
+			clickToggle.addEventListener('change', function(){ clickToSpawn = !!clickToggle.checked; });
+		}
+		if (settingsBtn && settingsPanel) {
+			// ensure panel hidden initially
+			settingsPanel.hidden = true;
+		}
+	}catch(e){ /* non-fatal */ }
 }
 
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
@@ -242,6 +254,10 @@ function degToRad(deg) {
 	function qsa(sel, ctx){ return (ctx||document).querySelectorAll(sel); }
 
 	var stargazeHelp = qs('.stargaze-help');
+	var settingsBtn = qs('#sg-settings-btn');
+	var settingsPanel = qs('#sg-settings-panel');
+	var clickToggle = qs('#sg-toggle-click');
+	var clickToSpawn = true; // default
 	var modal = qs('#stargaze-modal');
 	var sgForm = qs('#stargaze-form');
 	var sgDate = qs('#sg-date');
@@ -267,6 +283,13 @@ function degToRad(deg) {
 	document.addEventListener('click', function(e){
 		var el = e.target;
 		if (el && el.hasAttribute && el.hasAttribute('data-close')) { closeModal(); }
+		// if clicking the settings button, toggle panel
+		if (settingsBtn && (el === settingsBtn || settingsBtn.contains(el))) {
+			var expanded = settingsBtn.getAttribute('aria-expanded') === 'true';
+			settingsBtn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+			if (settingsPanel) settingsPanel.hidden = expanded;
+			return;
+		}
 	});
 	document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 
@@ -342,12 +365,16 @@ function degToRad(deg) {
 			}
 		}
 
-		// When user clicks anywhere (not on modal), spawn a burst at the click point
+		// When user clicks anywhere (not on modal), spawn a burst at the click point (if enabled)
 		document.addEventListener('click', function(e){
 			if (modal && modal.contains(e.target)) return;
 			var el = e.target;
 			// clicking an existing falling star should open the modal (handled on star click handler)
 			if (el.classList && el.classList.contains('falling-star')){ openModal(); return; }
+			// ignore clicks on settings UI
+			if (settingsBtn && (el === settingsBtn || (settingsBtn.contains && settingsBtn.contains(el)))) return;
+			if (settingsPanel && (settingsPanel === el || (settingsPanel.contains && settingsPanel.contains(el)))) return;
+			if (!clickToSpawn) return; // disabled by settings
 			// spawn a burst centered at the click location
 			spawnStarsBurst(e.clientX, e.clientY, 6 + Math.floor(Math.random()*5));
 		});

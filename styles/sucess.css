@@ -116,17 +116,18 @@
 		/* message box (moved from inline in earlier HTML) */
 		.message-box{
 			position: absolute;
-			top: 14vh;
+			top: 28vh; /* moved lower to avoid overlapping the heart GIF */
 			left: 50%;
 			transform: translateX(-50%);
 			background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
 			color: #fff;
-			padding: 18px 26px;
+			padding: 16px 22px;
 			border-radius: 12px;
-			font-size: 1.2rem;
+			font-size: 1.05rem;
 			text-align: center;
 			z-index: 45;
 			box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+			pointer-events: auto;
 		}
 
 		/* invite wrapper with a small heart around the message; keep it unobtrusive */
@@ -140,6 +141,12 @@
 
 		/* ensure embedded SVG images repaint and show animation */
 		.invite-heart image { display: block; opacity: 1; image-rendering: auto; }
+
+		/* small settings control */
+		.sg-settings { position: fixed; left: 18px; top: 18px; z-index: 70; }
+		.sg-settings button { background: rgba(255,255,255,0.06); color: #fff; border: none; padding: 8px 10px; border-radius: 8px; cursor: pointer; backdrop-filter: blur(6px); }
+		.sg-settings-panel { margin-top: 8px; background: rgba(2,6,23,0.6); color: #fff; padding: 8px 10px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
+		.sg-settings-panel label { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
 
 		/* modal actions used in HTML */
 		.modal-actions, .modal .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }

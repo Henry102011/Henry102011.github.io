@@ -27,7 +27,13 @@
     <div class="message-box">Stargazing and picnic with me, Leilah?</div>
   </div>
 
-  <div class="stargaze-help">Click a shooting star to plan a stargazing date ✨</div>
+  <!-- Settings (toggle click-to-spawn behavior) -->
+  <div id="sg-settings" class="sg-settings">
+    <button id="sg-settings-btn" aria-expanded="false" title="Settings">⚙</button>
+    <div id="sg-settings-panel" class="sg-settings-panel" hidden>
+      <label><input type="checkbox" id="sg-toggle-click" checked> Click-to-spawn stars</label>
+    </div>
+  </div>
 
   <!-- Stargaze modal (hidden by default) -->
   <div id="stargaze-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="stargaze-title" hidden>
