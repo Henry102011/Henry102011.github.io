@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MontraThai — Quick Appointment & Payroll</title>
+<link rel="stylesheet" href="styles/Project4340.css">
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="logo">MT</div>
+      <div>
+        <h1>MontraThai — Quick Booking & Payroll</h1>
+        <p class="lead">Fast one-page appointment form and simple payroll sheet. Designed to minimize clicks.</p>
+      </div>
+    </header>
+
+    <!-- CSS-only tabs -->
+    <input type="radio" id="tab-appointment" name="tab" checked>
+    <input type="radio" id="tab-payroll" name="tab">
+    <div class="tabs-labels">
+      <div class="tabs">
+        <label for="tab-appointment">Appointment</label>
+        <label for="tab-payroll">Payroll</label>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <!-- Appointment content -->
+      <section aria-labelledby="appt-title">
+        <h2 id="appt-title" style="margin-top:0;font-size:16px">Quick Appointment</h2>
+        <form action="mailto:info@montrathaimassage.net" method="post" enctype="text/plain">
+          <div class="grid">
+            <div>
+              <label class="field">Service</label>
+              <select name="Service" required>
+                <option value="Thai Massage">Thai Massage</option>
+                <option value="Oil Massage">Oil Massage</option>
+                <option value="Foot Massage">Foot Massage</option>
+                <option value="Couples">Couples</option>
+              </select>
+            </div>
+            <div>
+              <label class="field">Therapist (optional)</label>
+              <select name="Therapist">
+                <option value="">Any</option>
+                <option value="Therapist A">Therapist A</option>
+                <option value="Therapist B">Therapist B</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="field">Date</label>
+              <input type="date" name="Date" required>
+            </div>
+            <div>
+              <label class="field">Time</label>
+              <input type="time" name="Time" required>
+            </div>
+
+            <div>
+              <label class="field">Full name</label>
+              <input type="text" name="Name" placeholder="Jane Doe" required>
+            </div>
+            <div>
+              <label class="field">Phone</label>
+              <input type="tel" name="Phone" placeholder="(555) 123-4567" required>
+            </div>
+
+            <div class="full">
+              <label class="field">Email</label>
+              <input type="email" name="Email" placeholder="you@example.com">
+            </div>
+
+            <div class="full">
+              <label class="field">Notes / Requests</label>
+              <textarea name="Notes" placeholder="Any preferences, allergies, or notes..."></textarea>
+            </div>
+
+            <div class="full actions">
+              <button class="btn" type="submit">Send Booking (one click)</button>
+              <button class="btn secondary" type="reset">Clear</button>
+              <div class="muted" style="margin-left:auto">Or call: (enter phone on site)</div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Payroll content -->
+      <section aria-labelledby="pay-title" style="margin-top:18px">
+        <h2 id="pay-title" style="font-size:16px;margin-bottom:6px">Simple Payroll Sheet</h2>
+        <p class="muted" style="margin:0 0 8px 0">Fill staff rows and submit. This uses email submit so payroll can be saved/emailed quickly.</p>
+
+        <form action="mailto:payroll@montrathaimassage.net" method="post" enctype="text/plain">
+          <table class="pay" aria-describedby="pay-desc">
+            <thead>
+              <tr>
+                <th style="width:34%">Staff Name</th>
+                <th style="width:22%">Rate (per hr)</th>
+                <th style="width:22%">Hours</th>
+                <th style="width:22%">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="text" name="staff1_name" placeholder="Name"></td>
+                <td><input type="number" name="staff1_rate" step="0.01" placeholder="12.50"></td>
+                <td><input type="number" name="staff1_hours" step="0.01" placeholder="8"></td>
+                <td><input type="text" name="staff1_notes" placeholder="OT, tips..."></td>
+              </tr>
+              <tr>
+                <td><input type="text" name="staff2_name" placeholder="Name"></td>
+                <td><input type="number" name="staff2_rate" step="0.01" placeholder="12.50"></td>
+                <td><input type="number" name="staff2_hours" step="0.01" placeholder="8"></td>
+                <td><input type="text" name="staff2_notes" placeholder="OT, tips..."></td>
+              </tr>
+              <tr>
+                <td><input type="text" name="staff3_name" placeholder="Name"></td>
+                <td><input type="number" name="staff3_rate" step="0.01" placeholder="12.50"></td>
+                <td><input type="number" name="staff3_hours" step="0.01" placeholder="8"></td>
+                <td><input type="text" name="staff3_notes" placeholder="OT, tips..."></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="actions" style="margin-top:10px">
+            <button class="btn" type="submit">Send Payroll</button>
+            <button class="btn secondary" type="reset">Clear</button>
+            <div class="muted" style="margin-left:auto">Tip: open in browser and print for records</div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
