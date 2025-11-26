@@ -188,6 +188,17 @@ table.pay .result span{display:inline-block;min-width:56px;text-align:right;colo
 .cart-total{font-size:14px;font-weight:600}
 .paypal-wrap{margin-top:10px}
 
+/* availability time buttons */
+.time-btn{
+  background:linear-gradient(180deg,#fff,#fbfbfb);
+  border-radius:8px;
+  padding:6px 8px;
+  border:1px solid rgba(15,23,42,0.06);
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.time-btn:hover{ transform:translateY(-3px); box-shadow:0 8px 18px rgba(2,6,23,0.06); }
+
 /* responsive */
 @media (max-width:720px){
   .grid{grid-template-columns:1fr}

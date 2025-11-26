@@ -107,6 +107,12 @@
               </select>
               <div id="therapist-availability" class="muted" aria-live="polite" style="margin-top:6px;font-size:13px"></div>
 
+             <!-- Availability panel: lists therapists and clickable times -->
+             <div id="availability-panel" style="margin-top:10px;display:none" aria-live="polite">
+               <div class="muted" style="font-size:13px;margin-bottom:6px">Available times (click a time to choose therapist & time)</div>
+               <div id="availability-list" style="display:flex;flex-direction:column;gap:8px"></div>
+             </div>
++
              <!-- External availability controls -->
              <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
                <input type="checkbox" id="use-vagaro" />
@@ -562,23 +568,29 @@
     })();
   </script>
 
-  <!-- therapist availability & service details script -->
+  <!-- therapist availability & service details script (REPLACED) -->
   <script>
     (function(){
-      // mapping: use full therapist list for all services (Vicky, Amy, Lani, Sherry, Lynn)
-      const allTherapists = ["Vicky","Amy","Lani","Sherry","Lynn"];
+      // simple therapist list and schedule example (you can replace with dynamic source)
+      const therapists = ["Vicky","Amy","Lani","Sherry","Lynn"];
+      // example schedule keyed by ISO date (YYYY-MM-DD) -> therapist -> times (24h local strings)
+      const schedule = {
+        "2025-11-26": {
+          "Vicky": ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
+          "Amy":   ["18:45","19:00","19:15"],
+          "Lani":  ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
+          "Sherry": [], // add as needed
+          "Lynn":   []  // add as needed
+        }
+      };
 
-      // map every service value to the same therapist list for simplicity
+      // reuse earlier serviceMap generation
+      const allTherapists = therapists;
       const serviceMap = {};
       document.addEventListener('DOMContentLoaded', () => {
         const s = document.getElementById('service-select');
         if(s) Array.from(s.options).forEach(opt => { serviceMap[opt.value] = [...allTherapists]; });
       });
-
-      // example date rule: Lani unavailable on weekends
-      const dateUnavailable = {
-        "Lani": d => d && (d.getDay() === 0 || d.getDay() === 6) // Sun(0)/Sat(6)
-      };
 
       const serviceEl = document.getElementById('service-select');
       const dateEl = document.getElementById('date-input');
@@ -589,28 +601,107 @@
       const sdDesc = document.getElementById('sd-desc');
       const sdBook = document.getElementById('sd-book');
 
+      const availPanel = document.getElementById('availability-panel');
+      const availList = document.getElementById('availability-list');
+
       function formatList(arr){
         if(!arr || arr.length === 0) return 'none';
         if(arr.length === 1) return arr[0];
         return arr.slice(0,-1).join(', ') + ' and ' + arr.slice(-1);
       }
 
+      function timeToDisplay(t){
+        // t = "HH:MM" return like "4:30 PM"
+        const [hh,mm] = t.split(':').map(Number);
+        const dt = new Date();
+        dt.setHours(hh, mm, 0, 0);
+        return dt.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+      }
+
+      function buildAvailability(dateStr){
+        // show schedule for dateStr; fallback: use serviceMap only
+        availList.innerHTML = '';
+        if(!dateStr){
+          availPanel.style.display = 'none';
+          return;
+        }
+        const dateSchedule = schedule[dateStr] || {};
+        let any = false;
+        // iterate therapists and show their times (filter by service assignment if desired)
+        therapists.forEach(name => {
+          const times = dateSchedule[name] || [];
+          // only show therapists allowed for selected service
+          const svc = serviceEl.value;
+          const allowed = (serviceMap[svc] || []).includes(name);
+          if(!allowed) return;
+          const row = document.createElement('div');
+          row.style.display = 'flex';
+          row.style.alignItems = 'flex-start';
+          row.style.gap = '10px';
+          row.style.flexWrap = 'wrap';
+          const h = document.createElement('div');
+          h.style.minWidth = '90px';
+          h.style.fontWeight = 700;
+          h.textContent = name;
+          row.appendChild(h);
+          const timesWrap = document.createElement('div');
+          timesWrap.style.display = 'flex';
+          timesWrap.style.flexWrap = 'wrap';
+          timesWrap.style.gap = '6px';
+          if(times.length === 0){
+            const none = document.createElement('div');
+            none.className = 'muted';
+            none.textContent = 'No times';
+            timesWrap.appendChild(none);
+          } else {
+            any = true;
+            times.forEach(t => {
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'time-btn';
+              btn.style.border = '1px solid rgba(15,23,42,0.06)';
+              btn.style.background = 'white';
+              btn.style.padding = '6px 8px';
+              btn.style.borderRadius = '8px';
+              btn.style.cursor = 'pointer';
+              btn.style.fontSize = '13px';
+              btn.textContent = timeToDisplay(t);
+              btn.dataset.therapist = name;
+              btn.dataset.time = t;
+              btn.addEventListener('click', () => {
+                // set therapist and time inputs, sync payroll
+                therapistEl.value = name;
+                // set time input to t
+                const timeInput = document.querySelector('input[name="Time"]');
+                if(timeInput) timeInput.value = t;
+                statusEl.textContent = `Selected ${name} at ${timeToDisplay(t)}.`;
+                // run sync so payroll receives assignment
+                if(window.syncCartToPayroll) window.syncCartToPayroll();
+              });
+              timesWrap.appendChild(btn);
+            });
+          }
+          row.appendChild(timesWrap);
+          availList.appendChild(row);
+        });
+        availPanel.style.display = any ? 'block' : 'none';
+      }
+
       function updateTherapists(){
         const service = serviceEl.value;
         const dateVal = dateEl.value;
         const date = dateVal ? new Date(dateVal + 'T00:00:00') : null;
-
         let list = serviceMap[service] ? [...serviceMap[service]] : [];
 
-        // apply date-based removals
+        // example date-based rule still applied (Lani weekends off)
         if(date){
           list = list.filter(name => {
-            const rule = dateUnavailable[name];
+            const rule = ({"Lani": d => d && (d.getDay() === 0 || d.getDay() === 6)})[name];
             return typeof rule === 'function' ? !rule(date) : true;
           });
         }
 
-        // rebuild select options (keep the "Any" option)
+        // rebuild therapist options
         therapistEl.innerHTML = '';
         const anyOpt = document.createElement('option');
         anyOpt.value = '';
@@ -634,62 +725,34 @@
           statusEl.textContent = 'Available: ' + formatList(list) + '.';
         }
 
-        // update service details panel from selected option data attributes
+        // update service details panel
         const opt = serviceEl.selectedOptions[0];
         if(opt){
           const price = opt.getAttribute('data-price') || '0.00';
           const points = opt.getAttribute('data-points') || '0';
           const desc = opt.getAttribute('data-desc') || '';
-          if(sdPrice) sdPrice.textContent = '$' + Number(price).toFixed(2);
-          if(sdPoints) sdPoints.textContent = points;
-          if(sdDesc) sdDesc.textContent = desc;
+          document.getElementById('sd-price').textContent = '$' + Number(price).toFixed(2);
+          document.getElementById('sd-points').textContent = points;
+          document.getElementById('sd-desc').textContent = desc;
         }
+
+        // build availability UI for chosen date (ISO date)
+        const isoDate = dateEl.value;
+        buildAvailability(isoDate);
       }
 
-      // events
+      // wire events
       serviceEl.addEventListener('change', updateTherapists);
       dateEl.addEventListener('change', updateTherapists);
-      // Book Now: focus the form and date field, ensure selected service is set
-      sdBook.addEventListener('click', function(){
-        document.getElementById('tab-appointment').checked = true;
-        document.querySelector('form[action^="mailto:info"] input[name="Date"]').focus();
-      });
 
-      // external availability controls
-      const useVagaroCheckbox = document.getElementById('use-vagaro');
-      const loadVagaroBtn = document.getElementById('load-vagaro');
-      const vagaroWrap = document.getElementById('vagaro-wrap');
-      const vagaroIframe = document.getElementById('vagaro-iframe');
-      // the exact widget URL you pasted (keeps it safe by only assigning when requested)
-      const VAGARO_WIDGET_URL = "https://www.vagaro.com//Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVM4SakI1KjE3knRkP3ywpWVXk0IjFrFOrvdEdsZ/CVa7nEj6MRQuAwfBBGT5tOpfUYvKjmzdwCZhUVBSZgZ04zg5ODJm5RfAQvgigpMCzk85F500OkxY7h72LHqdhM0GKaslwm/63uDPVtlwPtiq0zxGfszkWkfL5W+J0D0EkvUeW14OtUdj8jJb5pybomIa3DUm18bl1nmoOtPVAdZ9ZJ5RdQHGeGZ1NWgQ+x9CqA/rxUWUoOLarHcF9qDm59aYGdKtT6r2+2Q2Z47D7SKuVTOMtAlCe3Niqc+vnHiObhEj4TzIrL8I0rNYX57wQIXRJaZ4Mb8dCHqXiu3w9R+nwhYvGA0C6rrJlSUk8ux5ZZgMQOCqw7vFr4LJh87bywl163VTQNGhFwev0M1AzkmQIjFivS0DfLpuM66KyICq9pPzBPQncS7AAPIVi848mlEadg==";
-
-      function toggleExternalAvail(enabled){
-        if(enabled){
-          therapistEl.disabled = true;
-          statusEl.textContent = 'Using live Vagaro availability. Load the widget to choose a therapist/time.';
+      // also re-run availability render when user checks "Use Vagaro" because iframe may be used instead
+      document.getElementById('use-vagaro')?.addEventListener('change', (e)=> {
+        if(e.target.checked){
+          // hide our availability if user prefers Vagaro
+          document.getElementById('availability-panel').style.display = 'none';
         } else {
-          therapistEl.disabled = false;
-          statusEl.textContent = '';
-          vagaroWrap.style.display = 'none';
-          vagaroIframe.src = '';
-          useVagaroCheckbox.checked = false;
+          updateTherapists();
         }
-      }
-
-      // clicking load will show the iframe and enable the live widget mode
-      loadVagaroBtn.addEventListener('click', function(){
-        if(!useVagaroCheckbox.checked){
-          useVagaroCheckbox.checked = true;
-        }
-        vagaroWrap.style.display = 'block';
-        if(!vagaroIframe.src) vagaroIframe.src = VAGARO_WIDGET_URL;
-        toggleExternalAvail(true);
-        // scroll widget into view
-        vagaroWrap.scrollIntoView({behavior:'smooth', block:'center'});
-      });
-
-      useVagaroCheckbox.addEventListener('change', function(){
-        toggleExternalAvail(!!useVagaroCheckbox.checked);
       });
 
       // initial populate
