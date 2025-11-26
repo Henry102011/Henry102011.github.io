@@ -181,9 +181,22 @@ table.pay .result span{display:inline-block;min-width:56px;text-align:right;colo
 .service-details .sd-desc{line-height:1.35}
 .service-details #sd-book{margin-top:8px}
 
+/* cart styles */
+.service-cart{margin-top:8px}
+.cart thead th{font-weight:600;color:var(--muted);font-size:13px;padding:6px 6px}
+.cart tbody td{padding:6px 6px;border-bottom:1px solid rgba(15,23,42,0.02)}
+.cart-total{font-size:14px;font-weight:600}
+.paypal-wrap{margin-top:10px}
+
 /* responsive */
 @media (max-width:720px){
   .grid{grid-template-columns:1fr}
   .thumbs img{width:72px;height:48px}
   .wrap{padding:16px}
+}
+
+/* small responsive tweaks */
+@media (max-width:520px){
+  .cart thead th:nth-child(4), .cart tbody td:nth-child(4){display:block;text-align:right}
+  .cart thead th:nth-child(5), .cart tbody td:nth-child(5){display:none}
 }

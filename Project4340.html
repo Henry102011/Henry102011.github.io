@@ -67,6 +67,28 @@
                 <div class="sd-price">Starting at <strong id="sd-price">$0.00</strong></div>
                 <div class="sd-points" style="margin-top:4px">Earned Points: <strong id="sd-points">0</strong></div>
                 <div class="sd-desc" id="sd-desc" style="margin-top:8px;color:var(--muted);font-size:13px">Select a service to see details.</div>
+
+                <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+                  <label style="font-size:13px;margin:0">Qty</label>
+                  <input id="srv-qty" type="number" min="1" value="1" style="width:70px;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.06)">
+                  <button type="button" id="add-service" class="btn small" style="margin-left:auto">Add Service</button>
+                </div>
+
+                <!-- cart -->
+                <div id="service-cart" class="service-cart" style="margin-top:12px;display:none">
+                  <table class="cart" style="width:100%;border-collapse:collapse">
+                    <thead><tr><th style="text-align:left">Service</th><th style="width:60px">Qty</th><th style="width:90px;text-align:right">Price</th><th style="width:90px;text-align:right">Subtotal</th><th style="width:34px"></th></tr></thead>
+                    <tbody id="cart-body"></tbody>
+                  </table>
+                  <div class="cart-total" style="display:flex;justify-content:flex-end;gap:12px;margin-top:8px">
+                    <div class="muted">Total: <strong id="cart-total">$0.00</strong></div>
+                  </div>
+                </div>
+
+                <div style="margin-top:12px" id="paypal-wrap" class="paypal-wrap">
+                  <div id="paypal-button-container"></div>
+                </div>
+
                 <div style="margin-top:10px"><button type="button" id="sd-book" class="btn">Book Now</button></div>
               </div>
             </div>
@@ -391,6 +413,123 @@
           nextRow = 4;
           recalc();
         }, 10);
+      });
+    })();
+  </script>
+
+  <!-- appointment cart + PayPal script -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+  <script>
+    (function(){
+      const serviceSelect = document.getElementById('service-select');
+      const qtyInput = document.getElementById('srv-qty');
+      const addBtn = document.getElementById('add-service');
+      const cartWrap = document.getElementById('service-cart');
+      const cartBody = document.getElementById('cart-body');
+      const cartTotalEl = document.getElementById('cart-total');
+      const paypalWrap = document.getElementById('paypal-wrap');
+      const form = document.querySelector('form[action^="mailto:info"]');
+
+      let cart = []; // {id, name, price, qty}
+
+      const fmt = v => Number(v||0).toFixed(2);
+
+      function renderCart(){
+        cartBody.innerHTML = '';
+        if(cart.length === 0){
+          cartWrap.style.display = 'none';
+          paypalWrap.style.display = 'none';
+          return;
+        }
+        cartWrap.style.display = 'block';
+        paypalWrap.style.display = 'block';
+        let total = 0;
+        cart.forEach((item, i) => {
+          const tr = document.createElement('tr');
+          const subtotal = item.price * item.qty;
+          total += subtotal;
+          tr.innerHTML = `
+            <td>${item.name}</td>
+            <td style="text-align:center">${item.qty}</td>
+            <td style="text-align:right">$${fmt(item.price)}</td>
+            <td style="text-align:right">$${fmt(subtotal)}</td>
+            <td style="text-align:right"><button type="button" class="remove-service" data-i="${i}" style="border:none;background:transparent;color:var(--muted);cursor:pointer">✕</button></td>
+          `;
+          cartBody.appendChild(tr);
+        });
+        cartTotalEl.textContent = '$' + fmt(total);
+        // ensure hidden inputs reflect cart for mailto
+        syncHiddenFields();
+      }
+
+      function syncHiddenFields(){
+        // remove existing dynamic service hidden fields
+        Array.from(form.querySelectorAll('input[name^="cart_"]')).forEach(el => el.remove());
+        let total = 0;
+        cart.forEach((it, idx) => {
+          const base = `cart_${idx}_`;
+          const name = document.createElement('input'); name.type='hidden'; name.name = base + 'name'; name.value = it.name; form.appendChild(name);
+          const price = document.createElement('input'); price.type='hidden'; price.name = base + 'price'; price.value = fmt(it.price); form.appendChild(price);
+          const qty = document.createElement('input'); qty.type='hidden'; qty.name = base + 'qty'; qty.value = it.qty; form.appendChild(qty);
+          const sub = document.createElement('input'); sub.type='hidden'; sub.name = base + 'subtotal'; sub.value = fmt(it.price * it.qty); form.appendChild(sub);
+          total += it.price * it.qty;
+        });
+        // total hidden
+        let existingTotal = form.querySelector('input[name="appointment_total"]');
+        if(!existingTotal){ existingTotal = document.createElement('input'); existingTotal.type='hidden'; existingTotal.name='appointment_total'; form.appendChild(existingTotal); }
+        existingTotal.value = fmt(total);
+      }
+
+      addBtn.addEventListener('click', () => {
+        const opt = serviceSelect.selectedOptions[0];
+        if(!opt) return;
+        const name = opt.textContent;
+        const price = Number(opt.getAttribute('data-price') || 0);
+        const qty = Math.max(1, Number(qtyInput.value||1));
+        // if same service exists, increase qty
+        const existing = cart.find(c => c.name === name);
+        if(existing){ existing.qty += qty; } else { cart.push({name, price, qty}); }
+        renderCart();
+      });
+
+      cartBody.addEventListener('click', (e) => {
+        if(e.target.matches('.remove-service')){
+          const i = Number(e.target.getAttribute('data-i'));
+          if(!isNaN(i)) cart.splice(i,1);
+          renderCart();
+        }
+      });
+
+      // PayPal Buttons: create order for total, capture then submit form
+      paypal.Buttons({
+        createOrder(data, actions){
+          const total = cart.reduce((s,i)=> s + i.price * i.qty, 0);
+          return actions.order.create({
+            purchase_units: [{ amount: { value: fmt(total) } }]
+          });
+        },
+        onApprove(data, actions){
+          return actions.order.capture().then(function(details){
+            // record payment details in hidden fields
+            let pId = form.querySelector('input[name="paypal_order_id"]');
+            if(!pId){ pId = document.createElement('input'); pId.type='hidden'; pId.name='paypal_order_id'; form.appendChild(pId);}
+            pId.value = details.id || '';
+            let pStatus = form.querySelector('input[name="paypal_status"]');
+            if(!pStatus){ pStatus = document.createElement('input'); pStatus.type='hidden'; pStatus.name='paypal_status'; form.appendChild(pStatus);}
+            pStatus.value = details.status || '';
+            // submit the booking form (mailto)
+            setTimeout(()=> form.submit(), 200);
+          });
+        },
+        onError(err){
+          console.error('PayPal error', err);
+          alert('Payment failed. Please try again or book without paying.');
+        }
+      }).render('#paypal-button-container');
+
+      // Make sure cart persists on load if desired
+      document.addEventListener('DOMContentLoaded', () => {
+        renderCart();
       });
     })();
   </script>
