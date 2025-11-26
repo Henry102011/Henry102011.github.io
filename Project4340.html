@@ -83,6 +83,13 @@
                   <div class="cart-total" style="display:flex;justify-content:flex-end;gap:12px;margin-top:8px">
                     <div class="muted">Total: <strong id="cart-total">$0.00</strong></div>
                   </div>
+
+                  <!-- appointment-wide tip for cart (syncs to payroll) -->
+                  <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+                    <label style="font-size:13px;margin:0">Tip</label>
+                    <input id="appointment-tip" type="number" min="0" step="0.01" value="0.00" style="width:110px;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);margin-left:8px">
+                    <div class="muted" style="margin-left:auto;font-size:13px">Tip will be included in payroll sync</div>
+                  </div>
                 </div>
 
                 <div style="margin-top:12px" id="paypal-wrap" class="paypal-wrap">
@@ -429,16 +436,21 @@
       const cartTotalEl = document.getElementById('cart-total');
       const paypalWrap = document.getElementById('paypal-wrap');
       const form = document.querySelector('form[action^="mailto:info"]');
+      const appointmentTipInput = document.getElementById('appointment-tip');
 
-      let cart = []; // {id, name, price, qty}
+      // expose cart to window so payroll sync can read it
+      window.cart = [];
 
       const fmt = v => Number(v||0).toFixed(2);
 
       function renderCart(){
         cartBody.innerHTML = '';
+        const cart = window.cart;
         if(cart.length === 0){
           cartWrap.style.display = 'none';
           paypalWrap.style.display = 'none';
+          // sync payroll to clear any previous auto rows
+          if(window.syncCartToPayroll) window.syncCartToPayroll();
           return;
         }
         cartWrap.style.display = 'block';
@@ -457,16 +469,21 @@
           `;
           cartBody.appendChild(tr);
         });
-        cartTotalEl.textContent = '$' + fmt(total);
+        // include appointment tip in displayed total
+        const tip = Number(appointmentTipInput?.value || 0);
+        const grand = total + tip;
+        cartTotalEl.textContent = '$' + fmt(grand);
         // ensure hidden inputs reflect cart for mailto
         syncHiddenFields();
+        // trigger payroll sync if available
+        if(window.syncCartToPayroll) window.syncCartToPayroll();
       }
 
       function syncHiddenFields(){
         // remove existing dynamic service hidden fields
         Array.from(form.querySelectorAll('input[name^="cart_"]')).forEach(el => el.remove());
         let total = 0;
-        cart.forEach((it, idx) => {
+        window.cart.forEach((it, idx) => {
           const base = `cart_${idx}_`;
           const name = document.createElement('input'); name.type='hidden'; name.name = base + 'name'; name.value = it.name; form.appendChild(name);
           const price = document.createElement('input'); price.type='hidden'; price.name = base + 'price'; price.value = fmt(it.price); form.appendChild(price);
@@ -474,6 +491,10 @@
           const sub = document.createElement('input'); sub.type='hidden'; sub.name = base + 'subtotal'; sub.value = fmt(it.price * it.qty); form.appendChild(sub);
           total += it.price * it.qty;
         });
+        // include appointment tip hidden
+        let tipEl = form.querySelector('input[name="appointment_tip"]');
+        if(!tipEl){ tipEl = document.createElement('input'); tipEl.type='hidden'; tipEl.name='appointment_tip'; form.appendChild(tipEl); }
+        tipEl.value = fmt(Number(appointmentTipInput?.value || 0));
         // total hidden
         let existingTotal = form.querySelector('input[name="appointment_total"]');
         if(!existingTotal){ existingTotal = document.createElement('input'); existingTotal.type='hidden'; existingTotal.name='appointment_total'; form.appendChild(existingTotal); }
@@ -487,23 +508,27 @@
         const price = Number(opt.getAttribute('data-price') || 0);
         const qty = Math.max(1, Number(qtyInput.value||1));
         // if same service exists, increase qty
-        const existing = cart.find(c => c.name === name);
-        if(existing){ existing.qty += qty; } else { cart.push({name, price, qty}); }
+        const existing = window.cart.find(c => c.name === name);
+        if(existing){ existing.qty += qty; } else { window.cart.push({name, price, qty}); }
         renderCart();
       });
 
       cartBody.addEventListener('click', (e) => {
         if(e.target.matches('.remove-service')){
           const i = Number(e.target.getAttribute('data-i'));
-          if(!isNaN(i)) cart.splice(i,1);
+          if(!isNaN(i)) window.cart.splice(i,1);
           renderCart();
         }
+      });
+
+      appointmentTipInput.addEventListener('input', () => {
+        renderCart();
       });
 
       // PayPal Buttons: create order for total, capture then submit form
       paypal.Buttons({
         createOrder(data, actions){
-          const total = cart.reduce((s,i)=> s + i.price * i.qty, 0);
+          const total = window.cart.reduce((s,i)=> s + i.price * i.qty, 0) + Number(appointmentTipInput?.value || 0);
           return actions.order.create({
             purchase_units: [{ amount: { value: fmt(total) } }]
           });
@@ -531,6 +556,9 @@
       document.addEventListener('DOMContentLoaded', () => {
         renderCart();
       });
+
+      // expose a hook so payroll can be synced
+      window.renderAppointmentCart = renderCart;
     })();
   </script>
 
@@ -666,6 +694,124 @@
 
       // initial populate
       document.addEventListener('DOMContentLoaded', updateTherapists);
+    })();
+  </script>
+
+  <!-- Cart → Payroll sync (global) -->
+  <script>
+    (function(){
+      // Wait until payroll functions exist on window
+      function ensureReady(){
+        return !!(window.renderAppointmentCart && window.cart !== undefined && window.payrollRecalc && window.payrollAddRow);
+      }
+
+      function fmt(v){ return Number(v||0).toFixed(2); }
+
+      // Remove existing auto-generated payroll rows (data-auto="1")
+      function clearAutoRows(){
+        const body = document.getElementById('payroll-body');
+        Array.from(body.querySelectorAll('tr[data-auto="1"]')).forEach(tr => tr.remove());
+      }
+
+      // try to find payroll row index for staff name; returns tr or null
+      function findPayrollRowByName(name){
+        const rows = document.querySelectorAll('#payroll-body tr[data-row]');
+        for(const tr of rows){
+          const input = tr.querySelector('input[name^="staff"][name$="_name"]');
+          if(input && input.value === name) return tr;
+        }
+        return null;
+      }
+
+      // create payroll row and mark auto
+      function createPayrollRowFor(name, firstServiceValue){
+        // add a row
+        window.payrollAddRow();
+        // newly added row will have data-row = next created (we can pick last row)
+        const rows = document.querySelectorAll('#payroll-body tr[data-row]');
+        const tr = rows[rows.length - 1];
+        tr.dataset.auto = "1";
+        // set staff name
+        const nameInput = tr.querySelector('input[name^="staff"][name$="_name"]');
+        if(nameInput) nameInput.value = name;
+        // set service select to first service if possible
+        const srv = tr.querySelector('select.srv');
+        if(srv && firstServiceValue){
+          const opt = Array.from(srv.options).find(o => o.value === firstServiceValue);
+          if(opt) srv.value = opt.value;
+        }
+        return tr;
+      }
+
+      // populate or update a payroll row with aggregated data
+      function fillPayrollRow(tr, servicesList, totalQty, tips){
+        // servicesList: [{name, price, qty, subtotal}]
+        // totalQty, tips numeric
+        const nameInput = tr.querySelector('input[name^="staff"][name$="_name"]');
+        if(nameInput && !nameInput.value) nameInput.value = 'Unassigned';
+        // try to set service select to first service
+        const firstSvc = servicesList[0]?.name || null;
+        const srvSelect = tr.querySelector('select.srv');
+        if(srvSelect && firstSvc){
+          // find option by matching visible text containing firstSvc name (options use a formatted text), or exact value
+          const opt = Array.from(srvSelect.options).find(o => o.value === firstSvc || o.textContent.includes(firstSvc));
+          if(opt) srvSelect.value = opt.value;
+        }
+        // set qty if available (use qty input)
+        const qtyInput = tr.querySelector('input.qty');
+        if(qtyInput) qtyInput.value = totalQty;
+        // set tips
+        const tipsInput = tr.querySelector('input.tips');
+        if(tipsInput) tipsInput.value = fmt(tips);
+        // set notes to list of services
+        const notesInput = tr.querySelector('input[name^="staff"][name$="_notes"]');
+        if(notesInput) notesInput.value = servicesList.map(s=>`${s.name} x${s.qty}`).join('; ');
+      }
+
+      // main sync function
+      window.syncCartToPayroll = function(){
+        if(!ensureReady()) return;
+        const cart = window.cart || [];
+        const appointmentTip = Number(document.getElementById('appointment-tip')?.value || 0);
+        // decide therapist assignment: use selected therapist, otherwise "Unassigned"
+        const therapistSel = document.getElementById('therapist-select');
+        const therapist = therapistSel && therapistSel.value ? therapistSel.value : 'Unassigned';
+
+        // for simplicity assign entire cart + tip to single selected therapist
+        // aggregate cart totals
+        const servicesList = cart.map(c => ({ name: c.name, price: Number(c.price||0), qty: Number(c.qty||0), subtotal: Number(c.price||0)*Number(c.qty||0) }));
+        const subtotal = servicesList.reduce((s,i)=> s + i.subtotal, 0);
+        const totalTips = appointmentTip;
+        const gross = subtotal + totalTips;
+
+        // clear previously auto rows
+        clearAutoRows();
+
+        // find or create payroll row for therapist
+        let row = findPayrollRowByName(therapist);
+        if(!row){
+          row = createPayrollRowFor(therapist, servicesList[0]?.name);
+        } else {
+          // mark as auto so future syncs remove it
+          row.dataset.auto = "1";
+        }
+
+        // fill row fields
+        fillPayrollRow(row, servicesList, servicesList.reduce((s,i)=> s + i.qty,0), totalTips);
+
+        // ensure hidden gross/tax/net updated by calling payrollRecalc
+        window.payrollRecalc();
+      };
+
+      // also auto-sync when therapist or date changes
+      document.getElementById('therapist-select')?.addEventListener('change', () => { if(window.syncCartToPayroll) window.syncCartToPayroll(); });
+      document.getElementById('date-input')?.addEventListener('change', () => { if(window.syncCartToPayroll) window.syncCartToPayroll(); });
+
+      // ensure ready after page scripts load
+      window.addEventListener('load', ()=> {
+        // small timeout to let payroll script expose functions
+        setTimeout(()=>{ if(window.syncCartToPayroll) window.syncCartToPayroll(); }, 200);
+      });
     })();
   </script>
 
