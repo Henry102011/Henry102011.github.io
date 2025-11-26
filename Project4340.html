@@ -45,22 +45,30 @@
             <div>
               <label class="field">Service</label>
               <select id="service-select" name="Service" required>
-                <!-- expanded options (from screenshot) -->
-                <option>Thai, Swedish, Combo, Deep Tissue, Prenatal - 1 hr</option>
-                <option>Thai, Swedish, Combo, Deep Tissue, Prenatal - 75 Mins</option>
-                <option>Thai, Swedish, Combo, Deep Tissue, Prenatal - 90 Mins</option>
-                <option>Thai, Swedish, Combo, Deep Tissue, Prenatal - 2 hr</option>
-                <option>Couples Massage - 1 hr</option>
-                <option>Couples Massage - 75 min</option>
-                <option>Couples Massage - 90 min</option>
-                <option>Deep Tissue - 1 hr</option>
-                <option>Swedish - 1 hr</option>
-                <option>Foot Massage - 30 min</option>
-                <option>Foot Massage - 45 min</option>
-                <option>Prenatal - 60 min</option>
-                <option>Hot Stone - 75 min</option>
-                <!-- add or edit entries as needed -->
+                <option value="Regular Massage - 40 Mins" data-price="60.00" data-points="0" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">Regular Massage - 40 Mins — $60</option>
+                <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 1 hr" data-price="80.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">Thai/Swedish/Combo/Deep Tissue/Prenatal - 1 hr — $80</option>
+                <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 75 Mins" data-price="100.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 75 Mins — $100</option>
+                <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 90 Mins" data-price="120.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 90 Mins — $120</option>
+                <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 2 hr" data-price="150.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 2 hr — $150</option>
+                <option value="Couples Massage - 1 hr" data-price="150.00" data-points="2" data-desc="Experience relaxation and connection with our Couples Massage bundle, featuring two one-hour massages designed to rejuvenate both body and mind.">Couples Massage - 1 hr — $150</option>
+                <option value="Couples Massage - 75 min" data-price="200.00" data-points="2" data-desc="Experience relaxation and connection with our Couples Massage, a 75-minute session designed to rejuvenate both body and mind.">Couples Massage - 75 min — $200</option>
+                <option value="Couples Massage - 90 min" data-price="240.00" data-points="2" data-desc="Experience ultimate relaxation with our Couples Massage bundle, offering a rejuvenating 90-minute session.">Couples Massage - 90 min — $240</option>
+                <option value="Couples Massage - 2 hrs" data-price="300.00" data-points="2" data-desc="Experience ultimate relaxation with our Couples Massage bundle, designed to rejuvenate both body and mind over a two-hour session.">Couples Massage - 2 hrs — $300</option>
+                <option value="Deep Tissue - 1 hr" data-price="80.00" data-points="1" data-desc="Deep tissue techniques to release chronic tension">Deep Tissue - 1 hr — $80</option>
+                <option value="Swedish - 1 hr" data-price="80.00" data-points="1" data-desc="Gentle, relaxing Swedish massage using long gliding strokes">Swedish - 1 hr — $80</option>
+                <option value="Foot Massage - 30 min" data-price="40.00" data-points="0" data-desc="Reflexology and foot care">Foot Massage - 30 min — $40</option>
+                <option value="Foot Massage - 45 min" data-price="60.00" data-points="0" data-desc="Extended foot work and calf massage">Foot Massage - 45 min — $60</option>
+                <option value="Prenatal - 60 min" data-price="80.00" data-points="1" data-desc="Gentle prenatal massage adapted for expectant mothers">Prenatal - 60 min — $80</option>
+                <option value="Hot Stone - 75 min" data-price="100.00" data-points="1" data-desc="Hot stone therapy to soothe muscles and promote deep relaxation">Hot Stone - 75 min — $100</option>
               </select>
+
+              <!-- service details panel -->
+              <div id="service-details" class="service-details" aria-live="polite" style="margin-top:10px">
+                <div class="sd-price">Starting at <strong id="sd-price">$0.00</strong></div>
+                <div class="sd-points" style="margin-top:4px">Earned Points: <strong id="sd-points">0</strong></div>
+                <div class="sd-desc" id="sd-desc" style="margin-top:8px;color:var(--muted);font-size:13px">Select a service to see details.</div>
+                <div style="margin-top:10px"><button type="button" id="sd-book" class="btn">Book Now</button></div>
+              </div>
             </div>
             <div>
               <label class="field">Therapist (optional)</label>
@@ -317,16 +325,18 @@
     })();
   </script>
 
-  <!-- therapist availability script -->
+  <!-- therapist availability & service details script -->
   <script>
     (function(){
-      // mapping of service -> therapists (names requested)
-      const serviceMap = {
-        "Thai Massage": ["Vicky","Amy","Lani"],
-        "Oil Massage": ["Amy","Sherry","Lynn"],
-        "Foot Massage": ["Lani","Lynn","Vicky"],
-        "Couples": ["Vicky","Amy","Lani","Sherry","Lynn"]
-      };
+      // mapping: use full therapist list for all services (Vicky, Amy, Lani, Sherry, Lynn)
+      const allTherapists = ["Vicky","Amy","Lani","Sherry","Lynn"];
+
+      // map every service value to the same therapist list for simplicity
+      const serviceMap = {};
+      document.addEventListener('DOMContentLoaded', () => {
+        const s = document.getElementById('service-select');
+        if(s) Array.from(s.options).forEach(opt => { serviceMap[opt.value] = [...allTherapists]; });
+      });
 
       // example date rule: Lani unavailable on weekends
       const dateUnavailable = {
@@ -337,6 +347,10 @@
       const dateEl = document.getElementById('date-input');
       const therapistEl = document.getElementById('therapist-select');
       const statusEl = document.getElementById('therapist-availability');
+      const sdPrice = document.getElementById('sd-price');
+      const sdPoints = document.getElementById('sd-points');
+      const sdDesc = document.getElementById('sd-desc');
+      const sdBook = document.getElementById('sd-book');
 
       function formatList(arr){
         if(!arr || arr.length === 0) return 'none';
@@ -382,11 +396,27 @@
           });
           statusEl.textContent = 'Available: ' + formatList(list) + '.';
         }
+
+        // update service details panel from selected option data attributes
+        const opt = serviceEl.selectedOptions[0];
+        if(opt){
+          const price = opt.getAttribute('data-price') || '0.00';
+          const points = opt.getAttribute('data-points') || '0';
+          const desc = opt.getAttribute('data-desc') || '';
+          if(sdPrice) sdPrice.textContent = '$' + Number(price).toFixed(2);
+          if(sdPoints) sdPoints.textContent = points;
+          if(sdDesc) sdDesc.textContent = desc;
+        }
       }
 
       // events
       serviceEl.addEventListener('change', updateTherapists);
       dateEl.addEventListener('change', updateTherapists);
+      // Book Now: focus the form and date field, ensure selected service is set
+      sdBook.addEventListener('click', function(){
+        document.getElementById('tab-appointment').checked = true;
+        document.querySelector('form[action^="mailto:info"] input[name="Date"]').focus();
+      });
 
       // initial populate
       document.addEventListener('DOMContentLoaded', updateTherapists);
