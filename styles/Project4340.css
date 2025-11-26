@@ -199,6 +199,9 @@ table.pay .result span{display:inline-block;min-width:56px;text-align:right;colo
 }
 .time-btn:hover{ transform:translateY(-3px); box-shadow:0 8px 18px rgba(2,6,23,0.06); }
 
+/* Vagaro status message */
+#vagaro-status{font-size:13px;color:var(--muted);margin-top:6px}
+
 /* responsive */
 @media (max-width:720px){
   .grid{grid-template-columns:1fr}

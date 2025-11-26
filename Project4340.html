@@ -118,7 +118,9 @@
                <input type="checkbox" id="use-vagaro" />
                <label for="use-vagaro" style="font-size:13px;color:var(--muted)">Use live Vagaro availability</label>
                <button type="button" id="load-vagaro" class="btn small" style="margin-left:auto">Load Vagaro</button>
++              <button type="button" id="import-vagaro" class="btn small" style="margin-left:8px">Import Vagaro selection</button>
              </div>
++            <div id="vagaro-status" style="margin-top:8px;font-size:13px;color:var(--muted)"></div>
 
              <!-- Vagaro iframe container (loaded on demand) -->
              <div id="vagaro-wrap" style="margin-top:10px;display:none">
@@ -755,128 +757,13 @@
         }
       });
 
-      // initial populate
-      document.addEventListener('DOMContentLoaded', updateTherapists);
-    })();
-  </script>
+      // therapist selection import feature
+      const useVagaroCheckbox = document.getElementById('use-vagaro');
+      const loadVagaroBtn = document.getElementById('load-vagaro');
+      const vagaroWrap = document.getElementById('vagaro-wrap');
+      const vagaroIframe = document.getElementById('vagaro-iframe');
+      const importVagaroBtn = document.getElementById('import-vagaro');
+      const vagaroStatus = document.getElementById('vagaro-status');
 
-  <!-- Cart → Payroll sync (global) -->
-  <script>
-    (function(){
-      // Wait until payroll functions exist on window
-      function ensureReady(){
-        return !!(window.renderAppointmentCart && window.cart !== undefined && window.payrollRecalc && window.payrollAddRow);
-      }
-
-      function fmt(v){ return Number(v||0).toFixed(2); }
-
-      // Remove existing auto-generated payroll rows (data-auto="1")
-      function clearAutoRows(){
-        const body = document.getElementById('payroll-body');
-        Array.from(body.querySelectorAll('tr[data-auto="1"]')).forEach(tr => tr.remove());
-      }
-
-      // try to find payroll row index for staff name; returns tr or null
-      function findPayrollRowByName(name){
-        const rows = document.querySelectorAll('#payroll-body tr[data-row]');
-        for(const tr of rows){
-          const input = tr.querySelector('input[name^="staff"][name$="_name"]');
-          if(input && input.value === name) return tr;
-        }
-        return null;
-      }
-
-      // create payroll row and mark auto
-      function createPayrollRowFor(name, firstServiceValue){
-        // add a row
-        window.payrollAddRow();
-        // newly added row will have data-row = next created (we can pick last row)
-        const rows = document.querySelectorAll('#payroll-body tr[data-row]');
-        const tr = rows[rows.length - 1];
-        tr.dataset.auto = "1";
-        // set staff name
-        const nameInput = tr.querySelector('input[name^="staff"][name$="_name"]');
-        if(nameInput) nameInput.value = name;
-        // set service select to first service if possible
-        const srv = tr.querySelector('select.srv');
-        if(srv && firstServiceValue){
-          const opt = Array.from(srv.options).find(o => o.value === firstServiceValue);
-          if(opt) srv.value = opt.value;
-        }
-        return tr;
-      }
-
-      // populate or update a payroll row with aggregated data
-      function fillPayrollRow(tr, servicesList, totalQty, tips){
-        // servicesList: [{name, price, qty, subtotal}]
-        // totalQty, tips numeric
-        const nameInput = tr.querySelector('input[name^="staff"][name$="_name"]');
-        if(nameInput && !nameInput.value) nameInput.value = 'Unassigned';
-        // try to set service select to first service
-        const firstSvc = servicesList[0]?.name || null;
-        const srvSelect = tr.querySelector('select.srv');
-        if(srvSelect && firstSvc){
-          // find option by matching visible text containing firstSvc name (options use a formatted text), or exact value
-          const opt = Array.from(srvSelect.options).find(o => o.value === firstSvc || o.textContent.includes(firstSvc));
-          if(opt) srvSelect.value = opt.value;
-        }
-        // set qty if available (use qty input)
-        const qtyInput = tr.querySelector('input.qty');
-        if(qtyInput) qtyInput.value = totalQty;
-        // set tips
-        const tipsInput = tr.querySelector('input.tips');
-        if(tipsInput) tipsInput.value = fmt(tips);
-        // set notes to list of services
-        const notesInput = tr.querySelector('input[name^="staff"][name$="_notes"]');
-        if(notesInput) notesInput.value = servicesList.map(s=>`${s.name} x${s.qty}`).join('; ');
-      }
-
-      // main sync function
-      window.syncCartToPayroll = function(){
-        if(!ensureReady()) return;
-        const cart = window.cart || [];
-        const appointmentTip = Number(document.getElementById('appointment-tip')?.value || 0);
-        // decide therapist assignment: use selected therapist, otherwise "Unassigned"
-        const therapistSel = document.getElementById('therapist-select');
-        const therapist = therapistSel && therapistSel.value ? therapistSel.value : 'Unassigned';
-
-        // for simplicity assign entire cart + tip to single selected therapist
-        // aggregate cart totals
-        const servicesList = cart.map(c => ({ name: c.name, price: Number(c.price||0), qty: Number(c.qty||0), subtotal: Number(c.price||0)*Number(c.qty||0) }));
-        const subtotal = servicesList.reduce((s,i)=> s + i.subtotal, 0);
-        const totalTips = appointmentTip;
-        const gross = subtotal + totalTips;
-
-        // clear previously auto rows
-        clearAutoRows();
-
-        // find or create payroll row for therapist
-        let row = findPayrollRowByName(therapist);
-        if(!row){
-          row = createPayrollRowFor(therapist, servicesList[0]?.name);
-        } else {
-          // mark as auto so future syncs remove it
-          row.dataset.auto = "1";
-        }
-
-        // fill row fields
-        fillPayrollRow(row, servicesList, servicesList.reduce((s,i)=> s + i.qty,0), totalTips);
-
-        // ensure hidden gross/tax/net updated by calling payrollRecalc
-        window.payrollRecalc();
-      };
-
-      // also auto-sync when therapist or date changes
-      document.getElementById('therapist-select')?.addEventListener('change', () => { if(window.syncCartToPayroll) window.syncCartToPayroll(); });
-      document.getElementById('date-input')?.addEventListener('change', () => { if(window.syncCartToPayroll) window.syncCartToPayroll(); });
-
-      // ensure ready after page scripts load
-      window.addEventListener('load', ()=> {
-        // small timeout to let payroll script expose functions
-        setTimeout(()=>{ if(window.syncCartToPayroll) window.syncCartToPayroll(); }, 200);
-      });
-    })();
-  </script>
-
-</body>
-</html>
+      // the exact widget URL you pasted
+      const VAGARO_WIDGET_URL = "https://www.vagaro.com//Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVM4SakI1KjE3knRkP3ywpWVXk0IjFrFOrvdEdsZ/CVa7nEj6MRQuAwfBBGT5tOpfUYvKjmzdwCZhUVBSZgZ04zg5ODJm5RfAQvgigpMCzk85F500OkxY7h72LHqdhM0GKaslwm/63uDPVtlwPtiq0zxGfszkWkfL5W+J0D0EkvUeW14OtUdj8jJb5pybomIa3DUm18bl1nmoOtPVAdZ9ZJ5RdQHGeGZ1NWgQ+x9CqA/rxUWUoOLarHcF9qDm59aYGdKtT6r2+2Q2Z47D7SKuVTOMtAlCe3Niqc+vnHiObhEj4TzIrL8I0rNYX57wQIXRJaZ4Mb8dCHqXiu3w9R+nwhYvGA0C6rrJlSUk8ux5ZZgMQOCqw7vFr4LJh87bywl163VTQNGhFwev0M1AzkmQIjFivS0DfLpuM66KyICq9pPzBPQncS7AAPIVi848mlEadg==";
