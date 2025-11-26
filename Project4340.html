@@ -147,8 +147,8 @@
             <thead>
               <tr>
                 <th style="width:22%">Staff Name</th>
-                <th style="width:10%">Rate (hr)</th>
-                <th style="width:10%">Hours</th>
+                <th style="width:18%">Service</th>
+                <th style="width:8%">Qty</th>
                 <th style="width:10%">Tips</th>
                 <th style="width:12%">Gross</th>
                 <th style="width:12%">Tax</th>
@@ -159,8 +159,26 @@
             <tbody id="payroll-body">
               <tr data-row="1">
                 <td><input type="text" name="staff1_name" placeholder="Name"></td>
-                <td><input type="number" name="staff1_rate" class="rate" step="0.01" placeholder="12.50"></td>
-                <td><input type="number" name="staff1_hours" class="hours" step="0.01" placeholder="8"></td>
+                <td>
+                  <select name="staff1_service" class="srv">
+                    <option value="Regular Massage - 40 Mins" data-price="60.00" data-points="0" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">Regular Massage - 40 Mins — $60</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 1 hr" data-price="80.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">Thai/Swedish/Combo/Deep Tissue/Prenatal - 1 hr — $80</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 75 Mins" data-price="100.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 75 Mins — $100</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 90 Mins" data-price="120.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 90 Mins — $120</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 2 hr" data-price="150.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 2 hr — $150</option>
+                    <option value="Couples Massage - 1 hr" data-price="150.00" data-points="2" data-desc="Experience relaxation and connection with our Couples Massage bundle, featuring two one-hour massages designed to rejuvenate both body and mind.">Couples Massage - 1 hr — $150</option>
+                    <option value="Couples Massage - 75 min" data-price="200.00" data-points="2" data-desc="Experience relaxation and connection with our Couples Massage, a 75-minute session designed to rejuvenate both body and mind.">Couples Massage - 75 min — $200</option>
+                    <option value="Couples Massage - 90 min" data-price="240.00" data-points="2" data-desc="Experience ultimate relaxation with our Couples Massage bundle, offering a rejuvenating 90-minute session.">Couples Massage - 90 min — $240</option>
+                    <option value="Couples Massage - 2 hrs" data-price="300.00" data-points="2" data-desc="Experience ultimate relaxation with our Couples Massage bundle, designed to rejuvenate both body and mind over a two-hour session.">Couples Massage - 2 hrs — $300</option>
+                    <option value="Deep Tissue - 1 hr" data-price="80.00" data-points="1" data-desc="Deep tissue techniques to release chronic tension">Deep Tissue - 1 hr — $80</option>
+                    <option value="Swedish - 1 hr" data-price="80.00" data-points="1" data-desc="Gentle, relaxing Swedish massage using long gliding strokes">Swedish - 1 hr — $80</option>
+                    <option value="Foot Massage - 30 min" data-price="40.00" data-points="0" data-desc="Reflexology and foot care">Foot Massage - 30 min — $40</option>
+                    <option value="Foot Massage - 45 min" data-price="60.00" data-points="0" data-desc="Extended foot work and calf massage">Foot Massage - 45 min — $60</option>
+                    <option value="Prenatal - 60 min" data-price="80.00" data-points="1" data-desc="Gentle prenatal massage adapted for expectant mothers">Prenatal - 60 min — $80</option>
+                    <option value="Hot Stone - 75 min" data-price="100.00" data-points="1" data-desc="Hot stone therapy to soothe muscles and promote deep relaxation">Hot Stone - 75 min — $100</option>
+                  </select>
+                </td>
+                <td><input type="number" name="staff1_qty" class="qty" step="1" min="1" value="1"></td>
                 <td><input type="number" name="staff1_tips" class="tips" step="0.01" placeholder="0.00"></td>
                 <td class="result"><span class="gross" data-row="1">0.00</span></td>
                 <td class="result"><span class="tax" data-row="1">0.00</span></td>
@@ -175,8 +193,26 @@
 
               <tr data-row="2">
                 <td><input type="text" name="staff2_name" placeholder="Name"></td>
-                <td><input type="number" name="staff2_rate" class="rate" step="0.01" placeholder="12.50"></td>
-                <td><input type="number" name="staff2_hours" class="hours" step="0.01" placeholder="8"></td>
+                <td>
+                  <select name="staff2_service" class="srv">
+                    <option value="Regular Massage - 40 Mins" data-price="60.00" data-points="0" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">Regular Massage - 40 Mins — $60</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 1 hr" data-price="80.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">Thai/Swedish/Combo/Deep Tissue/Prenatal - 1 hr — $80</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 75 Mins" data-price="100.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 75 Mins — $100</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 90 Mins" data-price="120.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 90 Mins — $120</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 2 hr" data-price="150.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 2 hr — $150</option>
+                    <option value="Couples Massage - 1 hr" data-price="150.00" data-points="2" data-desc="Experience relaxation and connection with our Couples Massage bundle, featuring two one-hour massages designed to rejuvenate both body and mind.">Couples Massage - 1 hr — $150</option>
+                    <option value="Couples Massage - 75 min" data-price="200.00" data-points="2" data-desc="Experience relaxation and connection with our Couples Massage, a 75-minute session designed to rejuvenate both body and mind.">Couples Massage - 75 min — $200</option>
+                    <option value="Couples Massage - 90 min" data-price="240.00" data-points="2" data-desc="Experience ultimate relaxation with our Couples Massage bundle, offering a rejuvenating 90-minute session.">Couples Massage - 90 min — $240</option>
+                    <option value="Couples Massage - 2 hrs" data-price="300.00" data-points="2" data-desc="Experience ultimate relaxation with our Couples Massage bundle, designed to rejuvenate both body and mind over a two-hour session.">Couples Massage - 2 hrs — $300</option>
+                    <option value="Deep Tissue - 1 hr" data-price="80.00" data-points="1" data-desc="Deep tissue techniques to release chronic tension">Deep Tissue - 1 hr — $80</option>
+                    <option value="Swedish - 1 hr" data-price="80.00" data-points="1" data-desc="Gentle, relaxing Swedish massage using long gliding strokes">Swedish - 1 hr — $80</option>
+                    <option value="Foot Massage - 30 min" data-price="40.00" data-points="0" data-desc="Reflexology and foot care">Foot Massage - 30 min — $40</option>
+                    <option value="Foot Massage - 45 min" data-price="60.00" data-points="0" data-desc="Extended foot work and calf massage">Foot Massage - 45 min — $60</option>
+                    <option value="Prenatal - 60 min" data-price="80.00" data-points="1" data-desc="Gentle prenatal massage adapted for expectant mothers">Prenatal - 60 min — $80</option>
+                    <option value="Hot Stone - 75 min" data-price="100.00" data-points="1" data-desc="Hot stone therapy to soothe muscles and promote deep relaxation">Hot Stone - 75 min — $100</option>
+                  </select>
+                </td>
+                <td><input type="number" name="staff2_qty" class="qty" step="1" min="1" value="1"></td>
                 <td><input type="number" name="staff2_tips" class="tips" step="0.01" placeholder="0.00"></td>
                 <td class="result"><span class="gross" data-row="2">0.00</span></td>
                 <td class="result"><span class="tax" data-row="2">0.00</span></td>
@@ -190,8 +226,26 @@
 
               <tr data-row="3">
                 <td><input type="text" name="staff3_name" placeholder="Name"></td>
-                <td><input type="number" name="staff3_rate" class="rate" step="0.01" placeholder="12.50"></td>
-                <td><input type="number" name="staff3_hours" class="hours" step="0.01" placeholder="8"></td>
+                <td>
+                  <select name="staff3_service" class="srv">
+                    <option value="Regular Massage - 40 Mins" data-price="60.00" data-points="0" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">Regular Massage - 40 Mins — $60</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 1 hr" data-price="80.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">Thai/Swedish/Combo/Deep Tissue/Prenatal - 1 hr — $80</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 75 Mins" data-price="100.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 75 Mins — $100</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 90 Mins" data-price="120.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 90 Mins — $120</option>
+                    <option value="Thai, Swedish, Combo, Deep Tissue, Prenatal - 2 hr" data-price="150.00" data-points="1" data-desc="Uses massage oils to facilitate smooth, gliding strokes over the entire body">... - 2 hr — $150</option>
+                    <option value="Couples Massage - 1 hr" data-price="150.00" data-points="2" data-desc="Experience relaxation and connection with our Couples Massage bundle, featuring two one-hour massages designed to rejuvenate both body and mind.">Couples Massage - 1 hr — $150</option>
+                    <option value="Couples Massage - 75 min" data-price="200.00" data-points="2" data-desc="Experience relaxation and connection with our Couples Massage, a 75-minute session designed to rejuvenate both body and mind.">Couples Massage - 75 min — $200</option>
+                    <option value="Couples Massage - 90 min" data-price="240.00" data-points="2" data-desc="Experience ultimate relaxation with our Couples Massage bundle, offering a rejuvenating 90-minute session.">Couples Massage - 90 min — $240</option>
+                    <option value="Couples Massage - 2 hrs" data-price="300.00" data-points="2" data-desc="Experience ultimate relaxation with our Couples Massage bundle, designed to rejuvenate both body and mind over a two-hour session.">Couples Massage - 2 hrs — $300</option>
+                    <option value="Deep Tissue - 1 hr" data-price="80.00" data-points="1" data-desc="Deep tissue techniques to release chronic tension">Deep Tissue - 1 hr — $80</option>
+                    <option value="Swedish - 1 hr" data-price="80.00" data-points="1" data-desc="Gentle, relaxing Swedish massage using long gliding strokes">Swedish - 1 hr — $80</option>
+                    <option value="Foot Massage - 30 min" data-price="40.00" data-points="0" data-desc="Reflexology and foot care">Foot Massage - 30 min — $40</option>
+                    <option value="Foot Massage - 45 min" data-price="60.00" data-points="0" data-desc="Extended foot work and calf massage">Foot Massage - 45 min — $60</option>
+                    <option value="Prenatal - 60 min" data-price="80.00" data-points="1" data-desc="Gentle prenatal massage adapted for expectant mothers">Prenatal - 60 min — $80</option>
+                    <option value="Hot Stone - 75 min" data-price="100.00" data-points="1" data-desc="Hot stone therapy to soothe muscles and promote deep relaxation">Hot Stone - 75 min — $100</option>
+                  </select>
+                </td>
+                <td><input type="number" name="staff3_qty" class="qty" step="1" min="1" value="1"></td>
                 <td><input type="number" name="staff3_tips" class="tips" step="0.01" placeholder="0.00"></td>
                 <td class="result"><span class="gross" data-row="3">0.00</span></td>
                 <td class="result"><span class="tax" data-row="3">0.00</span></td>
@@ -241,11 +295,13 @@
 
         document.querySelectorAll('tr[data-row]').forEach(row => {
           const r = row.getAttribute('data-row');
-          const rate = Number(row.querySelector('.rate')?.value || 0);
-          const hours = Number(row.querySelector('.hours')?.value || 0);
+          // service price comes from selected option's data-price; qty defaults to 1
+          const srvOpt = row.querySelector('.srv')?.selectedOptions?.[0];
+          const price = srvOpt ? Number(srvOpt.getAttribute('data-price') || 0) : 0;
+          const qty = Number(row.querySelector('.qty')?.value || 1);
           const tips = Number(row.querySelector('.tips')?.value || 0);
 
-          const gross = (rate * hours) + tips;
+          const gross = (price * qty) + tips;
           const tax = gross * taxPercent;
           const net = gross - tax;
 
@@ -282,12 +338,13 @@
       // create a new staff row
       function addRow(prefillIndex){
         const i = prefillIndex || nextRow++;
+        const optionsHTML = document.getElementById('service-select').innerHTML; // reuse main service list
         const tr = document.createElement('tr');
         tr.setAttribute('data-row', i);
         tr.innerHTML = `
           <td><input type="text" name="staff${i}_name" placeholder="Name"></td>
-          <td><input type="number" name="staff${i}_rate" class="rate" step="0.01" placeholder="12.50"></td>
-          <td><input type="number" name="staff${i}_hours" class="hours" step="0.01" placeholder="8"></td>
+          <td><select name="staff${i}_service" class="srv">${optionsHTML}</select></td>
+          <td><input type="number" name="staff${i}_qty" class="qty" step="1" min="1" value="1"></td>
           <td><input type="number" name="staff${i}_tips" class="tips" step="0.01" placeholder="0.00"></td>
           <td class="result"><span class="gross" data-row="${i}">0.00</span></td>
           <td class="result"><span class="tax" data-row="${i}">0.00</span></td>
@@ -314,7 +371,7 @@
 
       // listen for changes in inputs to recalc (delegation)
       document.getElementById('payroll-form').addEventListener('input', function(e){
-        if(e.target.matches('.rate, .hours, .tips, #tax-rate')) recalc();
+        if(e.target.matches('.srv, .qty, .tips, #tax-rate')) recalc();
       });
 
       // add-row button
