@@ -372,6 +372,9 @@
         document.getElementById('hidden-total-net').value = fmt(totalNet);
       }
 
+      // expose recalc to other scripts (cart → payroll sync expects this)
+      window.payrollRecalc = recalc;
+
       // create a new staff row
       function addRow(prefillIndex){
         const i = prefillIndex || nextRow++;
@@ -394,6 +397,9 @@
         body.appendChild(tr);
         recalc();
       }
+
+      // expose addRow so external sync can create rows
+      window.payrollAddRow = addRow;
 
       // remove row when clicking remove button
       body.addEventListener('click', function(e){
@@ -576,15 +582,41 @@
       // simple therapist list and schedule example (you can replace with dynamic source)
       const therapists = ["Vicky","Amy","Lani","Sherry","Lynn"];
       // example schedule keyed by ISO date (YYYY-MM-DD) -> therapist -> times (24h local strings)
-      const schedule = {
-        "2025-11-26": {
-          "Vicky": ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
-          "Amy":   ["18:45","19:00","19:15"],
-          "Lani":  ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
-          "Sherry": [], // add as needed
-          "Lynn":   []  // add as needed
-        }
-      };
+-      const schedule = {
+-        "2025-11-26": {
+-          "Vicky": ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
+-          "Amy":   ["18:45","19:00","19:15"],
+-          "Lani":  ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
+-          "Sherry": [], // add as needed
+-          "Lynn":   []  // add as needed
+-        }
+-      };
++      const schedule = {
++        // full availability for Wed, Nov 26, 2025 (times in 24h HH:MM)
++        "2025-11-26": {
++          "Vicky": [
++            // afternoon window
++            "16:30","16:45",
++            // evening window (every 15m as provided)
++            "17:00","17:15","17:30","17:45",
++            "18:00","18:15","18:30","18:45",
++            "19:00","19:15"
++          ],
++          "Amy": [
++            // evening slots (includes 18:00/18:15 and 18:45/19:00/19:15 shown)
++            "18:00","18:15","18:45","19:00","19:15"
++          ],
++          "Lani": [
++            // afternoon + evening similar to Vicky
++            "16:30","16:45",
++            "17:00","17:15","17:30","17:45",
++            "18:00","18:15","18:30","18:45",
++            "19:00","19:15"
++          ],
++          "Sherry": [], // add as needed
++          "Lynn":   []  // add as needed
++        }
++      };
 
       // reuse earlier serviceMap generation
       const allTherapists = therapists;
