@@ -45,10 +45,21 @@
             <div>
               <label class="field">Service</label>
               <select id="service-select" name="Service" required>
-                <option value="Thai Massage">Thai Massage</option>
-                <option value="Oil Massage">Oil Massage</option>
-                <option value="Foot Massage">Foot Massage</option>
-                <option value="Couples">Couples</option>
+                <!-- expanded options (from screenshot) -->
+                <option>Thai, Swedish, Combo, Deep Tissue, Prenatal - 1 hr</option>
+                <option>Thai, Swedish, Combo, Deep Tissue, Prenatal - 75 Mins</option>
+                <option>Thai, Swedish, Combo, Deep Tissue, Prenatal - 90 Mins</option>
+                <option>Thai, Swedish, Combo, Deep Tissue, Prenatal - 2 hr</option>
+                <option>Couples Massage - 1 hr</option>
+                <option>Couples Massage - 75 min</option>
+                <option>Couples Massage - 90 min</option>
+                <option>Deep Tissue - 1 hr</option>
+                <option>Swedish - 1 hr</option>
+                <option>Foot Massage - 30 min</option>
+                <option>Foot Massage - 45 min</option>
+                <option>Prenatal - 60 min</option>
+                <option>Hot Stone - 75 min</option>
+                <!-- add or edit entries as needed -->
               </select>
             </div>
             <div>
@@ -110,28 +121,30 @@
             <div class="muted" style="margin-left:auto;font-size:13px">Values update live — totals included in email</div>
           </div>
 
-          <!-- extended payroll table: Tips + computed columns -->
+          <!-- extended payroll table: Tips + visible Gross + computed columns -->
           <table class="pay" aria-describedby="pay-desc">
             <thead>
               <tr>
-                <th style="width:26%">Staff Name</th>
-                <th style="width:12%">Rate (hr)</th>
-                <th style="width:12%">Hours</th>
-                <th style="width:12%">Tips</th>
+                <th style="width:22%">Staff Name</th>
+                <th style="width:10%">Rate (hr)</th>
+                <th style="width:10%">Hours</th>
+                <th style="width:10%">Tips</th>
+                <th style="width:12%">Gross</th>
                 <th style="width:12%">Tax</th>
                 <th style="width:12%">Net</th>
-                <th style="width:14%">Notes</th>
+                <th style="width:12%">Notes</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="payroll-body">
               <tr data-row="1">
                 <td><input type="text" name="staff1_name" placeholder="Name"></td>
                 <td><input type="number" name="staff1_rate" class="rate" step="0.01" placeholder="12.50"></td>
                 <td><input type="number" name="staff1_hours" class="hours" step="0.01" placeholder="8"></td>
                 <td><input type="number" name="staff1_tips" class="tips" step="0.01" placeholder="0.00"></td>
+                <td class="result"><span class="gross" data-row="1">0.00</span></td>
                 <td class="result"><span class="tax" data-row="1">0.00</span></td>
                 <td class="result"><span class="net" data-row="1">0.00</span></td>
-                <td><input type="text" name="staff1_notes" placeholder="OT, tips..."></td>
+                <td><input type="text" name="staff1_notes" placeholder="OT, tips..."><button type="button" class="remove-btn" aria-label="Remove row">✕</button></td>
 
                 <!-- hidden computed fields for email submit -->
                 <input type="hidden" name="staff1_gross" class="hidden-gross" data-row="1" value="0.00">
@@ -144,9 +157,10 @@
                 <td><input type="number" name="staff2_rate" class="rate" step="0.01" placeholder="12.50"></td>
                 <td><input type="number" name="staff2_hours" class="hours" step="0.01" placeholder="8"></td>
                 <td><input type="number" name="staff2_tips" class="tips" step="0.01" placeholder="0.00"></td>
+                <td class="result"><span class="gross" data-row="2">0.00</span></td>
                 <td class="result"><span class="tax" data-row="2">0.00</span></td>
                 <td class="result"><span class="net" data-row="2">0.00</span></td>
-                <td><input type="text" name="staff2_notes" placeholder="OT, tips..."></td>
+                <td><input type="text" name="staff2_notes" placeholder="OT, tips..."><button type="button" class="remove-btn" aria-label="Remove row">✕</button></td>
 
                 <input type="hidden" name="staff2_gross" class="hidden-gross" data-row="2" value="0.00">
                 <input type="hidden" name="staff2_tax" class="hidden-tax" data-row="2" value="0.00">
@@ -158,9 +172,10 @@
                 <td><input type="number" name="staff3_rate" class="rate" step="0.01" placeholder="12.50"></td>
                 <td><input type="number" name="staff3_hours" class="hours" step="0.01" placeholder="8"></td>
                 <td><input type="number" name="staff3_tips" class="tips" step="0.01" placeholder="0.00"></td>
+                <td class="result"><span class="gross" data-row="3">0.00</span></td>
                 <td class="result"><span class="tax" data-row="3">0.00</span></td>
                 <td class="result"><span class="net" data-row="3">0.00</span></td>
-                <td><input type="text" name="staff3_notes" placeholder="OT, tips..."></td>
+                <td><input type="text" name="staff3_notes" placeholder="OT, tips..."><button type="button" class="remove-btn" aria-label="Remove row">✕</button></td>
 
                 <input type="hidden" name="staff3_gross" class="hidden-gross" data-row="3" value="0.00">
                 <input type="hidden" name="staff3_tax" class="hidden-tax" data-row="3" value="0.00">
@@ -169,8 +184,9 @@
             </tbody>
           </table>
 
-          <!-- totals summary (visible) and hidden fields for email -->
+          <!-- controls and totals -->
           <div class="summary" style="display:flex;gap:12px;align-items:center;margin-top:10px">
+            <button type="button" id="add-staff" class="btn small">+ Add Staff</button>
             <div class="muted">Total Gross: <strong id="total-gross">0.00</strong></div>
             <div class="muted">Total Tax: <strong id="total-tax">0.00</strong></div>
             <div class="muted">Total Net: <strong id="total-net">0.00</strong></div>
@@ -190,11 +206,13 @@
     </div>
   </div>
 
-  <!-- payroll calculator script -->
+  <!-- payroll calculator script (replaced) -->
   <script>
     (function(){
-      // helper to format numbers to 2 decimals
       const fmt = v => Number(v || 0).toFixed(2);
+
+      const body = document.getElementById('payroll-body');
+      let nextRow = 4; // next row index to create
 
       function recalc(){
         const taxPercent = Math.max(0, Number(document.getElementById('tax-rate').value || 0)) / 100;
@@ -215,8 +233,10 @@
           totalNet += net;
 
           // update visible cells
+          const spanGross = row.querySelector('.gross[data-row="'+r+'"]');
           const spanTax = row.querySelector('.tax[data-row="'+r+'"]');
           const spanNet = row.querySelector('.net[data-row="'+r+'"]');
+          if(spanGross) spanGross.textContent = fmt(gross);
           if(spanTax) spanTax.textContent = fmt(tax);
           if(spanNet) spanNet.textContent = fmt(net);
 
@@ -229,7 +249,6 @@
           if(hn) hn.value = fmt(net);
         });
 
-        // update totals
         document.getElementById('total-gross').textContent = fmt(totalGross);
         document.getElementById('total-tax').textContent = fmt(totalTax);
         document.getElementById('total-net').textContent = fmt(totalNet);
@@ -239,17 +258,61 @@
         document.getElementById('hidden-total-net').value = fmt(totalNet);
       }
 
-      // bind events
+      // create a new staff row
+      function addRow(prefillIndex){
+        const i = prefillIndex || nextRow++;
+        const tr = document.createElement('tr');
+        tr.setAttribute('data-row', i);
+        tr.innerHTML = `
+          <td><input type="text" name="staff${i}_name" placeholder="Name"></td>
+          <td><input type="number" name="staff${i}_rate" class="rate" step="0.01" placeholder="12.50"></td>
+          <td><input type="number" name="staff${i}_hours" class="hours" step="0.01" placeholder="8"></td>
+          <td><input type="number" name="staff${i}_tips" class="tips" step="0.01" placeholder="0.00"></td>
+          <td class="result"><span class="gross" data-row="${i}">0.00</span></td>
+          <td class="result"><span class="tax" data-row="${i}">0.00</span></td>
+          <td class="result"><span class="net" data-row="${i}">0.00</span></td>
+          <td><input type="text" name="staff${i}_notes" placeholder="OT, tips..."><button type="button" class="remove-btn" aria-label="Remove row">✕</button></td>
+          <input type="hidden" name="staff${i}_gross" class="hidden-gross" data-row="${i}" value="0.00">
+          <input type="hidden" name="staff${i}_tax" class="hidden-tax" data-row="${i}" value="0.00">
+          <input type="hidden" name="staff${i}_net" class="hidden-net" data-row="${i}" value="0.00">
+        `;
+        body.appendChild(tr);
+        recalc();
+      }
+
+      // remove row when clicking remove button
+      body.addEventListener('click', function(e){
+        if(e.target && e.target.matches('.remove-btn')){
+          const tr = e.target.closest('tr[data-row]');
+          if(tr) {
+            tr.remove();
+            recalc();
+          }
+        }
+      });
+
+      // listen for changes in inputs to recalc (delegation)
       document.getElementById('payroll-form').addEventListener('input', function(e){
         if(e.target.matches('.rate, .hours, .tips, #tax-rate')) recalc();
       });
 
-      // recalc on load
-      window.addEventListener('DOMContentLoaded', recalc);
+      // add-row button
+      document.getElementById('add-staff').addEventListener('click', function(){
+        addRow();
+      });
 
-      // clear resets then recalc after reset
+      // initialize and bind reset
+      window.addEventListener('DOMContentLoaded', recalc);
       document.getElementById('payroll-reset').addEventListener('click', function(){
-        setTimeout(recalc, 10);
+        // keep the first 3 rows, remove extras
+        setTimeout(() => {
+          Array.from(body.querySelectorAll('tr[data-row]')).forEach(tr => {
+            const idx = Number(tr.getAttribute('data-row'));
+            if(idx > 3) tr.remove();
+          });
+          nextRow = 4;
+          recalc();
+        }, 10);
       });
     })();
   </script>
