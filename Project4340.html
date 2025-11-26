@@ -77,6 +77,19 @@
                 <!-- therapist options are populated automatically -->
               </select>
               <div id="therapist-availability" class="muted" aria-live="polite" style="margin-top:6px;font-size:13px"></div>
+
+             <!-- External availability controls -->
+             <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+               <input type="checkbox" id="use-vagaro" />
+               <label for="use-vagaro" style="font-size:13px;color:var(--muted)">Use live Vagaro availability</label>
+               <button type="button" id="load-vagaro" class="btn small" style="margin-left:auto">Load Vagaro</button>
+             </div>
+
+             <!-- Vagaro iframe container (loaded on demand) -->
+             <div id="vagaro-wrap" style="margin-top:10px;display:none">
+               <div class="muted" style="font-size:13px;margin-bottom:6px">Vagaro booking widget (live availability). Use the widget to pick a time/therapist.</div>
+               <iframe id="vagaro-iframe" title="Vagaro availability" src="" sandbox="allow-scripts allow-same-origin allow-forms" style="width:100%;height:520px;border:1px solid rgba(0,0,0,0.06);border-radius:8px"></iframe>
+             </div>
             </div>
 
             <div>
@@ -416,6 +429,43 @@
       sdBook.addEventListener('click', function(){
         document.getElementById('tab-appointment').checked = true;
         document.querySelector('form[action^="mailto:info"] input[name="Date"]').focus();
+      });
+
+      // external availability controls
+      const useVagaroCheckbox = document.getElementById('use-vagaro');
+      const loadVagaroBtn = document.getElementById('load-vagaro');
+      const vagaroWrap = document.getElementById('vagaro-wrap');
+      const vagaroIframe = document.getElementById('vagaro-iframe');
+      // the exact widget URL you pasted (keeps it safe by only assigning when requested)
+      const VAGARO_WIDGET_URL = "https://www.vagaro.com//Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVM4SakI1KjE3knRkP3ywpWVXk0IjFrFOrvdEdsZ/CVa7nEj6MRQuAwfBBGT5tOpfUYvKjmzdwCZhUVBSZgZ04zg5ODJm5RfAQvgigpMCzk85F500OkxY7h72LHqdhM0GKaslwm/63uDPVtlwPtiq0zxGfszkWkfL5W+J0D0EkvUeW14OtUdj8jJb5pybomIa3DUm18bl1nmoOtPVAdZ9ZJ5RdQHGeGZ1NWgQ+x9CqA/rxUWUoOLarHcF9qDm59aYGdKtT6r2+2Q2Z47D7SKuVTOMtAlCe3Niqc+vnHiObhEj4TzIrL8I0rNYX57wQIXRJaZ4Mb8dCHqXiu3w9R+nwhYvGA0C6rrJlSUk8ux5ZZgMQOCqw7vFr4LJh87bywl163VTQNGhFwev0M1AzkmQIjFivS0DfLpuM66KyICq9pPzBPQncS7AAPIVi848mlEadg==";
+
+      function toggleExternalAvail(enabled){
+        if(enabled){
+          therapistEl.disabled = true;
+          statusEl.textContent = 'Using live Vagaro availability. Load the widget to choose a therapist/time.';
+        } else {
+          therapistEl.disabled = false;
+          statusEl.textContent = '';
+          vagaroWrap.style.display = 'none';
+          vagaroIframe.src = '';
+          useVagaroCheckbox.checked = false;
+        }
+      }
+
+      // clicking load will show the iframe and enable the live widget mode
+      loadVagaroBtn.addEventListener('click', function(){
+        if(!useVagaroCheckbox.checked){
+          useVagaroCheckbox.checked = true;
+        }
+        vagaroWrap.style.display = 'block';
+        if(!vagaroIframe.src) vagaroIframe.src = VAGARO_WIDGET_URL;
+        toggleExternalAvail(true);
+        // scroll widget into view
+        vagaroWrap.scrollIntoView({behavior:'smooth', block:'center'});
+      });
+
+      useVagaroCheckbox.addEventListener('change', function(){
+        toggleExternalAvail(!!useVagaroCheckbox.checked);
       });
 
       // initial populate
