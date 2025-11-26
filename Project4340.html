@@ -44,7 +44,7 @@
           <div class="grid">
             <div>
               <label class="field">Service</label>
-              <select name="Service" required>
+              <select id="service-select" name="Service" required>
                 <option value="Thai Massage">Thai Massage</option>
                 <option value="Oil Massage">Oil Massage</option>
                 <option value="Foot Massage">Foot Massage</option>
@@ -53,16 +53,16 @@
             </div>
             <div>
               <label class="field">Therapist (optional)</label>
-              <select name="Therapist">
+              <select id="therapist-select" name="Therapist">
                 <option value="">Any</option>
-                <option value="Therapist A">Therapist A</option>
-                <option value="Therapist B">Therapist B</option>
+                <!-- therapist options are populated automatically -->
               </select>
+              <div id="therapist-availability" class="muted" aria-live="polite" style="margin-top:6px;font-size:13px"></div>
             </div>
 
             <div>
               <label class="field">Date</label>
-              <input type="date" name="Date" required>
+              <input type="date" id="date-input" name="Date" required>
             </div>
             <div>
               <label class="field">Time</label>
@@ -253,5 +253,82 @@
       });
     })();
   </script>
+
+  <!-- therapist availability script -->
+  <script>
+    (function(){
+      // mapping of service -> therapists (names requested)
+      const serviceMap = {
+        "Thai Massage": ["Vicky","Amy","Lani"],
+        "Oil Massage": ["Amy","Sherry","Lynn"],
+        "Foot Massage": ["Lani","Lynn","Vicky"],
+        "Couples": ["Vicky","Amy","Lani","Sherry","Lynn"]
+      };
+
+      // example date rule: Lani unavailable on weekends
+      const dateUnavailable = {
+        "Lani": d => d && (d.getDay() === 0 || d.getDay() === 6) // Sun(0)/Sat(6)
+      };
+
+      const serviceEl = document.getElementById('service-select');
+      const dateEl = document.getElementById('date-input');
+      const therapistEl = document.getElementById('therapist-select');
+      const statusEl = document.getElementById('therapist-availability');
+
+      function formatList(arr){
+        if(!arr || arr.length === 0) return 'none';
+        if(arr.length === 1) return arr[0];
+        return arr.slice(0,-1).join(', ') + ' and ' + arr.slice(-1);
+      }
+
+      function updateTherapists(){
+        const service = serviceEl.value;
+        const dateVal = dateEl.value;
+        const date = dateVal ? new Date(dateVal + 'T00:00:00') : null;
+
+        let list = serviceMap[service] ? [...serviceMap[service]] : [];
+
+        // apply date-based removals
+        if(date){
+          list = list.filter(name => {
+            const rule = dateUnavailable[name];
+            return typeof rule === 'function' ? !rule(date) : true;
+          });
+        }
+
+        // rebuild select options (keep the "Any" option)
+        therapistEl.innerHTML = '';
+        const anyOpt = document.createElement('option');
+        anyOpt.value = '';
+        anyOpt.textContent = 'Any';
+        therapistEl.appendChild(anyOpt);
+
+        if(list.length === 0){
+          const none = document.createElement('option');
+          none.textContent = 'No therapists available';
+          none.value = '';
+          none.disabled = true;
+          therapistEl.appendChild(none);
+          statusEl.textContent = 'No therapists available for that service/date. Please choose another date or contact us.';
+        } else {
+          list.forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            therapistEl.appendChild(opt);
+          });
+          statusEl.textContent = 'Available: ' + formatList(list) + '.';
+        }
+      }
+
+      // events
+      serviceEl.addEventListener('change', updateTherapists);
+      dateEl.addEventListener('change', updateTherapists);
+
+      // initial populate
+      document.addEventListener('DOMContentLoaded', updateTherapists);
+    })();
+  </script>
+
 </body>
 </html>
