@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>MontraThai — Quick Appointment & Payroll</title>
+<!-- added font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/Project4340.css">
 </head>
 <body>
@@ -28,8 +30,16 @@
 
     <div class="tab-content">
       <!-- Appointment content -->
-      <section aria-labelledby="appt-title">
+      <section aria-labelledby="appt-title" class="card">
         <h2 id="appt-title" style="margin-top:0;font-size:16px">Quick Appointment</h2>
+
+        <!-- optional thumbnails: drop provided images into images/ as spa1.jpg, spa2.jpg, spa3.jpg -->
+        <div class="thumbs" aria-hidden="true">
+          <img src="images/spa1.jpg" alt="">
+          <img src="images/spa2.jpg" alt="">
+          <img src="images/spa3.jpg" alt="">
+        </div>
+
         <form action="mailto:info@montrathaimassage.net" method="post" enctype="text/plain">
           <div class="grid">
             <div>
@@ -88,7 +98,7 @@
       </section>
 
       <!-- Payroll content -->
-      <section aria-labelledby="pay-title" style="margin-top:18px">
+      <section aria-labelledby="pay-title" style="margin-top:18px" class="card">
         <h2 id="pay-title" style="font-size:16px;margin-bottom:6px">Simple Payroll Sheet</h2>
         <p class="muted" style="margin:0 0 8px 0">Fill staff rows and submit. This uses email submit so payroll can be saved/emailed quickly.</p>
 
