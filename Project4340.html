@@ -581,42 +581,50 @@
     (function(){
       // simple therapist list and schedule example (you can replace with dynamic source)
       const therapists = ["Vicky","Amy","Lani","Sherry","Lynn"];
-      // example schedule keyed by ISO date (YYYY-MM-DD) -> therapist -> times (24h local strings)
--      const schedule = {
--        "2025-11-26": {
--          "Vicky": ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
--          "Amy":   ["18:45","19:00","19:15"],
--          "Lani":  ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
--          "Sherry": [], // add as needed
--          "Lynn":   []  // add as needed
--        }
--      };
-+      const schedule = {
-+        // full availability for Wed, Nov 26, 2025 (times in 24h HH:MM)
-+        "2025-11-26": {
-+          "Vicky": [
-+            // afternoon window
-+            "16:30","16:45",
-+            // evening window (every 15m as provided)
-+            "17:00","17:15","17:30","17:45",
-+            "18:00","18:15","18:30","18:45",
-+            "19:00","19:15"
-+          ],
-+          "Amy": [
-+            // evening slots (includes 18:00/18:15 and 18:45/19:00/19:15 shown)
-+            "18:00","18:15","18:45","19:00","19:15"
-+          ],
-+          "Lani": [
-+            // afternoon + evening similar to Vicky
-+            "16:30","16:45",
-+            "17:00","17:15","17:30","17:45",
-+            "18:00","18:15","18:30","18:45",
-+            "19:00","19:15"
-+          ],
-+          "Sherry": [], // add as needed
-+          "Lynn":   []  // add as needed
-+        }
-+      };
+      // flexible schedule model:
+      // - scheduleByDate: explicit availability for specific dates (ISO YYYY-MM-DD)
+      // - scheduleByWeekday: recurring weekly availability keyed by short weekday name (Sun, Mon, Tue, ...)
+      // Update these arrays to change availability for Montra Thai — Houston.
+      const scheduleByDate = {
+        // example: Wed Nov 26, 2025
+        "2025-11-26": {
+          "Vicky": ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
+          "Amy":   ["18:00","18:15","18:45","19:00","19:15"],
+          "Lani":  ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
+          "Sherry": [],
+          "Lynn":   []
+        }
+      };
+
+      // recurring weekly availability (short weekday: Sun, Mon, Tue, Wed, Thu, Fri, Sat)
+      const scheduleByWeekday = {
+        "Mon": {
+          "Vicky": ["16:30","16:45","17:00","17:15"],
+          "Amy": [],
+          "Lani": ["17:00","17:15"]
+        },
+        "Tue": {},
+        "Wed": {
+          "Vicky": ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"],
+          "Amy":   ["18:00","18:15","18:45","19:00","19:15"],
+          "Lani":  ["16:30","16:45","17:00","17:15","17:30","17:45","18:00","18:15","18:30","18:45","19:00","19:15"]
+        },
+        "Thu": {},
+        "Fri": {},
+        "Sat": {},
+        "Sun": {}
+      };
+
+      function getAvailableSchedule(dateStr){
+        if(!dateStr) return {};
+        // date-specific first
+        if(scheduleByDate[dateStr]) return scheduleByDate[dateStr];
+        // fallback to weekday template
+        const d = new Date(dateStr + 'T00:00:00');
+        if(isNaN(d.getTime())) return {};
+        const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()];
+        return scheduleByWeekday[weekday] || {};
+      }
 
       // reuse earlier serviceMap generation
       const allTherapists = therapists;
@@ -659,7 +667,7 @@
           availPanel.style.display = 'none';
           return;
         }
-        const dateSchedule = schedule[dateStr] || {};
+        const dateSchedule = getAvailableSchedule(dateStr) || {};
         let any = false;
         // iterate therapists and show their times (filter by service assignment if desired)
         therapists.forEach(name => {
