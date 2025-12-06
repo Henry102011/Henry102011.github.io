@@ -32,7 +32,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Accessibility */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -60,7 +59,6 @@ body {
   border-width: 0;
 }
 
-/* Typography */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
   font-weight: 600;
@@ -79,14 +77,11 @@ p {
   margin-bottom: 1rem;
 }
 
-/* Container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
-
-/* Navigation */
 .navbar {
   position: sticky;
   top: 0;
