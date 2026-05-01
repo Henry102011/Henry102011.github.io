@@ -1,0 +1,281 @@
+
+DROP VIEW IF EXISTS vw_DailyFinancialSummary;
+DROP VIEW IF EXISTS vw_EndOfDayEmployeeSummary;
+DROP VIEW IF EXISTS vw_PayrollSummary;
+DROP VIEW IF EXISTS vw_YearlyTaxSummary;
+
+DROP PROCEDURE IF EXISTS sp_BookAppointment;
+DROP PROCEDURE IF EXISTS sp_ProcessPayment;
+DROP PROCEDURE IF EXISTS sp_CancelAppointment;
+DROP PROCEDURE IF EXISTS sp_GeneratePayroll;
+
+DROP TABLE IF EXISTS Payments;
+DROP TABLE IF EXISTS Appointments;
+DROP TABLE IF EXISTS Services;
+DROP TABLE IF EXISTS Customers;
+DROP TABLE IF EXISTS Employees;
+
+
+CREATE TABLE Employees (
+    employee_id INT IDENTITY(1,1) PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    role VARCHAR(50) DEFAULT 'Therapist',
+    specialty VARCHAR(100),
+    commission_rate DECIMAL(5,2) DEFAULT 0.50,
+    hire_date DATE DEFAULT GETDATE()
+);
+
+CREATE TABLE Customers (
+    customer_id INT IDENTITY(1,1) PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    phone VARCHAR(20),
+    email VARCHAR(100),
+    join_date DATE DEFAULT GETDATE()
+);
+
+CREATE TABLE Services (
+    service_id INT IDENTITY(1,1) PRIMARY KEY,
+    service_name VARCHAR(100) NOT NULL,
+    duration_minutes INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE Appointments (
+    appointment_id INT IDENTITY(1,1) PRIMARY KEY,
+    customer_id INT NOT NULL,
+    employee_id INT NOT NULL,
+    service_id INT NOT NULL,
+    appointment_datetime DATETIME NOT NULL,
+    status VARCHAR(20) DEFAULT 'Scheduled',
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+    FOREIGN KEY (employee_id) REFERENCES Employees(employee_id),
+    FOREIGN KEY (service_id) REFERENCES Services(service_id)
+);
+
+CREATE TABLE Payments (
+    payment_id INT IDENTITY(1,1) PRIMARY KEY,
+    appointment_id INT NOT NULL,
+    employee_id INT NOT NULL,
+    service_amount DECIMAL(10,2) DEFAULT 0,
+    product_amount DECIMAL(10,2) DEFAULT 0,
+    tip_amount DECIMAL(10,2) DEFAULT 0,
+    tax_amount DECIMAL(10,2) DEFAULT 0,
+    total_paid DECIMAL(10,2) NOT NULL,
+    payment_method VARCHAR(30),
+    payment_date DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (appointment_id) REFERENCES Appointments(appointment_id),
+    FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
+);
+
+-- INSERT DATA
+INSERT INTO Employees (first_name, last_name, role, specialty, commission_rate, hire_date) VALUES
+('Nina','Tran','Therapist','Thai Massage',0.50,'2025-01-10'),
+('Mali','Suk','Therapist','Deep Tissue',0.50,'2025-02-15'),
+('Anna','Nguyen','Therapist','Aromatherapy',0.50,'2025-03-20'),
+('Sara','Kim','Therapist','Foot Massage',0.50,'2025-04-05'),
+('Ben','Lee','Receptionist','Front Desk',0.00,'2025-05-01'),
+('Lina','Pham','Therapist','Hot Stone',0.50,'2025-06-12'),
+('May','Chen','Therapist','Sports Massage',0.50,'2025-07-08'),
+('Joy','Patel','Therapist','Reflexology',0.50,'2025-08-18'),
+('Tina','Wong','Therapist','Herbal Compress',0.50,'2025-09-09'),
+('Kelly','Vo','Therapist','Thai Stretching',0.50,'2025-10-11');
+
+INSERT INTO Customers (first_name, last_name, phone, email, join_date) VALUES
+('John','Smith','713-555-1001','john.smith@email.com','2026-02-01'),
+('Maria','Garcia','713-555-1002','maria.garcia@email.com','2026-02-03'),
+('David','Brown','713-555-1003','david.brown@email.com','2026-02-05'),
+('Linda','Johnson','713-555-1004','linda.j@email.com','2026-02-07'),
+('Chris','Wilson','713-555-1005','chris.w@email.com','2026-02-10'),
+('Amanda','Davis','713-555-1006','amanda.d@email.com','2026-02-12'),
+('Kevin','Miller','713-555-1007','kevin.m@email.com','2026-02-15'),
+('Sophia','Martinez','713-555-1008','sophia.m@email.com','2026-02-18'),
+('Ryan','Taylor','713-555-1009','ryan.t@email.com','2026-02-20'),
+('Emily','Anderson','713-555-1010','emily.a@email.com','2026-02-22');
+
+INSERT INTO Services (service_name, duration_minutes, price) VALUES
+('Traditional Thai Massage',60,80),
+('Deep Tissue Massage',60,90),
+('Aromatherapy Massage',60,95),
+('Thai Foot Massage',45,60),
+('Couples Massage',60,160),
+('Sports Massage',60,100),
+('Herbal Compress Massage',60,110),
+('Hot Stone Massage',60,105),
+('Reflexology',30,50),
+('Thai Stretching Therapy',60,85);
+
+INSERT INTO Appointments (customer_id, employee_id, service_id, appointment_datetime, status) VALUES
+(1,1,1,'2026-02-03 10:00:00','Completed'),
+(2,2,2,'2026-02-07 14:30:00','Completed'),
+(3,3,3,'2026-02-14 16:00:00','Completed'),
+(4,4,4,'2026-03-08 11:00:00','Completed'),
+(5,6,8,'2026-03-15 15:30:00','Completed'),
+(6,7,6,'2026-03-22 18:00:00','Completed'),
+(7,8,9,'2026-03-29 12:00:00','Completed'),
+(8,9,7,'2026-04-05 13:00:00','Completed'),
+(9,10,10,'2026-04-12 17:30:00','Completed'),
+(10,1,1,'2026-04-27 16:30:00','Completed');
+
+INSERT INTO Payments (appointment_id, employee_id, service_amount, product_amount, tip_amount, tax_amount, total_paid, payment_method, payment_date) VALUES
+(1,1,80,20,15,8.25,123.25,'Card','2026-02-03 11:00:00'),
+(2,2,90,0,18,7.43,115.43,'Cash','2026-02-07 15:30:00'),
+(3,3,95,25,20,9.90,149.90,'Card','2026-02-14 17:00:00'),
+(4,4,60,10,12,5.78,87.78,'Card','2026-03-08 12:00:00'),
+(5,6,105,0,22,8.66,135.66,'Cash','2026-03-15 16:30:00'),
+(6,7,100,15,20,9.49,144.49,'Card','2026-03-22 19:00:00'),
+(7,8,50,0,10,4.13,64.13,'Cash','2026-03-29 13:00:00'),
+(8,9,110,30,25,11.55,176.55,'Card','2026-04-05 14:00:00'),
+(9,10,85,0,17,7.01,109.01,'Card','2026-04-12 18:30:00'),
+(10,1,80,15,16,7.84,118.84,'Cash','2026-04-27 17:30:00');
+
+SELECT * FROM Employees;
+SELECT * FROM Customers;
+SELECT * FROM Services;
+SELECT * FROM Appointments;
+SELECT * FROM Payments;
+GO
+
+CREATE VIEW vw_DailyFinancialSummary AS
+SELECT
+    CAST(payment_date AS DATE) AS business_date,
+    SUM(service_amount) AS service_sales_before_tax,
+    SUM(product_amount) AS product_sales_before_tax,
+    SUM(service_amount + product_amount) AS subtotal_before_tax,
+    SUM(tax_amount) AS total_tax_collected,
+    SUM(tip_amount) AS total_tips,
+    SUM(total_paid) AS total_money_collected
+FROM Payments
+GROUP BY CAST(payment_date AS DATE);
+
+GO
+
+CREATE VIEW vw_YearlyTaxSummary AS
+SELECT
+    YEAR(payment_date) AS tax_year,
+    SUM(service_amount + product_amount) AS total_sales_before_tax,
+    SUM(ROUND(tax_amount, 2)) AS total_tax_collected,
+    SUM(tip_amount) AS total_tips_paid,
+    SUM(total_paid) AS total_revenue
+FROM Payments
+GROUP BY YEAR(payment_date);
+
+GO
+
+GO
+
+GO
+
+CREATE VIEW vw_EndOfDayEmployeeSummary AS
+SELECT
+    CAST(p.payment_date AS DATE) AS business_date,
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    SUM(p.service_amount) AS service_sales_before_tax,
+    SUM(p.product_amount) AS product_sales_before_tax,
+    SUM(p.tax_amount) AS taxes_collected,
+    SUM(p.tip_amount) AS tips_earned,
+    SUM(p.total_paid) AS total_collected_with_tax_and_tips
+FROM Payments p
+JOIN Employees e ON p.employee_id = e.employee_id
+GROUP BY CAST(p.payment_date AS DATE), e.employee_id, e.first_name, e.last_name;
+
+GO
+
+GO
+
+SELECT * FROM vw_EndOfDayEmployeeSummary;
+
+GO
+
+CREATE VIEW vw_PayrollSummary AS
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    SUM(p.service_amount * e.commission_rate) AS service_commission,
+    SUM(p.tip_amount) AS tips,
+    SUM(p.service_amount * e.commission_rate) + SUM(p.tip_amount) AS total_pay
+FROM Payments p
+JOIN Employees e ON p.employee_id = e.employee_id
+GROUP BY e.employee_id, e.first_name, e.last_name;
+
+GO
+
+CREATE PROCEDURE sp_BookAppointment
+    @customer_id INT,
+    @employee_id INT,
+    @service_id INT,
+    @appointment_datetime DATETIME
+AS
+BEGIN
+    INSERT INTO Appointments (customer_id, employee_id, service_id, appointment_datetime, status)
+    VALUES (@customer_id, @employee_id, @service_id, @appointment_datetime, 'Scheduled');
+END;
+
+GO
+
+CREATE PROCEDURE sp_ProcessPayment
+    @appointment_id INT,
+    @employee_id INT,
+    @service_amount DECIMAL(10,2),
+    @product_amount DECIMAL(10,2),
+    @tip_amount DECIMAL(10,2),
+    @payment_method VARCHAR(30)
+AS
+BEGIN
+    DECLARE @tax_amount DECIMAL(10,2);
+    DECLARE @total_paid DECIMAL(10,2);
+
+    SET @tax_amount = ROUND((@service_amount + @product_amount) * 0.0825, 2);
+    SET @total_paid = @service_amount + @product_amount + @tax_amount + @tip_amount;
+
+    INSERT INTO Payments
+    (appointment_id, employee_id, service_amount, product_amount, tip_amount, tax_amount, total_paid, payment_method, payment_date)
+    VALUES
+    (@appointment_id, @employee_id, @service_amount, @product_amount, @tip_amount, @tax_amount, @total_paid, @payment_method, GETDATE());
+END;
+
+GO
+
+CREATE PROCEDURE sp_CancelAppointment
+    @appointment_id INT
+AS
+BEGIN
+    UPDATE Appointments
+    SET status = 'Cancelled'
+    WHERE appointment_id = @appointment_id;
+END;
+
+GO
+
+CREATE PROCEDURE sp_GeneratePayroll
+AS
+BEGIN
+    SELECT
+        e.employee_id,
+        e.first_name,
+        e.last_name,
+        SUM(p.service_amount * e.commission_rate) AS service_commission,
+        SUM(p.tip_amount) AS tips,
+        SUM(p.service_amount * e.commission_rate) + SUM(p.tip_amount) AS total_pay
+    FROM Payments p
+    JOIN Employees e ON p.employee_id = e.employee_id
+    GROUP BY e.employee_id, e.first_name, e.last_name;
+END;
+
+GO
+
+SELECT name FROM sys.views;
+
+SELECT name FROM sys.views;
+SELECT name FROM sys.procedures;
+
+SELECT * FROM vw_DailyFinancialSummary;
+SELECT * FROM vw_EndOfDayEmployeeSummary;
+SELECT * FROM vw_PayrollSummary;
+SELECT * FROM vw_YearlyTaxSummary;
+
+EXEC sp_GeneratePayroll;
