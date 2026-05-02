@@ -11,19 +11,25 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: #0b1220;
-      color: #e2e8f0;
-      line-height: 1.6;
+      background: linear-gradient(135deg, #07111f 0%, #0b1f3a 45%, #102a4c 100%);
+      color: #eaf2ff;
+      line-height: 1.7;
     }
 
     a {
-      color: #60a5fa;
+      color: #93c5fd;
       text-decoration: none;
+      font-weight: 600;
     }
 
     a:hover {
+      color: #bfdbfe;
       text-decoration: underline;
     }
 
@@ -34,126 +40,148 @@
     }
 
     header {
-      padding: 28px 0;
-      border-bottom: 1px solid #1e293b;
-      background: rgba(11, 18, 32, 0.95);
+      background: rgba(7, 17, 31, 0.92);
+      border-bottom: 1px solid rgba(147, 197, 253, 0.18);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
+      backdrop-filter: blur(10px);
     }
 
     nav {
+      min-height: 74px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 20px;
     }
 
     .logo {
       font-size: 1.35rem;
-      font-weight: bold;
-      color: #f8fafc;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #ffffff;
     }
 
     .nav-links {
       display: flex;
+      flex-wrap: wrap;
       gap: 18px;
       font-size: 0.95rem;
     }
 
     .hero {
-      padding: 85px 0 70px;
-      display: grid;
-      grid-template-columns: 1.4fr 0.8fr;
-      gap: 40px;
+      min-height: 88vh;
+      display: flex;
       align-items: center;
+      text-align: center;
+      padding: 80px 0;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(8, 20, 38, 0.62);
+      border: 1px solid rgba(147, 197, 253, 0.2);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      border-radius: 34px;
+      padding: 55px 42px;
     }
 
     .hero h1 {
-      font-size: clamp(2.3rem, 5vw, 4.5rem);
+      font-size: clamp(2.4rem, 6vw, 5rem);
       line-height: 1.05;
-      color: #f8fafc;
       margin-bottom: 18px;
+      color: #ffffff;
     }
 
     .hero h1 span {
       color: #60a5fa;
     }
 
+    .hero .subtitle {
+      font-size: 1.35rem;
+      color: #bfdbfe;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
     .hero p {
-      font-size: 1.08rem;
-      color: #cbd5f5;
-      margin-bottom: 26px;
-      max-width: 700px;
+      max-width: 760px;
+      margin: 0 auto 28px;
+      color: #dbeafe;
+      font-size: 1.05rem;
     }
 
     .buttons {
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 14px;
+      margin-top: 20px;
     }
 
     .btn {
       display: inline-block;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-weight: bold;
-      border: 1px solid #60a5fa;
+      padding: 13px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(147, 197, 253, 0.45);
+      transition: all 0.2s ease;
     }
 
     .btn-primary {
       background: #2563eb;
-      color: #f8fafc;
+      color: #ffffff;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.28);
     }
 
     .btn-secondary {
-      color: #60a5fa;
+      color: #dbeafe;
+      background: rgba(15, 35, 65, 0.65);
     }
 
-    .hero-card {
-      background: linear-gradient(145deg, #111827, #020617);
-      padding: 26px;
-      border-radius: 24px;
-      border: 1px solid #1e293b;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-    }
-
-    .hero-card h3 {
-      color: #f8fafc;
-      margin-bottom: 14px;
-    }
-
-    .quick-stats {
-      display: grid;
-      gap: 14px;
-    }
-
-    .stat {
-      background: #020617;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid #1e293b;
-    }
-
-    .stat strong {
-      color: #60a5fa;
-      font-size: 1.15rem;
+    .btn:hover {
+      transform: translateY(-2px);
+      text-decoration: none;
     }
 
     section {
-      padding: 60px 0;
+      padding: 70px 0;
+    }
+
+    .section-box {
+      background: rgba(8, 20, 38, 0.72);
+      border: 1px solid rgba(147, 197, 253, 0.18);
+      border-radius: 28px;
+      padding: 38px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
     }
 
     .section-title {
-      font-size: 2rem;
-      color: #f8fafc;
-      margin-bottom: 14px;
+      text-align: center;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      color: #ffffff;
+      margin-bottom: 12px;
     }
 
     .section-subtitle {
-      color: #94a3b8;
-      margin-bottom: 30px;
+      text-align: center;
+      color: #bfdbfe;
       max-width: 760px;
+      margin: 0 auto 34px;
+      font-size: 1.05rem;
+    }
+
+    .quote {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+      color: #dbeafe;
+      font-size: 1.15rem;
+      background: rgba(96, 165, 250, 0.08);
+      border: 1px solid rgba(147, 197, 253, 0.25);
+      border-radius: 22px;
+      padding: 26px;
     }
 
     .grid {
@@ -163,71 +191,82 @@
     }
 
     .card {
-      background: #020617;
-      border: 1px solid #1e293b;
-      border-radius: 22px;
+      background: rgba(3, 12, 26, 0.82);
+      border: 1px solid rgba(147, 197, 253, 0.18);
+      border-radius: 24px;
       padding: 24px;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: 0.25s ease;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      border-color: #60a5fa;
+      transform: translateY(-5px);
+      border-color: rgba(96, 165, 250, 0.85);
+      box-shadow: 0 20px 45px rgba(37, 99, 235, 0.14);
     }
 
     .card h3 {
-      color: #f8fafc;
-      margin-bottom: 10px;
+      color: #ffffff;
+      margin-bottom: 12px;
+      font-size: 1.25rem;
     }
 
     .card p {
-      color: #cbd5f5;
+      color: #dbeafe;
       margin-bottom: 14px;
+    }
+
+    .project-image {
+      width: 100%;
+      min-height: 180px;
+      background: linear-gradient(135deg, rgba(15, 35, 65, 0.8), rgba(3, 12, 26, 0.9));
+      border: 1px dashed rgba(147, 197, 253, 0.35);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      color: #93c5fd;
+      margin-bottom: 18px;
+      font-weight: 700;
     }
 
     .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 16px;
     }
 
     .tag {
-      background: #020617;
-      color: #93c5fd;
-      border: 1px solid #1e293b;
-      padding: 6px 10px;
+      color: #dbeafe;
+      background: rgba(37, 99, 235, 0.18);
+      border: 1px solid rgba(147, 197, 253, 0.2);
+      padding: 6px 11px;
       border-radius: 999px;
       font-size: 0.82rem;
     }
 
-    .project-image {
-      width: 100%;
-      height: 170px;
-      background: #020617;
-      border: 1px dashed #334155;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #64748b;
-      margin-bottom: 18px;
-      text-align: center;
-      padding: 15px;
-      font-size: 0.92rem;
-    }
-
-    .resume-list {
+    .stats {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 28px;
     }
 
-    .resume-item {
-      background: #020617;
-      border: 1px solid #1e293b;
-      padding: 16px;
-      border-radius: 16px;
+    .stat {
+      text-align: center;
+      background: rgba(3, 12, 26, 0.82);
+      border: 1px solid rgba(147, 197, 253, 0.18);
+      border-radius: 22px;
+      padding: 22px 16px;
+    }
+
+    .stat strong {
+      display: block;
+      color: #60a5fa;
+      font-size: 1.7rem;
+      margin-bottom: 4px;
     }
 
     .timeline {
@@ -236,52 +275,385 @@
     }
 
     .timeline-item {
-      background: #020617;
-      border-left: 4px solid #60a5fa;
-      padding: 18px 20px;
-      border-radius: 14px;
-      border-top: 1px solid #1e293b;
-      border-right: 1px solid #1e293b;
-      border-bottom: 1px solid #1e293b;
+      background: rgba(3, 12, 26, 0.82);
+      border-left: 5px solid #60a5fa;
+      border-radius: 18px;
+      padding: 22px;
+      border-top: 1px solid rgba(147, 197, 253, 0.16);
+      border-right: 1px solid rgba(147, 197, 253, 0.16);
+      border-bottom: 1px solid rgba(147, 197, 253, 0.16);
     }
 
     .timeline-item h3 {
-      color: #f8fafc;
+      color: #ffffff;
       margin-bottom: 4px;
     }
 
     .timeline-item small {
-      color: #94a3b8;
+      color: #93c5fd;
+      font-weight: 700;
+    }
+
+    .resume-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .resume-card {
+      display: block;
+      background: rgba(3, 12, 26, 0.82);
+      border: 1px solid rgba(147, 197, 253, 0.18);
+      padding: 20px;
+      border-radius: 20px;
+      color: #dbeafe;
+      transition: 0.25s ease;
+    }
+
+    .resume-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(96, 165, 250, 0.85);
+      box-shadow: 0 18px 40px rgba(37, 99, 235, 0.14);
+      text-decoration: none;
+    }
+
+    .resume-card h3 {
+      color: #ffffff;
+      margin-bottom: 8px;
+      font-size: 1.15rem;
+    }
+
+    .resume-card p {
+      color: #bfdbfe;
+      font-size: 0.92rem;
+      margin-bottom: 12px;
+    }
+
+    .resume-card span {
+      color: #60a5fa;
+      font-weight: 800;
+      font-size: 0.9rem;
     }
 
     footer {
-      padding: 36px 0;
+      padding: 38px 0;
       text-align: center;
-      color: #94a3b8;
-      border-top: 1px solid #1e293b;
+      color: #bfdbfe;
+      border-top: 1px solid rgba(147, 197, 253, 0.16);
+      background: rgba(7, 17, 31, 0.85);
     }
 
-    @media (max-width: 850px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
-      .grid, .resume-list {
-        grid-template-columns: 1fr;
-      }
-
+    @media (max-width: 900px) {
       nav {
         flex-direction: column;
+        padding: 18px 0;
       }
 
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
+      .hero-content {
+        padding: 40px 24px;
+      }
+
+      .grid,
+      .stats,
+      .resume-list {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <!-- content unchanged -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Henry Ton</div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#resumes">Resumes</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Henry Ton</h1>
+          <div class="subtitle">MIS Student | Data, Systems & Business Intelligence</div>
+          <p>
+            Welcome to my portfolio. This is where I showcase the projects I am proud of — from automated dashboards
+            to SQL systems and financial data tools. I enjoy building solutions that make data easier to understand,
+            more useful, and more connected to real business decisions.
+          </p>
+          <div class="buttons">
+            <a class="btn btn-primary" href="#projects">View My Proud Work</a>
+            <a class="btn btn-secondary" href="mailto:Ht62636@gmail.com">Contact Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container section-box">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">
+          I am pursuing a Bachelor of Business Administration in Management Information Systems at Sam Houston State University,
+          expected to graduate in May 2026. My experience connects business, data, technology, and communication.
+        </p>
+        <div class="quote">
+          “I take pride in creating solutions that are not just technical, but practical — tools that help people understand data,
+          make better decisions, and reduce manual work.”
+        </div>
+
+        <div class="stats">
+          <div class="stat"><strong>29/30</strong>students passed certification</div>
+          <div class="stat"><strong>15%</strong>scheduling efficiency improvement</div>
+          <div class="stat"><strong>7%</strong>reporting efficiency improvement</div>
+          <div class="stat"><strong>300+</strong>transactions analyzed</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container section-box">
+        <h2 class="section-title">My Proud Work</h2>
+        <p class="section-subtitle">
+          These projects represent the kind of work I enjoy most: solving business problems with data, systems, and clear visuals.
+        </p>
+
+        <div class="grid">
+          <article class="card">
+            <div class="project-image">Add Power BI dashboard screenshot here</div>
+            <h3>Business Intelligence System</h3>
+            <p>
+              I built an automated SQL + Power BI dashboard to track revenue, taxes, employee performance, and daily business metrics.
+              This project helped reduce manual end-of-day reporting and made business performance easier to understand.
+            </p>
+            <p><strong>Impact:</strong> Improved reporting efficiency by 7%.</p>
+            <div class="tags">
+              <span class="tag">SQL</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Automation</span>
+              <span class="tag">Reporting</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="images/trading-indicator.png" class="project-image" alt="Trading indicator chart with custom signals">
+            <h3>Trading Indicator & Financial Data Analysis</h3>
+            <p>
+              I developed a custom indicator using Python to help me understand market trends, price movement, and real-time financial data.
+              This project reflects my interest in using data to recognize patterns and support decision-making.
+            </p>
+            <p><strong>Focus:</strong> Trend analysis, pattern recognition, and financial data interpretation.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">TradingView</span>
+              <span class="tag">Financial Data</span>
+              <span class="tag">Trend Analysis</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="images/sql-vscode.png" class="project-image" alt="SQL database code in VS Code">
+            <h3>Relational Database Design</h3>
+            <p>
+              I designed a normalized SQL database with tables, relationships, primary keys, and foreign keys.
+              This project strengthened my understanding of how data should be structured, connected, and retrieved efficiently.
+            </p>
+            <p><strong>Focus:</strong> Data integrity, SQL queries, and database structure.</p>
+            <div class="tags">
+              <span class="tag">SQL</span>
+              <span class="tag">Azure</span>
+              <span class="tag">Database Design</span>
+              <span class="tag">ERD</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="project-image">Live Website Project</div>
+            <h3>Web Design Project</h3>
+            <p>
+              I built a live website using HTML and CSS to practice front-end design, page structure, layout, and visual styling.
+              This project helped strengthen my ability to create user-friendly pages and present information clearly online.
+            </p>
+            <p><strong>Focus:</strong> Web layout, HTML/CSS, design consistency, and user experience.</p>
+            <a href="https://henry102011.github.io/ITSA.html" target="_blank">View Live Website</a>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">Web Design</span>
+              <span class="tag">GitHub Pages</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="project-image">Systems Modeling Project</div>
+            <h3>BPMN, ERD & UML Project</h3>
+            <p>
+              Designed and documented business systems using BPMN diagrams, Entity-Relationship Diagrams (ERD), and UML models.
+              This project demonstrates my ability to analyze processes, structure data, and model systems clearly for development and business use.
+            </p>
+            <p><strong>Focus:</strong> Process modeling, data relationships, and system design documentation.</p>
+            <a href="https://henry102011.github.io/Project4340.html" target="_blank">View Project</a>
+            <div class="tags">
+              <span class="tag">BPMN</span>
+              <span class="tag">ERD</span>
+              <span class="tag">UML</span>
+              <span class="tag">Systems Design</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="project-image">E-Commerce Website Project</div>
+            <h3>Business Website (E-Commerce Concept)</h3>
+            <p>
+              Developed a full business website for a Thai massage company, focusing on user experience, service presentation,
+              customer engagement, and booking flow. This project connects with my systems modeling work (BPMN, ERD, UML)
+              by translating business requirements into a functional and visually structured website.
+            </p>
+            <p><strong>Focus:</strong> UI/UX design, business requirements, service flow, and front-end development.</p>
+            <a href="https://henry102011.github.io/Montra.html" target="_blank">View Live Website</a>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">E-Commerce</span>
+              <span class="tag">UI/UX</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container section-box">
+        <h2 class="section-title">Skills & Tools</h2>
+        <p class="section-subtitle">A mix of technical, business, and systems skills that support my work.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Data & Analytics</h3>
+            <p>SQL, Python, pandas, Excel, PivotTables, reporting, data analysis, trend analysis, and business metrics.</p>
+          </div>
+          <div class="card">
+            <h3>Business Intelligence</h3>
+            <p>Power BI dashboards, KPI reporting, automated reporting, data visualization, and decision support.</p>
+          </div>
+          <div class="card">
+            <h3>Systems & Business</h3>
+            <p>SAP S/4HANA, UML, BPMN, requirements gathering, process analysis, and client communication.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container section-box">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3>E-commerce Assistant / Teaching Assistant — SHSU</h3>
+            <small>August 2025 – April 2026</small>
+            <p>
+              Provided technical support to 30+ students, simplified HTML/CSS concepts, resolved coding issues,
+              and contributed to 29 out of 30 students passing certification exams.
+            </p>
+          </div>
+          <div class="timeline-item">
+            <h3>Real Estate Agent — NB Elite Real Estate</h3>
+            <small>July 2023 – Present</small>
+            <p>
+              Analyzed market data and comparable listings to support pricing strategies, client decision-making,
+              and transaction accuracy.
+            </p>
+          </div>
+          <div class="timeline-item">
+            <h3>Receptionist / Operations & Data Support — Sweet Nail and Spa</h3>
+            <small>December 2019 – May 2023</small>
+            <p>
+              Analyzed 300+ transactions, monitored revenue trends, supported financial reporting,
+              and improved scheduling efficiency through data insights.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resumes">
+      <div class="container section-box">
+        <h2 class="section-title">Targeted Resumes</h2>
+        <p class="section-subtitle">
+          I created targeted resumes for different roles so each application reflects the skills most relevant to that position.
+        </p>
+        <div class="resume-list">
+          <a class="resume-card" href="resumes/Product-Analysis-Henry.pdf" download>
+            <h3>Product Analyst Resume</h3>
+            <p>Focused on product decisions, business impact, user needs, SQL, Power BI, and analytical problem-solving.</p>
+            <span>Download PDF →</span>
+          </a>
+
+          <a class="resume-card" href="resumes/Data-Analysis-Henry.pdf" download>
+            <h3>Data Analyst Resume</h3>
+            <p>Focused on SQL, Python, Excel, Power BI, data cleaning, trend analysis, and reporting insights.</p>
+            <span>Download PDF →</span>
+          </a>
+
+          <a class="resume-card" href="resumes/BI-Resume-Henry.pdf" download>
+            <h3>Business Intelligence Resume</h3>
+            <p>Focused on dashboards, KPI reporting, Power BI, SQL-backed reporting, and data visualization.</p>
+            <span>Download PDF →</span>
+          </a>
+
+          <a class="resume-card" href="resumes/Database-Resume-Henry.pdf" download>
+            <h3>Database / SQL Resume</h3>
+            <p>Focused on database design, SQL queries, PK/FK relationships, ERD, data integrity, and backend structure.</p>
+            <span>Download PDF →</span>
+          </a>
+
+          <a class="resume-card" href="resumes/Healthcare-Resume-Henry.pdf" download>
+            <h3>Healthcare / Systems Resume</h3>
+            <p>Focused on systems, healthcare-style reporting, SAP S/4HANA, SQL, Power BI, and operational data.</p>
+            <span>Download PDF →</span>
+          </a>
+
+          <a class="resume-card" href="resumes/General-MIS-Resume-Henry.pdf" download>
+            <h3>General MIS Resume</h3>
+            <p>Balanced resume for broad MIS, business technology, data, systems, and entry-level analyst roles.</p>
+            <span>Download PDF →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="container section-box">
+        <h2 class="section-title">Certifications</h2>
+        <p class="section-subtitle">Certiport certifications that support my technical foundation.</p>
+        <div class="quote">
+          Python Programming • SQL • Cloud Computing • Networking • HTML/CSS • PMI
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container section-box">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-subtitle">
+          I am interested in entry-level opportunities in product analysis, data analysis, business intelligence,
+          database support, healthcare systems, and MIS-related roles.
+        </p>
+        <p style="text-align:center;">Email: <a href="mailto:Ht62636@gmail.com">Ht62636@gmail.com</a></p>
+        <p style="text-align:center;">LinkedIn: <a href="https://www.linkedin.com/in/HenryTon09" target="_blank">linkedin.com/in/HenryTon09</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Henry Ton. Built with HTML, CSS, and pride in my work.</p>
+    </div>
+  </footer>
 </body>
 </html>
