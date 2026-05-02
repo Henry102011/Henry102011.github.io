@@ -215,20 +215,30 @@
       margin-bottom: 14px;
     }
 
-    .project-image {
+    .img-container {
       width: 100%;
-      min-height: 180px;
-      background: linear-gradient(135deg, rgba(15, 35, 65, 0.8), rgba(3, 12, 26, 0.9));
-      border: 1px dashed rgba(147, 197, 253, 0.35);
-      border-radius: 18px;
+      height: 250px;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 18px;
-      color: #93c5fd;
+      overflow: hidden;
+      border-radius: 18px;
       margin-bottom: 18px;
-      font-weight: 700;
+      background: linear-gradient(135deg, rgba(15, 35, 65, 0.8), rgba(3, 12, 26, 0.9));
+      border: 1px solid rgba(147, 197, 253, 0.25);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      padding: 10px;
+    }
+
+    .img-container:hover .project-img {
+      transform: scale(1.03);
+      transition: transform 0.25s ease;
     }
 
     .tags {
@@ -358,6 +368,10 @@
       .resume-list {
         grid-template-columns: 1fr;
       }
+
+      .img-container {
+        height: 220px;
+      }
     }
   </style>
 </head>
@@ -369,8 +383,10 @@
         <div class="nav-links">
           <a href="#about">About</a>
           <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
           <a href="#experience">Experience</a>
           <a href="#resumes">Resumes</a>
+          <a href="#certifications">Certifications</a>
           <a href="#contact">Contact</a>
         </div>
       </nav>
@@ -384,12 +400,12 @@
           <h1>Henry Ton</h1>
           <div class="subtitle">MIS Student | Data, Systems & Business Intelligence</div>
           <p>
-            Welcome to my portfolio. This is where I showcase the projects I am proud of — from automated dashboards
+            Welcome to my portfolio. This is where I showcase my projects — from automated dashboards
             to SQL systems and financial data tools. I enjoy building solutions that make data easier to understand,
             more useful, and more connected to real business decisions.
           </p>
           <div class="buttons">
-            <a class="btn btn-primary" href="#projects">View My Proud Work</a>
+            <a class="btn btn-primary" href="#projects">View My Projects</a>
             <a class="btn btn-secondary" href="mailto:Ht62636@gmail.com">Contact Me</a>
           </div>
         </div>
@@ -419,14 +435,16 @@
 
     <section id="projects">
       <div class="container section-box">
-        <h2 class="section-title">My Proud Work</h2>
+        <h2 class="section-title">Featured Projects</h2>
         <p class="section-subtitle">
           These projects represent the kind of work I enjoy most: solving business problems with data, systems, and clear visuals.
         </p>
 
         <div class="grid">
           <article class="card">
-            <img src="images/bi-dashboard.png">Add Power BI dashboard screenshot here</div>
+            <div class="img-container">
+              <img src="images/bi-dashboard.png" class="project-img" alt="Power BI dashboard screenshot">
+            </div>
             <h3>Business Intelligence System</h3>
             <p>
               I built an automated SQL + Power BI dashboard to track revenue, taxes, employee performance, and daily business metrics.
@@ -442,7 +460,9 @@
           </article>
 
           <article class="card">
-            <img src="images/trading-project.png" class="project-image" alt="Trading indicator chart with custom signals">
+            <div class="img-container">
+              <img src="images/trading-project.png" class="project-img" alt="Trading indicator chart with custom signals">
+            </div>
             <h3>Trading Indicator & Financial Data Analysis</h3>
             <p>
               I developed a custom indicator using Python to help me understand market trends, price movement, and real-time financial data.
@@ -458,7 +478,9 @@
           </article>
 
           <article class="card">
-            <img src="images/sql-vscode.png" class="project-image" alt="SQL database code in VS Code">
+            <div class="img-container">
+              <img src="images/sql-vscode.png" class="project-img" alt="SQL database code in VS Code">
+            </div>
             <h3>Relational Database Design</h3>
             <p>
               I designed a normalized SQL database with tables, relationships, primary keys, and foreign keys.
@@ -474,8 +496,9 @@
           </article>
 
           <article class="card">
-            <img src="images/ITSA.png" class="project-image" alt="ITSA Project" 
-            <div Website Project</div>
+            <div class="img-container">
+              <img src="images/ITSA.png" class="project-img" alt="ITSA live website project screenshot">
+            </div>
             <h3>Web Design Project</h3>
             <p>
               I built a live website using HTML and CSS to practice front-end design, page structure, layout, and visual styling.
@@ -492,7 +515,9 @@
           </article>
 
           <article class="card">
-            <img src="images/erd-diagram.png">Systems Modeling Project</div>
+            <div class="img-container">
+              <img src="images/erd-diagram.png" class="project-img" alt="ERD systems modeling project screenshot">
+            </div>
             <h3>BPMN, ERD & UML Project</h3>
             <p>
               Designed and documented business systems using BPMN diagrams, Entity-Relationship Diagrams (ERD), and UML models.
@@ -509,7 +534,9 @@
           </article>
 
           <article class="card">
-            <img src="images/montra-website.png">E-Commerce Website Project</div>
+            <div class="img-container">
+              <img src="images/montra-website.png" class="project-img" alt="Montra e-commerce website project screenshot">
+            </div>
             <h3>Business Website (E-Commerce Concept)</h3>
             <p>
               Developed a full business website for a Thai massage company, focusing on user experience, service presentation,
@@ -629,65 +656,75 @@
     </section>
 
     <section id="certifications">
-  <div class="container section-box">
-    <h2 class="section-title">Certifications</h2>
-    <p class="section-subtitle">
-      Verified certifications demonstrating my skills in programming, databases, cloud, networking, and systems.
-    </p>
+      <div class="container section-box">
+        <h2 class="section-title">Certifications</h2>
+        <p class="section-subtitle">
+          Verified certifications demonstrating my skills in programming, databases, cloud, networking, and systems.
+        </p>
 
-    <div class="grid">
+        <div class="grid">
+          <article class="card">
+            <a href="images/python-cert.png" target="_blank">
+              <div class="img-container">
+                <img src="images/python-cert.png" class="project-img" alt="Python Certification">
+              </div>
+            </a>
+            <h3>Python Certification</h3>
+            <p>Certiport IT Specialist – Python (2026)</p>
+          </article>
 
-      <article class="card">
-        <a href="images/python-cert.png" target="_blank">
-          <img src="images/python-cert.png" class="project-image" alt="Python Certification">
-        </a>
-        <h3>Python Certification</h3>
-        <p>Certiport IT Specialist – Python (2026)</p>
-      </article>
+          <article class="card">
+            <a href="images/sql-cert.png" target="_blank">
+              <div class="img-container">
+                <img src="images/sql-cert.png" class="project-img" alt="SQL Certification">
+              </div>
+            </a>
+            <h3>SQL / Database Certification</h3>
+            <p>Certiport IT Specialist – Databases (2026)</p>
+          </article>
 
-      <article class="card">
-        <a href="images/sql-cert.png" target="_blank">
-          <img src="images/sql-cert.png" class="project-image" alt="SQL Certification">
-        </a>
-        <h3>SQL / Database Certification</h3>
-        <p>Certiport IT Specialist – Databases (2026)</p>
-      </article>
+          <article class="card">
+            <a href="images/cloud-cert.png" target="_blank">
+              <div class="img-container">
+                <img src="images/cloud-cert.png" class="project-img" alt="Cloud Certification">
+              </div>
+            </a>
+            <h3>Cloud Computing Certification</h3>
+            <p>Certiport IT Specialist – Cloud Computing (2026)</p>
+          </article>
 
-      <article class="card">
-        <a href="images/cloud-cert.png" target="_blank">
-          <img src="images/cloud-cert.png" class="project-image" alt="Cloud Certification">
-        </a>
-        <h3>Cloud Computing Certification</h3>
-        <p>Certiport IT Specialist – Cloud Computing (2026)</p>
-      </article>
+          <article class="card">
+            <a href="images/networking-cert.png" target="_blank">
+              <div class="img-container">
+                <img src="images/networking-cert.png" class="project-img" alt="Networking Certification">
+              </div>
+            </a>
+            <h3>Networking Certification</h3>
+            <p>Certiport IT Specialist – Networking (2025)</p>
+          </article>
 
-      <article class="card">
-        <a href="images/networking-cert.png" target="_blank">
-          <img src="images/networking-cert.png" class="project-image" alt="Networking Certification">
-        </a>
-        <h3>Networking Certification</h3>
-        <p>Certiport IT Specialist – Networking (2025)</p>
-      </article>
+          <article class="card">
+            <a href="images/html-css-cert.png" target="_blank">
+              <div class="img-container">
+                <img src="images/html-css-cert.png" class="project-img" alt="HTML CSS Certification">
+              </div>
+            </a>
+            <h3>HTML & CSS Certification</h3>
+            <p>Certiport IT Specialist – HTML & CSS (2025)</p>
+          </article>
 
-      <article class="card">
-        <a href="images/html-css-cert.png" target="_blank">
-          <img src="images/html-css-cert.png" class="project-image" alt="HTML CSS Certification">
-        </a>
-        <h3>HTML & CSS Certification</h3>
-        <p>Certiport IT Specialist – HTML & CSS (2025)</p>
-      </article>
-
-      <article class="card">
-        <a href="images/pmi-cert.png" target="_blank">
-          <img src="images/pmi-cert.png" class="project-image" alt="PMI Certification">
-        </a>
-        <h3>Project Management Certification</h3>
-        <p>PMI Project Management Ready® (2025)</p>
-      </article>
-
-    </div>
-  </div>
-</section>
+          <article class="card">
+            <a href="images/pmi-cert.png" target="_blank">
+              <div class="img-container">
+                <img src="images/pmi-cert.png" class="project-img" alt="PMI Certification">
+              </div>
+            </a>
+            <h3>Project Management Certification</h3>
+            <p>PMI Project Management Ready® (2025)</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <section id="contact">
       <div class="container section-box">
