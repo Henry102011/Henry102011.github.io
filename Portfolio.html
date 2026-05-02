@@ -184,6 +184,46 @@
       padding: 26px;
     }
 
+    .about-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 28px;
+      align-items: center;
+      margin-top: 28px;
+    }
+
+    .profile-photo-box {
+      width: 240px;
+      height: 240px;
+      border-radius: 28px;
+      overflow: hidden;
+      background: rgba(15, 35, 65, 0.65);
+      border: 1px solid rgba(147, 197, 253, 0.25);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    }
+
+    .profile-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-details p {
+      color: #dbeafe;
+      margin-bottom: 14px;
+    }
+
+    .skill-list {
+      color: #dbeafe;
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .skill-list li {
+      margin-bottom: 8px;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -239,6 +279,11 @@
     .img-container:hover .project-img {
       transform: scale(1.03);
       transition: transform 0.25s ease;
+    }
+
+    .zoom-link {
+      display: block;
+      cursor: zoom-in;
     }
 
     .tags {
@@ -363,6 +408,15 @@
         padding: 40px 24px;
       }
 
+      .about-layout {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .profile-photo-box {
+        margin: 0 auto;
+      }
+
       .grid,
       .stats,
       .resume-list {
@@ -419,9 +473,26 @@
           I am pursuing a Bachelor of Business Administration in Management Information Systems at Sam Houston State University,
           expected to graduate in May 2026. My experience connects business, data, technology, and communication.
         </p>
-        <div class="quote">
-          “I take pride in creating solutions that are not just technical, but practical — tools that help people understand data,
-          make better decisions, and reduce manual work.”
+        <div class="about-layout">
+          <div class="profile-photo-box">
+            <img src="images/profile-photo.png" class="profile-photo" alt="Henry Ton professional profile photo">
+          </div>
+
+          <div class="about-details">
+            <div class="quote">
+              “I take pride in creating solutions that are not just technical, but practical — tools that help people understand data,
+              make better decisions, and reduce manual work.”
+            </div>
+            <p>
+              My background combines Management Information Systems, business operations, data analysis, technical support,
+              and real client communication. I enjoy taking messy information, organizing it into systems, and turning it into dashboards,
+              reports, or tools that people can actually use.
+            </p>
+            <p>
+              I am especially interested in roles where I can connect business needs with technology, including product analysis,
+              data analysis, business intelligence, database support, and systems-focused analyst work.
+            </p>
+          </div>
         </div>
 
         <div class="stats">
@@ -442,9 +513,11 @@
 
         <div class="grid">
           <article class="card">
-            <div class="img-container">
-              <img src="images/bi-dashboard.png" class="project-img" alt="Power BI dashboard screenshot">
-            </div>
+            <a href="images/bi-dashboard.png" target="_blank" class="zoom-link">
+              <div class="img-container">
+                <img src="images/bi-dashboard.png" class="project-img" alt="Power BI dashboard screenshot">
+              </div>
+            </a>
             <h3>Business Intelligence System</h3>
             <p>
               I built an automated SQL + Power BI dashboard to track revenue, taxes, employee performance, and daily business metrics.
@@ -460,9 +533,11 @@
           </article>
 
           <article class="card">
-            <div class="img-container">
-              <img src="images/trading-project.png" class="project-img" alt="Trading indicator chart with custom signals">
-            </div>
+            <a href="images/trading-project.png" target="_blank" class="zoom-link">
+              <div class="img-container">
+                <img src="images/trading-project.png" class="project-img" alt="Trading indicator chart with custom signals">
+              </div>
+            </a>
             <h3>Trading Indicator & Financial Data Analysis</h3>
             <p>
               I developed a custom indicator using Python to help me understand market trends, price movement, and real-time financial data.
@@ -478,9 +553,11 @@
           </article>
 
           <article class="card">
-            <div class="img-container">
-              <img src="images/sql-vscode.png" class="project-img" alt="SQL database code in VS Code">
-            </div>
+            <a href="images/sql-vscode.png" target="_blank" class="zoom-link">
+              <div class="img-container">
+                <img src="images/sql-vscode.png" class="project-img" alt="SQL database code in VS Code">
+              </div>
+            </a>
             <h3>Relational Database Design</h3>
             <p>
               I designed a normalized SQL database with tables, relationships, primary keys, and foreign keys.
@@ -496,9 +573,11 @@
           </article>
 
           <article class="card">
-            <div class="img-container">
-              <img src="images/ITSA.png" class="project-img" alt="ITSA live website project screenshot">
-            </div>
+            <a href="images/ITSA.png" target="_blank" class="zoom-link">
+              <div class="img-container">
+                <img src="images/ITSA.png" class="project-img" alt="ITSA live website project screenshot">
+              </div>
+            </a>
             <h3>Web Design Project</h3>
             <p>
               I built a live website using HTML and CSS to practice front-end design, page structure, layout, and visual styling.
@@ -515,9 +594,11 @@
           </article>
 
           <article class="card">
-            <div class="img-container">
-              <img src="images/erd-diagram.png" class="project-img" alt="ERD systems modeling project screenshot">
-            </div>
+            <a href="images/erd-diagram.png" target="_blank" class="zoom-link">
+              <div class="img-container">
+                <img src="images/erd-diagram.png" class="project-img" alt="ERD systems modeling project screenshot">
+              </div>
+            </a>
             <h3>BPMN, ERD & UML Project</h3>
             <p>
               Designed and documented business systems using BPMN diagrams, Entity-Relationship Diagrams (ERD), and UML models.
@@ -534,9 +615,11 @@
           </article>
 
           <article class="card">
-            <div class="img-container">
-              <img src="images/montra-website.png" class="project-img" alt="Montra e-commerce website project screenshot">
-            </div>
+            <a href="images/montra-website.png" target="_blank" class="zoom-link">
+              <div class="img-container">
+                <img src="images/montra-website.png" class="project-img" alt="Montra e-commerce website project screenshot">
+              </div>
+            </a>
             <h3>Business Website (E-Commerce Concept)</h3>
             <p>
               Developed a full business website for a Thai massage company, focusing on user experience, service presentation,
@@ -563,15 +646,30 @@
         <div class="grid">
           <div class="card">
             <h3>Data & Analytics</h3>
-            <p>SQL, Python, pandas, Excel, PivotTables, reporting, data analysis, trend analysis, and business metrics.</p>
+            <p>Experienced with organizing, analyzing, and presenting business data in ways that support decision-making.</p>
+            <ul class="skill-list">
+              <li>SQL queries, joins, filtering, grouping, and database relationships</li>
+              <li>Python, pandas, data cleaning, basic automation, and financial data analysis</li>
+              <li>Excel, PivotTables, reporting, trend analysis, and business metrics</li>
+            </ul>
           </div>
           <div class="card">
             <h3>Business Intelligence</h3>
-            <p>Power BI dashboards, KPI reporting, automated reporting, data visualization, and decision support.</p>
+            <p>Built dashboard-style reporting to make daily operations, revenue, taxes, and employee performance easier to understand.</p>
+            <ul class="skill-list">
+              <li>Power BI dashboards with KPI-focused visuals</li>
+              <li>SQL-backed reporting and automated business summaries</li>
+              <li>Revenue, tips, services, tax, and performance tracking</li>
+            </ul>
           </div>
           <div class="card">
             <h3>Systems & Business</h3>
-            <p>SAP S/4HANA, UML, BPMN, requirements gathering, process analysis, and client communication.</p>
+            <p>Comfortable connecting business needs with technical solutions through process modeling, communication, and documentation.</p>
+            <ul class="skill-list">
+              <li>SAP S/4HANA, UML, BPMN, ERD, and requirements gathering</li>
+              <li>Technical support, troubleshooting, and user-focused explanations</li>
+              <li>Business process improvement, client communication, and documentation</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -588,6 +686,10 @@
               Provided technical support to 30+ students, simplified HTML/CSS concepts, resolved coding issues,
               and contributed to 29 out of 30 students passing certification exams.
             </p>
+            <p>
+              Used hands-on instruction, step-by-step troubleshooting, and practice exam data to identify weak areas and help students improve.
+              This experience strengthened my communication, documentation, problem-solving, and ability to explain technical concepts to non-technical users.
+            </p>
           </div>
           <div class="timeline-item">
             <h3>Real Estate Agent — NB Elite Real Estate</h3>
@@ -596,6 +698,9 @@
               Analyzed market data and comparable listings to support pricing strategies, client decision-making,
               and transaction accuracy.
             </p>
+            <p>
+              Built experience translating data into business recommendations, communicating clearly with clients, and understanding how market trends affect real-world decisions.
+            </p>
           </div>
           <div class="timeline-item">
             <h3>Receptionist / Operations & Data Support — Sweet Nail and Spa</h3>
@@ -603,6 +708,9 @@
             <p>
               Analyzed 300+ transactions, monitored revenue trends, supported financial reporting,
               and improved scheduling efficiency through data insights.
+            </p>
+            <p>
+              Supported daily operations by tracking customer payments, employee services, tips, and business activity. This experience inspired my SQL + Power BI dashboard project for improving manual reporting.
             </p>
           </div>
         </div>
@@ -746,3 +854,4 @@
   </footer>
 </body>
 </html>
+
