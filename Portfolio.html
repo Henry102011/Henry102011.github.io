@@ -21,6 +21,72 @@
       background: linear-gradient(135deg, #07111f 0%, #0b1f3a 45%, #102a4c 100%);
       color: #eaf2ff;
       line-height: 1.7;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.85) 0 1.5px, transparent 2px),
+        radial-gradient(circle at 26% 35%, rgba(255, 255, 255, 0.75) 0 1px, transparent 2px),
+        radial-gradient(circle at 42% 28%, rgba(202, 167, 255, 0.75) 0 1.2px, transparent 2px),
+        radial-gradient(circle at 58% 52%, rgba(255, 255, 200, 0.8) 0 1.5px, transparent 2px),
+        radial-gradient(circle at 76% 38%, rgba(255, 255, 220, 0.9) 0 1.4px, transparent 2px),
+        radial-gradient(circle at 86% 62%, rgba(190, 130, 255, 0.8) 0 1.3px, transparent 2px),
+        radial-gradient(circle at 50% 70%, rgba(255, 255, 255, 0.6) 0 1px, transparent 2px),
+        radial-gradient(circle at 30% 75%, rgba(167, 139, 250, 0.6) 0 1px, transparent 2px),
+        radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.65) 0 1px, transparent 2px),
+        radial-gradient(circle at 50% 58%, rgba(132, 0, 255, 0.42), transparent 32%),
+        radial-gradient(circle at 72% 72%, rgba(99, 102, 241, 0.28), transparent 34%),
+        radial-gradient(circle at 34% 42%, rgba(168, 85, 247, 0.2), transparent 28%);
+      animation: constellationDrift 28s ease-in-out infinite alternate;
+      opacity: 0.95;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(168, 85, 247, 0.45) 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(250, 204, 21, 0.55) 1px, transparent 1.5px);
+      background-size: 90px 90px, 150px 150px, 230px 230px;
+      background-position: 20px 30px, 70px 110px, 130px 60px;
+      animation: starFloat 55s linear infinite;
+      opacity: 0.55;
+    }
+
+    @keyframes constellationDrift {
+      from {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      to {
+        transform: translate3d(18px, -22px, 0) scale(1.04);
+      }
+    }
+
+    @keyframes starFloat {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-160px);
+      }
+    }
+
+    header,
+    main,
+    footer {
+      position: relative;
+      z-index: 1;
     }
 
     a {
@@ -441,13 +507,6 @@
       box-shadow: 0 0 35px rgba(96, 165, 250, 0.25);
     }
 
-    .proof-link {
-      display: inline-block;
-      margin-top: 8px;
-      color: #60a5fa;
-      font-weight: 800;
-    }
-
     footer {
       padding: 38px 0;
       text-align: center;
@@ -862,13 +921,6 @@
             <p>
               Recognized by the Kappa Mu Chapter of Beta Alpha Psi for efforts above and beyond membership requirements.
             </p>
-            <a
-              href="https://www.linkedin.com/posts/bapkappamu_congratulations-to-our-members-for-their-share-7455749174643331072-uHn9?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEoTprMB7v9TOMk2sV3rX5qTvBdTSGOBd0A"
-              target="_blank"
-              class="proof-link"
-            >
-              View LinkedIn Recognition Post →
-            </a>
           </article>
 
           <article class="card">
