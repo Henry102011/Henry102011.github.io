@@ -35,7 +35,7 @@
         radial-gradient(circle at 65% 60%, rgba(168, 85, 247, 0.38), transparent 38%),
         radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.25), transparent 45%),
         radial-gradient(circle at 78% 75%, rgba(139, 92, 246, 0.30), transparent 50%);
-      animation: constellationDrift 28s ease-in-out infinite alternate;
+      animation: constellationDrift 40s ease-in-out infinite alternate;
     }
 
     body::after {
@@ -45,13 +45,13 @@
       pointer-events: none;
       z-index: 0;
       background-image:
-        radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1.7px),
-        radial-gradient(circle, rgba(168,85,247,0.75) 1px, transparent 1.7px),
-        radial-gradient(circle, rgba(250,204,21,0.65) 1px, transparent 1.7px);
-      background-size: 85px 85px, 145px 145px, 230px 230px;
-      background-position: 20px 30px, 70px 110px, 130px 60px;
-      animation: starFloat 55s linear infinite;
-      opacity: 0.75;
+        radial-gradient(circle, rgba(255,255,255,0.95) 1px, transparent 1.7px),
+        radial-gradient(circle, rgba(168,85,247,0.85) 1px, transparent 1.7px),
+        radial-gradient(circle, rgba(250,204,21,0.75) 1px, transparent 1.7px);
+      background-size: 80px 80px, 140px 140px, 220px 220px;
+      background-position: 0 0, 40px 60px, 120px 30px;
+      animation: starMove 60s linear infinite, starTwinkle 4s ease-in-out infinite;
+      opacity: 0.8;
     }
 
     @keyframes constellationDrift {
@@ -63,12 +63,21 @@
       }
     }
 
-    @keyframes starFloat {
+    @keyframes starMove {
       from {
-        transform: translateY(0);
+        transform: translateY(0px);
       }
       to {
-        transform: translateY(-180px);
+        transform: translateY(-200px);
+      }
+    }
+
+    @keyframes starTwinkle {
+      0%, 100% {
+        opacity: 0.55;
+      }
+      50% {
+        opacity: 1;
       }
     }
 
@@ -554,12 +563,6 @@
   </style>
 </head>
 <body>
- 
-</body>
-</html>
-  </style>
-</head>
-<body>
   <header>
     <div class="container">
       <nav>
@@ -789,6 +792,7 @@
               <li>Excel, PivotTables, reporting, trend analysis, and business metrics</li>
             </ul>
           </div>
+
           <div class="card">
             <h3>Business Intelligence</h3>
             <p>Built dashboard-style reporting to make daily operations, revenue, taxes, and employee performance easier to understand.</p>
@@ -798,6 +802,7 @@
               <li>Revenue, tips, services, tax, and performance tracking</li>
             </ul>
           </div>
+
           <div class="card">
             <h3>Systems & Business</h3>
             <p>Comfortable connecting business needs with technical solutions through process modeling, communication, and documentation.</p>
@@ -827,6 +832,7 @@
               This experience strengthened my communication, documentation, problem-solving, and ability to explain technical concepts to non-technical users.
             </p>
           </div>
+
           <div class="timeline-item">
             <h3>Real Estate Agent — NB Elite Real Estate</h3>
             <small>July 2023 – Present</small>
@@ -838,6 +844,7 @@
               Built experience translating data into business recommendations, communicating clearly with clients, and understanding how market trends affect real-world decisions.
             </p>
           </div>
+
           <div class="timeline-item">
             <h3>Receptionist / Operations & Data Support — Sweet Nail and Spa</h3>
             <small>December 2019 – May 2023</small>
@@ -859,6 +866,7 @@
         <p class="section-subtitle">
           I created targeted resumes for different roles so each application reflects the skills most relevant to that position.
         </p>
+
         <div class="resume-list">
           <a class="resume-card" href="files/Product Analysis Henry.pdf" download>
             <h3>Product Analyst Resume</h3>
