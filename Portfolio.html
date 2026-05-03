@@ -18,7 +18,7 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #07111f 0%, #0b1f3a 45%, #102a4c 100%);
+      background: radial-gradient(circle at 70% 70%, #2b0a4a 0%, #12051f 35%, #07111f 100%);
       color: #eaf2ff;
       line-height: 1.7;
       position: relative;
@@ -32,20 +32,10 @@
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.85) 0 1.5px, transparent 2px),
-        radial-gradient(circle at 26% 35%, rgba(255, 255, 255, 0.75) 0 1px, transparent 2px),
-        radial-gradient(circle at 42% 28%, rgba(202, 167, 255, 0.75) 0 1.2px, transparent 2px),
-        radial-gradient(circle at 58% 52%, rgba(255, 255, 200, 0.8) 0 1.5px, transparent 2px),
-        radial-gradient(circle at 76% 38%, rgba(255, 255, 220, 0.9) 0 1.4px, transparent 2px),
-        radial-gradient(circle at 86% 62%, rgba(190, 130, 255, 0.8) 0 1.3px, transparent 2px),
-        radial-gradient(circle at 50% 70%, rgba(255, 255, 255, 0.6) 0 1px, transparent 2px),
-        radial-gradient(circle at 30% 75%, rgba(167, 139, 250, 0.6) 0 1px, transparent 2px),
-        radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.65) 0 1px, transparent 2px),
-        radial-gradient(circle at 50% 58%, rgba(132, 0, 255, 0.42), transparent 32%),
-        radial-gradient(circle at 72% 72%, rgba(99, 102, 241, 0.28), transparent 34%),
-        radial-gradient(circle at 34% 42%, rgba(168, 85, 247, 0.2), transparent 28%);
+        radial-gradient(circle at 65% 60%, rgba(168, 85, 247, 0.38), transparent 38%),
+        radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.25), transparent 45%),
+        radial-gradient(circle at 78% 75%, rgba(139, 92, 246, 0.30), transparent 50%);
       animation: constellationDrift 28s ease-in-out infinite alternate;
-      opacity: 0.95;
     }
 
     body::after {
@@ -55,13 +45,13 @@
       pointer-events: none;
       z-index: 0;
       background-image:
-        radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 1.5px),
-        radial-gradient(circle, rgba(168, 85, 247, 0.45) 1px, transparent 1.5px),
-        radial-gradient(circle, rgba(250, 204, 21, 0.55) 1px, transparent 1.5px);
-      background-size: 90px 90px, 150px 150px, 230px 230px;
+        radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1.7px),
+        radial-gradient(circle, rgba(168,85,247,0.75) 1px, transparent 1.7px),
+        radial-gradient(circle, rgba(250,204,21,0.65) 1px, transparent 1.7px);
+      background-size: 85px 85px, 145px 145px, 230px 230px;
       background-position: 20px 30px, 70px 110px, 130px 60px;
       animation: starFloat 55s linear infinite;
-      opacity: 0.55;
+      opacity: 0.75;
     }
 
     @keyframes constellationDrift {
@@ -78,7 +68,7 @@
         transform: translateY(0);
       }
       to {
-        transform: translateY(-160px);
+        transform: translateY(-180px);
       }
     }
 
@@ -107,7 +97,7 @@
     }
 
     header {
-      background: rgba(7, 17, 31, 0.92);
+      background: rgba(7, 17, 31, 0.88);
       border-bottom: 1px solid rgba(147, 197, 253, 0.18);
       position: sticky;
       top: 0;
@@ -142,7 +132,7 @@
       display: flex;
       align-items: center;
       padding: 80px 0;
-      background: linear-gradient(135deg, #07111f 0%, #0b1f3a 100%);
+      background: transparent;
     }
 
     .hero-content {
@@ -561,6 +551,12 @@
         grid-column: auto;
       }
     }
+  </style>
+</head>
+<body>
+ 
+</body>
+</html>
   </style>
 </head>
 <body>
