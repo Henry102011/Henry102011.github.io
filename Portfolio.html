@@ -435,10 +435,10 @@
       font-size: 0.9rem;
     }
 
-    #certifications .card:last-child {
-      grid-column: 2 / 3;
-      border-color: rgba(96, 165, 250, 0.45);
-      box-shadow: 0 20px 45px rgba(37, 99, 235, 0.12);
+    .featured-achievement {
+      grid-column: 1 / -1;
+      border: 2px solid rgba(96, 165, 250, 0.75);
+      box-shadow: 0 0 35px rgba(96, 165, 250, 0.25);
     }
 
     footer {
@@ -491,7 +491,7 @@
         height: 220px;
       }
 
-      #certifications .card:last-child {
+      .featured-achievement {
         grid-column: auto;
       }
     }
@@ -845,6 +845,18 @@
         </p>
 
         <div class="grid">
+          <article class="card featured-achievement">
+            <a href="images/Outstanding BAP.png" target="_blank" class="zoom-link">
+              <div class="img-container">
+                <img src="images/Outstanding BAP.png" class="project-img" alt="Outstanding Candidate Beta Alpha Psi Certificate">
+              </div>
+            </a>
+            <h3>Outstanding Candidate – Beta Alpha Psi</h3>
+            <p>
+              Recognized by the Kappa Mu Chapter of Beta Alpha Psi for efforts above and beyond membership requirements.
+            </p>
+          </article>
+
           <article class="card">
             <a href="images/python-cert.png" target="_blank" class="zoom-link">
               <div class="img-container">
@@ -903,18 +915,6 @@
             </a>
             <h3>Project Management Certification</h3>
             <p>PMI Project Management Ready® (2025)</p>
-          </article>
-
-          <article class="card">
-            <a href="images/Outstanding BAP.png" target="_blank" class="zoom-link">
-              <div class="img-container">
-                <img src="images/Outstanding BAP.png" class="project-img" alt="Outstanding Candidate Beta Alpha Psi Certificate">
-              </div>
-            </a>
-            <h3>Outstanding Candidate – Beta Alpha Psi</h3>
-            <p>
-              Recognized by the Kappa Mu Chapter of Beta Alpha Psi for efforts above and beyond membership requirements.
-            </p>
           </article>
         </div>
       </div>
