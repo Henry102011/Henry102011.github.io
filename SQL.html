@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SQL Project | Henry Ton</title>
 
-  <!-- Prism.js Theme -->
   <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 
   <style>
     * {
@@ -17,93 +16,138 @@
     }
 
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #0f172a;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
       color: #e2e8f0;
+      min-height: 100vh;
       padding: 40px 20px;
     }
 
     .container {
       max-width: 1200px;
-      margin: 0 auto;
+      margin: auto;
     }
 
-    h1 {
-      font-size: 2.5rem;
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .header h1 {
+      font-size: 2.8rem;
+      color: #ffffff;
       margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #cbd5e1;
+      font-size: 1.1rem;
+    }
+
+    .project-card {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid #334155;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 15px;
+    }
+
+    .card-top h2 {
+      font-size: 1.3rem;
       color: #ffffff;
     }
 
-    p {
-      color: #94a3b8;
-      margin-bottom: 25px;
-      font-size: 1rem;
-    }
-
-    .code-wrapper {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid #1e293b;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    .tag {
+      background: #2563eb;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: bold;
     }
 
     .copy-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      z-index: 10;
-      background: #2563eb;
-      color: #ffffff;
+      margin-bottom: 15px;
+      background: #22c55e;
+      color: #052e16;
       border: none;
-      border-radius: 8px;
-      padding: 8px 14px;
-      font-size: 0.9rem;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: 0.2s ease;
     }
 
     .copy-btn:hover {
-      background: #1d4ed8;
+      background: #16a34a;
+      transform: translateY(-2px);
     }
 
     pre {
-      margin: 0 !important;
-      max-height: 85vh;
+      border-radius: 14px;
+      max-height: 80vh;
       overflow: auto;
       font-size: 0.9rem;
       line-height: 1.6;
+      border: 1px solid #334155;
     }
 
     code {
       font-family: Consolas, "Courier New", monospace;
     }
 
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
     @media (max-width: 768px) {
-      h1 {
+      .header h1 {
         font-size: 2rem;
       }
 
-      .copy-btn {
-        font-size: 0.8rem;
-        padding: 6px 10px;
+      .card-top {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
       }
 
       pre {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <h1>SQL Database Project</h1>
-    <p>Complete SQL schema, sample data, views, and stored procedures.</p>
 
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+    <div class="header">
+      <h1>SQL Database Project</h1>
+      <p>Business database system with tables, sample data, views, and stored procedures.</p>
+    </div>
+
+    <div class="project-card">
+      <div class="card-top">
+        <h2>Salon Business Management Database</h2>
+        <span class="tag">SQL Server</span>
+      </div>
+
+      <button class="copy-btn" onclick="copyCode()">Copy SQL Code</button>
 
       <pre><code id="sqlCode" class="language-sql">
+
 DROP VIEW IF EXISTS vw_DailyFinancialSummary;
 DROP VIEW IF EXISTS vw_EndOfDayEmployeeSummary;
 DROP VIEW IF EXISTS vw_PayrollSummary;
@@ -385,11 +429,16 @@ SELECT * FROM vw_YearlyTaxSummary;
 
 EXEC sp_GeneratePayroll;
 
+      
       </code></pre>
     </div>
+
+    <footer>
+      © 2026 Henry Ton | SQL Portfolio Project
+    </footer>
+
   </div>
 
-  <!-- Prism.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
 
@@ -398,12 +447,11 @@ EXEC sp_GeneratePayroll;
       const code = document.getElementById("sqlCode").textContent;
       navigator.clipboard.writeText(code);
 
-      const btn = document.querySelector(".copy-btn");
-      const originalText = btn.textContent;
+      const button = document.querySelector(".copy-btn");
+      button.textContent = "Copied!";
 
-      btn.textContent = "Copied!";
       setTimeout(() => {
-        btn.textContent = originalText;
+        button.textContent = "Copy SQL Code";
       }, 2000);
     }
   </script>
