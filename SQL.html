@@ -1,4 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL Project | Henry Ton</title>
 
+  <!-- Prism.js Theme -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    p {
+      color: #94a3b8;
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+
+    .code-wrapper {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #1e293b;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 10;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: #1d4ed8;
+    }
+
+    pre {
+      margin: 0 !important;
+      max-height: 85vh;
+      overflow: auto;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .copy-btn {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+      }
+
+      pre {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SQL Database Project</h1>
+    <p>Complete SQL schema, sample data, views, and stored procedures.</p>
+
+    <div class="code-wrapper">
+      <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+
+      <pre><code id="sqlCode" class="language-sql">
 DROP VIEW IF EXISTS vw_DailyFinancialSummary;
 DROP VIEW IF EXISTS vw_EndOfDayEmployeeSummary;
 DROP VIEW IF EXISTS vw_PayrollSummary;
@@ -279,3 +384,28 @@ SELECT * FROM vw_PayrollSummary;
 SELECT * FROM vw_YearlyTaxSummary;
 
 EXEC sp_GeneratePayroll;
+
+      </code></pre>
+    </div>
+  </div>
+
+  <!-- Prism.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+
+  <script>
+    function copyCode() {
+      const code = document.getElementById("sqlCode").textContent;
+      navigator.clipboard.writeText(code);
+
+      const btn = document.querySelector(".copy-btn");
+      const originalText = btn.textContent;
+
+      btn.textContent = "Copied!";
+      setTimeout(() => {
+        btn.textContent = originalText;
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
